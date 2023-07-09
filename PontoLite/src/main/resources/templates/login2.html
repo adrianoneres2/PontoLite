@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{base :: head}"></div>
+
+<body>
+	<div id="DivIdContainer" class="container-fluid">
+
+		<div th:replace="~{base :: barraMenu}"></div>
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 100px; margin-bottom: auto">
+		
+			<div>
+				<div id="divLoginRowInformacao" class="row justify-content-md-center">
+					<span>
+						<h1>ACESSO</h1>
+					</span>
+				</div>
+				<form method="POST" th:object="${loginDto}" th:action="@{/pontolite/acessar}" >
+					<div id="divLoginRowNome" class="row justify-content-md-center form-group">
+						<input type="text" th:field="*{nomeUsuario}" style="width: 300px; height: 40px" placeholder="Usuário"
+							class="form-control">
+					</div>
+					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
+						<input th:field="*{senha}" type="password" style="width: 300px; height: 40px" placeholder="Senha"
+							class="form-control">
+					</div>
+					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
+						<input type="submit" name="btLoginEnviar" value="Acessar" class="btn btn-success btn-lg"
+							style="width: 300px">
+					</div>
+					<div id="divLoginRowRecuperarSenha" class="row justify-content-md-center mt-2">
+						<input type="submit" name="btLoginRecuperar" value="Recuperar Senha"
+							class="btn btn-secondary btn-lg" style="width: 300px">
+					</div>
+				</form>
+				
+				<div class="alert alert-warning" role="alert" th:if="${mensagem} != NULL" th:text="${mensagem}" style="margin-top:10px; width: 300px"></div>
+				<hr style="width: 300px">
+				<span>Todos os direitos reservados</span>
+			</div>
+
+		</div>
+		<div th:replace="~{base :: barraRodape}"></div>
+	</div>
+	<div th:insert="~{base :: script}"></div>
+</body>
+
+</html>

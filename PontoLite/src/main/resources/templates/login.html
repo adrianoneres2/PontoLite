@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Autenticação</title>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
+<link th:rel="stylesheet" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}" />
+
+<body>
+	<div id="DivIdContainer" class="container-fluid">
+
+		<div th:replace="~{base :: barraMenu}"></div>
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 100px; margin-bottom: auto">
+		
+			<div>
+				<div id="divLoginRowInformacao" class="row justify-content-md-center">
+					<span>
+						<h1>ACESSO</h1>
+					</span>
+				</div>
+				<form method="POST" th:action="@{/pontolite}" >
+					<div id="divLoginRowNome" class="row justify-content-md-center form-group">
+						<input type="text" name="username" style="width: 300px; height: 40px" placeholder="Usuário"
+							class="form-control">
+					</div>
+					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
+						<input name="password" type="password" style="width: 300px; height: 40px" placeholder="Senha"
+							class="form-control">
+					</div>
+					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
+						<input type="submit" name="btLoginEnviar" value="Acessar" class="btn btn-success btn-lg"
+							style="width: 300px">
+					</div>
+					<div id="divLoginRowRecuperarSenha" class="row justify-content-md-center mt-2">
+						<input type="submit" name="btLoginRecuperar" value="Recuperar Senha"
+							class="btn btn-secondary btn-lg" style="width: 300px">
+					</div>
+				</form>
+				
+				<div class="alert alert-warning" role="alert" th:if="${mensagem} != NULL" th:text="${mensagem}" style="margin-top:10px; width: 300px"></div>
+				<hr style="width: 300px">
+				<span>Todos os direitos reservados</span>
+			</div>
+
+		</div>
+		<div th:replace="~{base :: barraRodape}"></div>
+	</div>
+	<div>
+		<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+	</div>
+</body>
+
+</html>

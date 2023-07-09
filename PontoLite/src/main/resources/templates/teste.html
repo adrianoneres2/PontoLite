@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Lista de Usuarios</title>
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
+	<link th:rel="stylesheet" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}" />
+</head>
+
+<body>
+	<div id="DivIdContainer" class="container-fluid" >
+	
+		<div id=DivIdTopo align="center" class="fixed-top" style="background-color: rgb(252, 233, 79);">
+			<h2>topo</h2>
+		</div>
+
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 280px; margin-bottom: auto">
+			<form method="POST" th:action="@{/mensagem}">
+  				<input type="submit" value="Registrar o ponto">
+			</form>
+			<div><h1><span th:text="${nome}"></span></h1></div>
+		</div>
+
+		<div id=DivIdRodape align="center" class="fixed-bottom" style="background-color: rgb(252, 233, 79);">
+			<h2>rodapé</h2>
+		</div>
+
+	</div>
+
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

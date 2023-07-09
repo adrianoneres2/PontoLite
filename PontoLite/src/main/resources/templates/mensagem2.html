@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{base :: head}"></div>
+
+<body>
+	<div id="DivIdContainer" class="container-fluid">
+
+		<div th:replace="~{base :: menuPrincipal}"></div>
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 280px; margin-bottom: auto">
+
+
+			<div class="alert alert-success" role="alert">
+				Registrado com sucesso!
+			</div>
+
+		</div>
+		<div th:replace="~{base :: barraRodape}"></div>
+	</div>
+	<div th:insert="~{base :: script}"></div>
+</body>
+
+</html>
