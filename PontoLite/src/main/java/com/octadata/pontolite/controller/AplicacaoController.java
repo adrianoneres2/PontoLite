@@ -29,6 +29,12 @@ public class AplicacaoController {
 	public String login() {
 		/* Método observa se a autenticação foi feita com sucesso e registra o objeto "Usuário" na sessão HttpSession */
 		if (autenticacaoService.registrarUsuarioSessao()) {
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("page", "base");
+			mv.addObject("fragmento", "botaoRegistrarPonto");
+			mv.addObject("mensagem", "teste");
+			
 			return "/dashboard";
 		}
 		return "/login";
@@ -38,6 +44,13 @@ public class AplicacaoController {
 	public String logof(Model model, HttpSession session) {
 		autenticacaoService.encerrarSessao();
 		return "redirect:/pontolite";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ACESSAR_REGISTRO_PONTO')")
+	@GetMapping("registrar")
+	public String registrar() {
+		//System.out.println("teste de registrar ponto!!!");
+		return "/ponto/registroPonto";
 	}
 	
 	@PreAuthorize("hasRole('ROLE_APROVAR_AJUSTE_PONTO')")

@@ -1,7 +1,6 @@
 package com.octadata.pontolite.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
