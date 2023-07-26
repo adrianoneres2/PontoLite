@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{base :: head}"></div>
+
+<body>
+	<div id="DivIdContainer" class="container-fluid">
+
+		<div th:replace="~{base :: menuPrincipal}"></div>
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 280px; margin-bottom: auto">
+
+			<div class="card mb-1" th:each="registro : ${registros}">
+			  <div class="card-body">
+			    <div class="row">
+                    <div class="col-md-12"><span th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}">10/02/2020</span>
+                    </div>
+			    </div>
+			  </div>
+			</div>
+			
+
+		</div>
+		<div th:replace="~{base :: barraRodape}"></div>
+	</div>
+	<div th:insert="~{base :: script}"></div>
+</body>
+
+</html>

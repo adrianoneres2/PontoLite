@@ -1,6 +1,7 @@
 package com.octadata.pontolite.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class RegistroPonto implements Serializable {
 	private Long codigoRegistroPonto;
 	
 	@Column(name="dt_registro_ponto", nullable = false)
-	private Date dataRegistroPonto;
+	private LocalDateTime dataRegistroPonto;
 	
 	@Column(name = "st_registro_ponto", nullable = false)
 	private Integer situacaoRegistroPonto;
@@ -63,11 +64,11 @@ public class RegistroPonto implements Serializable {
 	public void setCodigoRegistroPonto(Long codigoRegistroPonto) {
 		this.codigoRegistroPonto = codigoRegistroPonto;
 	}
-	public Date getDataRegistroPonto() {
+	public LocalDateTime getDataRegistroPonto() {
 		return dataRegistroPonto;
 	}
-	public void setDataRegistroPonto(Date dataRegistroPonto) {
-		this.dataRegistroPonto = dataRegistroPonto;
+	public void setDataRegistroPonto(LocalDateTime date) {
+		this.dataRegistroPonto = date;
 	}
 	public Integer getSituacaoRegistroPonto() {
 		return situacaoRegistroPonto;

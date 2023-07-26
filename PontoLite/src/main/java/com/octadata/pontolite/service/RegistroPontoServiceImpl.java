@@ -1,6 +1,7 @@
 package com.octadata.pontolite.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	public void salvar(RegistroPonto registroPonto) {
 		try {
 			Usuario usuarioSessao = (Usuario) session.getAttribute("usuarioLogado");
-			registroPonto.setDataRegistroPonto(new Date());
+			registroPonto.setDataRegistroPonto(LocalDateTime.now()); 
 			registroPonto.setUsuario(usuarioSessao);
 			registroPonto.setSituacaoRegistroPonto(1);
 			registroPonto.setTipoRegistro(1);
@@ -31,6 +32,10 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
+	}
+	
+	@Override
+	public List<RegistroPonto> listarPorUsuario() {
+		 return registroPontoRepository.findByUsuario((Usuario) session.getAttribute("usuarioLogado"));
 	}
 }
