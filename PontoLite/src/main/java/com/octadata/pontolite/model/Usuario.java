@@ -56,6 +56,13 @@ public class Usuario implements UserDetails, Serializable{
 		@Column(name = "id_usuario_cadastro	", nullable = false)
 		private Long  codigoUsuarioCadastro;
 		
+		@ManyToOne(fetch = FetchType.EAGER)
+		@JoinColumn(name="id_jornada", insertable = false, updatable = false)
+		private Jornada jornada;
+		
+		@ManyToOne(fetch = FetchType.EAGER)
+		@JoinColumn(name="id_cliente", insertable = false, updatable = false)
+		private Cliente cliente;
 		
 		public Long getCodigoUsuario() {
 			return codigoUsuario;
@@ -101,6 +108,19 @@ public class Usuario implements UserDetails, Serializable{
 		}
 		public void setPerfil(Perfil perfil) {
 			this.perfil = perfil;
+		}
+		
+		public Jornada getJornada() {
+			return jornada;
+		}
+		public void setJornada(Jornada jornada) {
+			this.jornada = jornada;
+		}
+		public Cliente getCliente() {
+			return cliente;
+		}
+		public void setCliente(Cliente cliente) {
+			this.cliente = cliente;
 		}
 		@Override
 		public Collection<? extends GrantedAuthority> getAuthorities() {

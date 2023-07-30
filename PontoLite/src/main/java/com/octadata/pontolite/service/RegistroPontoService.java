@@ -13,4 +13,8 @@ public interface RegistroPontoService {
 
 	List<RegistroPonto> listarPorUsuario();
 
+	List<RegistroPonto> listarPorDataRegistroPonto();
+
+	List<RegistroPonto> listarPorDataRegistroPontoHoje();
+
 }

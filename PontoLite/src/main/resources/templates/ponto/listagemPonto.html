@@ -12,7 +12,7 @@
 			<div class="card mb-1" th:each="registro : ${registros}">
 			  <div class="card-body">
 			    <div class="row">
-                    <div class="col-md-12"><span th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}">10/02/2020</span>
+                    <div class="col-md-12"><span th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}"></span>
                     </div>
 			    </div>
 			  </div>

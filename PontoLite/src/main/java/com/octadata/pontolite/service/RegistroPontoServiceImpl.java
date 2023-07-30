@@ -1,6 +1,7 @@
 package com.octadata.pontolite.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,21 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	@Override
 	public List<RegistroPonto> listarPorUsuario() {
 		 return registroPontoRepository.findByUsuario((Usuario) session.getAttribute("usuarioLogado"));
+	}
+	@Override
+	public List<RegistroPonto> listarPorDataRegistroPonto() {
+		 /*Ajustar*/ 
+		 LocalDateTime now = LocalDateTime.now();
+		 return registroPontoRepository.findByDataRegistroPonto(now);
+	}
+	
+	@Override
+	public List<RegistroPonto> listarPorDataRegistroPontoHoje() {
+		 LocalDateTime now = LocalDateTime.now();
+		 LocalDateTime dataHoraFinal = LocalDateTime.parse(now.toString());
+		 LocalDateTime dataHoraIncial = dataHoraFinal.toLocalDate().atTime(LocalTime.MIN);
+		 
+		 //return registroPontoRepository.findByDataRegistroPontoBetween(dataHoraIncial, dataHoraFinal);
+		 return registroPontoRepository.findByDataRegistroPontoBetween(dataHoraIncial, dataHoraFinal);
 	}
 }

@@ -42,7 +42,8 @@ public class RegistroPontoController {
 	@PreAuthorize("hasRole('ROLE_LISTAR_REGISTRO_PONTO')")
 	@GetMapping("listar")
 	public String listar(Model model) {
-		List<RegistroPonto> registros = registroPontoService.listarPorUsuario();
+		//List<RegistroPonto> registros = registroPontoService.listarPorUsuario();
+		List<RegistroPonto> registros = registroPontoService.listarPorDataRegistroPontoHoje();
 		model.addAttribute("registros", registros);
 		return "/ponto/listagemPonto";
 	}

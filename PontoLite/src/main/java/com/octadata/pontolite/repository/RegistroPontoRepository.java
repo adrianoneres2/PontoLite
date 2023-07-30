@@ -1,5 +1,6 @@
 package com.octadata.pontolite.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ import com.octadata.pontolite.model.Usuario;
 public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Long>{
 
 	List<RegistroPonto> findByUsuario(Usuario usuario);
+	List<RegistroPonto> findByDataRegistroPonto(LocalDateTime dataRegistroPonto);
+	List<RegistroPonto> findByDataRegistroPontoBetween(LocalDateTime dataRegistroPontoInicial, LocalDateTime dataRegistroPontoFinal);
 }
