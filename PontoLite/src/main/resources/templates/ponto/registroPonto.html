@@ -6,77 +6,46 @@
 <body>
 	<div id="DivIdContainer" class="container-fluid">
 
-		<div th:replace="~{base :: menuPrincipal}"></div>
-		<div id=DivIdConteudo align="center" class="col" style="margin-top: 70px; margin-bottom: auto">
+		<div class="row">
+			<div th:replace="~{base :: menuPrincipal}"></div>
+		</div>
 
-			<div class="card p-0 mb-2 text-white" style="width: 400px">
-				<div class="card p-0 mb-2 bg-success text-white">
+		<div class="row">
+			<div id=DivIdConteudo style="margin-top:15%; margin-bottom:auto; margin-left:auto; margin-right: auto;">
+
+				<div class="card p-0 mb-2 bg-secondary text-white" style="width: 500px">
 					<a href="/pontolite/ponto/registrar" class="nav-item nav-link" style="color:white">
 						<div class="row">
 							<div class="col">
-								<div class="card-body" style="font-size: 30px;">1</div>
+								<div class="card-body" style="font-size: 60px;">1</div>
 							</div>
-							<div class="col">
-								ENTRADA
+							<div class="col" style="align-items: center; margin: 0; display: flex;" >
+								Registrar Ponto
 							</div>
-							<div class="col">
-								asdfasdf
+							<div class="col" style="align-items: center; margin: 0; display: flex;" >
+								<div id="current_date" style="font-size: 40px">
+									<script>
+										date = new Date();
+										var current_time = date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds();
+										year = date.getFullYear();
+										month = date.getMonth() + 1;
+										day = date.getDate();
+										document.getElementById("current_date").innerHTML = current_time;
+									</script>
+								</div>
 							</div>
 						</div>
 					</a>
 				</div>
-				<div class="card p-0 mb-2 bg-primary text-white">
-					<a href="/pontolite/ponto/registrar" class="nav-item nav-link" style="color:white">
-						<div class="row">
-							<div class="col">
-								<div class="card-body" style="font-size: 30px;">2</div>
-							</div>
-							<div class="col">
-								PAUSA PARA ALMOÇO.
-							</div>
-							<div class="col">
-								asdfasdf
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="card p-0 mb-2 bg-warning text-white">
-					<a href="/pontolite/ponto/registrar" class="nav-item nav-link" style="color:white">
-						<div class="row">
-							<div class="col">
-								<div class="card-body" style="font-size: 30px;">3</div>
-							</div>
-							<div class="col">
-								VOLTA DO ALMOÇO.
-							</div>
-							<div class="col">
-								asdfasdf
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="card p-0 mb-2 bg-danger text-white">
-						<a href="/pontolite/ponto/registrar" class="nav-item nav-link" style="color:white">
-						<div class="row">
-							<div class="col">
-								<div class="card-body" style="font-size: 30px;">4</div>
-							</div>
-							<div class="col">
-								SAÍDA
-							</div>
-							<div class="col">
-								asdfasdf
-							</div>
-						</div>
-					</a>
+
+				<div class="alert alert-success" role="alert" th:if="${mensagem2} != NULL" th:text="${mensagem2}"
+					style="margin-top:10px; width: 300px">
 				</div>
 			</div>
-
-			<div class="alert alert-success" role="alert" th:if="${mensagem2} != NULL" th:text="${mensagem2}"
-				style="margin-top:10px; width: 300px"></div>
-
 		</div>
-		<div th:replace="~{base :: barraRodape}"></div>
+		<div class="row">
+			<div th:replace="~{base :: barraRodape}"></div>
+		</div>
 	</div>
 	<div th:insert="~{base :: script}"></div>
 </body>

@@ -33,8 +33,9 @@ public class RegistroPonto implements Serializable {
 	@Column(name = "st_registro_ponto", nullable = false)
 	private Integer situacaoRegistroPonto;
 
-	@Column(name = "id_tipo_registro", nullable = false)
-	private Integer tipoRegistro;
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_registro")
+	private TipoRegistro tipoRegistro;
 	
 	@Column(name= "dt_aprovacao", nullable = true)
 	private Date dataAprovacao; 
@@ -101,12 +102,14 @@ public class RegistroPonto implements Serializable {
 		this.registroPontoAjustado = registroPontoAjustado;
 	}
 	
-	public Integer getTipoRegistro() {
+	public TipoRegistro getTipoRegistro() {
 		return tipoRegistro;
 	}
-	public void setTipoRegistro(Integer tipoRegistro) {
+	public void setTipoRegistro(TipoRegistro tipoRegistro) {
 		this.tipoRegistro = tipoRegistro;
 	}
+
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigoRegistroPonto, dataAprovacao, dataRegistroPonto, registroPontoAjustado,

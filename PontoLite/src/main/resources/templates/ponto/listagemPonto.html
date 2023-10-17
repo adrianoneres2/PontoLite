@@ -7,22 +7,27 @@
 	<div id="DivIdContainer" class="container-fluid">
 
 		<div th:replace="~{base :: menuPrincipal}"></div>
-		<div id=DivIdConteudo align="center" class="col" style="margin-top: 70px; margin-bottom: auto">
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 70px;">
 
 			<div class="card mb-1" th:each="registro : ${registros}">
-			  <div class="card-body">
-			    <div class="row">
-                    <div class="col-md-12"><span th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}"></span>
-                    </div>
-			    </div>
-			  </div>
-			</div>
-			
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm">
+							<span style="font-family: Fnt_Oswald-VariableFont_wght;" th:text="${registro.tipoRegistro.nomeTipoRegistro}"></span>
+						</div>
 
+						<div class="col-sm">
+							<span style="font-family: Fnt_Oswald-VariableFont_wght;" th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}"></span>
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div th:replace="~{base :: barraRodape}"></div>
 		</div>
-		<div th:replace="~{base :: barraRodape}"></div>
-	</div>
-	<div th:insert="~{base :: script}"></div>
+		<div th:insert="~{base :: script}"></div>
 </body>
 
 </html>

@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Fnt_Kanit-Regular';
+  src: url('/fontes/Kanit/Kanit-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fnt_BebasNeue-Regular';
+  src: url('/fontes/Bebas_Neue/BebasNeue-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fnt_Ubuntu-Regular';
+  src: url('/fontes/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fnt_Ubuntu-Bold';
+  src: url('/fontes/Ubuntu/Ubuntu-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Fnt_Oswald-VariableFont_wght';
+  src: url('/fontes/Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
+}

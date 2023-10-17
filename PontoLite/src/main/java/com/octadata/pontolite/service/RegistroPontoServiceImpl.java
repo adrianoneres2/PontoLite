@@ -20,18 +20,43 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	private RegistroPontoRepository registroPontoRepository;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private TipoRegistroService tipoRegistroService;
 
 	@Override
-	public void salvar(RegistroPonto registroPonto) {
+	public RegistroPonto salvar(RegistroPonto registroPonto) {
 		try {
 			Usuario usuarioSessao = (Usuario) session.getAttribute("usuarioLogado");
 			registroPonto.setDataRegistroPonto(LocalDateTime.now()); 
 			registroPonto.setUsuario(usuarioSessao);
 			registroPonto.setSituacaoRegistroPonto(1);
-			registroPonto.setTipoRegistro(1);
-			registroPontoRepository.save(registroPonto);
+			
+			RegistroPonto ultimoRegistroPonto = registroPontoRepository.findMaiorRegistroPorCodigoUsuario(usuarioSessao.getCodigoUsuario());
+			
+			if(ultimoRegistroPonto == null) {
+				ultimoRegistroPonto = new RegistroPonto();
+				/*Obter o primeiro tipo de registro*/
+				registroPonto.setTipoRegistro(tipoRegistroService.porCodigoTipoRegistro(1L));
+			}else {
+				/*Se o dia atual não for o mesmo dia do último ponto, registra como o primeiro ponto do dia*/
+				if(ultimoRegistroPonto.getDataRegistroPonto().getDayOfMonth() != LocalDateTime.now().getDayOfMonth()) {
+					registroPonto.setTipoRegistro(tipoRegistroService.porCodigoTipoRegistro(1L));
+				}else {
+					/*Obtem o próximo tipo de registro*/ 
+					registroPonto.setTipoRegistro((tipoRegistroService.porCodigoTipoRegistro(ultimoRegistroPonto.getTipoRegistro().getCodigoTipoRegistro()+1)));	
+				}				
+			}
+
+			/*Se o último ponto for maior que 1 hora permite registrar novo ponto*/
+			if(ultimoRegistroPonto.getCodigoRegistroPonto() == null || ultimoRegistroPonto.getDataRegistroPonto().plusHours(1).isBefore(LocalDateTime.now())) {
+				registroPontoRepository.save(registroPonto);
+				return registroPonto;
+			}
+			
+			return new RegistroPonto();
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			return new RegistroPonto();
 		}
 	}
 	
@@ -55,4 +80,10 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		 //return registroPontoRepository.findByDataRegistroPontoBetween(dataHoraIncial, dataHoraFinal);
 		 return registroPontoRepository.findByDataRegistroPontoBetween(dataHoraIncial, dataHoraFinal);
 	}
+
+	@Override
+	public List<RegistroPonto> listarPeriodoPorUsuario(Usuario usuario, LocalDateTime dataHoraIncial, LocalDateTime dataHoraFinal) {
+		 return registroPontoRepository.findByPeriodoPorUsuario(usuario.getCodigoUsuario(), dataHoraIncial, dataHoraFinal);
+	}
+	
 }
