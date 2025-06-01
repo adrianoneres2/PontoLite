@@ -2,13 +2,21 @@ package com.octadata.pontolite.dto;
 
 import com.octadata.pontolite.model.Usuario;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginDto {
 
-		@NotBlank
+		@Column(name="username")
+		@Enumerated(EnumType.STRING)
+		@NotBlank(message = "Nome do usuário é obrigatório!")
 		private String username;
-		@NotBlank
+		
+		@Column(name="password")
+		@Enumerated(EnumType.STRING)
+		@NotBlank(message = "O campo password é obrigatório!")
 		private String password;
 		
 		public String getUsername() {

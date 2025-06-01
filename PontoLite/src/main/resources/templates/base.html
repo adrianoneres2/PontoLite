@@ -29,6 +29,17 @@
 	</div>
 </div>
 
+<div th:fragment="mensagemSucesso(msg)" id=DivIdMensagemSucesso>
+	<div class="alert alert-success" role="alert">
+		<div th:text="${msg}"></div>
+	</div>
+</div>
+
+<div th:fragment="mensagemErro(msg)" id=DivIdMensagemErro>
+	<div class="alert alert-warning" role="alert" th:if="${msg} != NULL" th:text="${msg}" style="margin-top:10px; width: 300px">
+	</div>
+</div>
+
 <nav th:fragment="menuPrincipal" class="navbar navbar-expand navbar-light d-flex justify-content-between mb-3 fixed-top bg-danger text-white">
     <div>.</div>
 	<div class="navbar-nav">

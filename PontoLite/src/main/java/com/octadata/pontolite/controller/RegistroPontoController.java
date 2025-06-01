@@ -36,7 +36,7 @@ public class RegistroPontoController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REGISTRAR_PONTO')")
-	@RequestMapping("registrar")
+	@GetMapping("registrar")
 	public ModelAndView registrarPonto() {
 		ModelAndView mv = new ModelAndView("/mensagem2");
 		

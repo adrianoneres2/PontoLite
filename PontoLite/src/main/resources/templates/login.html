@@ -10,24 +10,35 @@
 	<div id="DivIdContainer" class="container-fluid">
 
 		<div th:replace="~{base :: barraMenu}"></div>
-		<div id=DivIdConteudo align="center" class="col" style="margin-top: 100px; margin-left:auto; margin-right: auto;">
-		
+		<div id=DivIdConteudo align="center" class="col"
+			style="margin-top: 100px; margin-left:auto; margin-right: auto;">
+
 			<div>
 				<div id="divLoginRowInformacao" class="row justify-content-md-center">
 					<span>
 						<h1>ACESSO</h1>
 					</span>
 				</div>
-				<form method="POST" th:action="@{/pontolite}" >
+				<form method="post" th:action="@{/pontolite}" th:object="${loginDto}">
 					<div id="divLoginRowNome" class="row justify-content-md-center form-group">
-						<input type="text" name="username" style="width: 300px; height: 40px" placeholder="Usuário"
-							class="form-control">
+
+						<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('username')}">
+							<label class="validation-message" th:errors="*{username}"></label>
+						</div>
+
+						<input th:field="*{username}" th:value="${username}" type="text"
+							style="width: 300px; height: 40px" placeholder="Nome do usuário" class="form-control"
+							required>
 					</div>
+
 					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
-						<input name="password" type="password" style="width: 300px; height: 40px" placeholder="Senha"
-							class="form-control">
+						<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('password')}">
+							<label class="validation-message" th:errors="*{password}"></label>
+						</div>
+						<input th:field="*{password}" th:value="${password}" type="password"
+							style="width: 300px; height: 40px" placeholder="Senha" class="form-control" required>
 					</div>
-					<div id="divLoginRowSenha" class="row justify-content-md-center mt-2 form-group">
+					<div id="divLoginRowSubmit" class="row justify-content-md-center mt-2 form-group">
 						<input type="submit" name="btLoginEnviar" value="Acessar" class="btn btn-success btn-lg"
 							style="width: 300px">
 					</div>
@@ -36,10 +47,10 @@
 							class="btn btn-secondary btn-lg" style="width: 300px">
 					</div>
 				</form>
-				
-				<div class="alert alert-warning" role="alert" th:if="${mensagem} != NULL" th:text="${mensagem}" style="margin-top:10px; width: 300px"></div>
+
 				<hr style="width: 300px">
-				<span>Todos os direitos reservados</span>
+
+				<div th:replace="~{base :: mensagemErro(${msg})}"></div>
 			</div>
 
 		</div>

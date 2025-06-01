@@ -19,31 +19,9 @@ public class WebSecurityConfig{
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			///.httpBasic()
-			///.and()
 			.authorizeHttpRequests()
 			.anyRequest().permitAll()
-			///.authenticated()
-			.and().formLogin(form -> form.loginPage("/pontolite").permitAll().defaultSuccessUrl("/pontolite", true)
-					/*
-					.successHandler(new AuthenticationSuccessHandler() {
-						 
-	                    @Override
-	                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-	                            Authentication authentication) throws IOException, ServletException {
-	                        System.out.println("Logado com sucesso!!!!");
-	                    }
-	                })
-					.failureHandler(new AuthenticationFailureHandler() {
-
-						@Override
-						public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-								AuthenticationException exception) throws IOException, ServletException {
-							System.out.println("Falhou!!!");
-						}
-					})
-					*/
-					)
+			.and().formLogin(form -> form.loginPage("/pontolite").permitAll().defaultSuccessUrl("/pontolite", true))
 	        .exceptionHandling()
 	        .accessDeniedHandler(accessDeniedHandler())
 	        .and()
