@@ -124,6 +124,12 @@ public class Usuario implements UserDetails, Serializable{
 		}
 		@Override
 		public Collection<? extends GrantedAuthority> getAuthorities() {
+			
+			/*
+			for(PerfilFuncionalidade obj : this.getPerfil().getPerfilFuncionalidades()) {
+				System.out.println(obj.getAuthority());
+			}
+			*/
 			return this.getPerfil().getPerfilFuncionalidades();
 		}
 		@Override

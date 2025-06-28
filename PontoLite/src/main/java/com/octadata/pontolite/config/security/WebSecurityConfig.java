@@ -15,30 +15,40 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableWebSecurity
 public class WebSecurityConfig{
 
-	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.authorizeHttpRequests()
-			.anyRequest().permitAll()
-			.and().formLogin(form -> form.loginPage("/pontolite").permitAll().defaultSuccessUrl("/pontolite", true))
-	        .exceptionHandling()
-	        .accessDeniedHandler(accessDeniedHandler())
-	        .and()
-			.logout(logout -> logout.logoutUrl("/logout"))
-			.csrf().disable();
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/pontolite/ponto/registrarPonto").hasAnyRole("REGISTRAR_PONTO")
+                        .requestMatchers("/pontolite/acessarRegistroPonto").hasRole("ACESSAR_REGISTRO_PONTO")
+                        .anyRequest()
+                        .authenticated()
+                        )
+                .formLogin(form -> form.loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/pontolite", true)
+                        .permitAll()
+                        )
+                .exceptionHandling(handling -> handling
+                        .accessDeniedHandler(accessDeniedHandler()).accessDeniedPage("/login")
+                        )
+                .logout(logout -> logout.logoutUrl("/login/logout").permitAll()
+                )
+                .csrf(csrf -> csrf.disable());
 
 		System.out.println(passwordEncoder().encode("12345"));
 		return http.build();
 	}
-	
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
+
+    @Bean
+    AccessDeniedHandler accessDeniedHandler() {
 	   return new CustomAccessDeniedHandler();
 	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	

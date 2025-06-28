@@ -1,38 +1,32 @@
 package com.octadata.pontolite.controller;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.octadata.pontolite.dto.LoginDto;
+import com.octadata.pontolite.service.AutenticacaoService;
 
 @Controller
 @RequestMapping("login")
 public class LoginController {
 	
+	@Autowired
+	private AutenticacaoService autenticacaoService;
+
+
+	/*
+	 * O nome desse método precisa ser login para o spring security 
+	 * entender que os campos password e username serão usados para a autenticação
+	 * */
 	@GetMapping
-	public String login() {
-		if (isAuthenticated()) {
-			System.out.println("executou");
-			//return "//dashboard";
-			return "redirect:pontolite/dashboard";
-		}
-		return "redirect:pontolite";
-	}
+	public void login(LoginDto loginDto) {}
 
 
-	@GetMapping("logout")
-	public String logout() {
-		return "/login";
-	}
-	
-	private boolean isAuthenticated() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication == null || AnonymousAuthenticationToken.class.
-	      isAssignableFrom(authentication.getClass())) {
-	        return false;
-	    }
-	    return authentication.isAuthenticated();
+	@GetMapping("logof")
+	public String logof() {
+		autenticacaoService.encerrarSessao();
+		return "redirect:/login";
 	}
 }

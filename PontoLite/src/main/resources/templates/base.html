@@ -1,4 +1,6 @@
 <head th:fragment="head">
+	<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width" />
 	<title>Autenticação</title>
@@ -12,42 +14,44 @@
 	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
 </div>
 
-<div th:fragment="barraMenu" id=DivIdTopo align="center" class="fixed-top"
-	style="background-color: rgb(86, 61, 124); color:white;">
-	<h2>Ponto Lite</h2>
-</div>
-
-<div th:fragment="barraRodape" id=DivIdRodape align="center" class="fixed-bottom bg-danger text-white">
+<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-danger text-white">
 	<div style="height: 50px;">
 		<strong style="font-family: Fnt_Oswald-VariableFont_wght; font-size: 15px;">Todos os direitos reservados</strong>
 	</div>
 </div>
 
-<div th:fragment="barraTopo" id=DivIdBarraTopo align="center" class="fixed-bottom  text-white">
+<div th:fragment="barra-superior" id=DivIdBarraTopo align="center" class="fixed-bottom  text-white">
 	<div style="height: 50px;">
 		<strong style="font-family: Fnt_Oswald-VariableFont_wght; font-size: 15px;">Todos os direitos reservados</strong>
 	</div>
 </div>
 
-<div th:fragment="mensagemSucesso(msg)" id=DivIdMensagemSucesso>
+<div th:fragment="menssagem-sucesso(msg)" id=DivIdMensagemSucesso>
 	<div class="alert alert-success" role="alert">
 		<div th:text="${msg}"></div>
 	</div>
 </div>
 
-<div th:fragment="mensagemErro(msg)" id=DivIdMensagemErro>
-	<div class="alert alert-warning" role="alert" th:if="${msg} != NULL" th:text="${msg}" style="margin-top:10px; width: 300px">
+<div th:fragment="menssagem-erro(msg)" id="div-menssagem-erro">
+	<div class="alert alert-warning" 
+	    role="alert" 
+		th:if="${msg} != NULL" 
+		th:text="${msg}" 
+		style="margin-top:10px; width: 300px">
 	</div>
 </div>
 
-<nav th:fragment="menuPrincipal" class="navbar navbar-expand navbar-light d-flex justify-content-between mb-3 fixed-top bg-danger text-white">
-    <div>.</div>
+<nav th:fragment="menu-principal" class="navbar navbar-expand navbar-light d-flex justify-content-between mb-3 fixed-top bg-danger text-white">
+    <div></div>
 	<div class="navbar-nav">
 		<a class="nav-item nav-link active" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite}">Home</a>
-		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/registrar}">Registrar</a>
+		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a>
 		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/ponto/listar}">Meus Pontos</a>
 		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/ponto/listar}">Clientes</a>
 		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/ponto/listar}">Usuários</a>
 	</div>
-	<a href="/pontolite/logof"><button class="btn btn-outline-warning my-2 my-sm-0">Sair</button></a>
+	<div>
+		<strong th:text="${session.usuarioLogado.username}" style="margin-right: 10px"></strong>
+		<a th:href="@{/login/logof}"><button class="btn btn-outline-warning my-2 my-sm-0">Sair</button></a>
+	</div>
 </nav>

@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <div th:replace="~{base :: head}"></div>
 
 <body>
 	<div id="DivIdContainer" class="container-fluid">
 
-		<div th:replace="~{base :: menuPrincipal}"></div>
-		<div id=DivIdConteudo align="center" class="col" style="margin-top: 280px; margin-bottom: auto">
-
-
+		<div th:replace="~{base :: menu-principal}"></div>
+		<div id=DivIdConteudo align="center" class="col" style="margin-top: 380px; margin-bottom: auto">
 			<div class="alert alert-success" role="alert">
 				<div th:text="${msg}"></div>
 			</div>
-
 		</div>
-		<div th:replace="~{base :: barraRodape}"></div>
+		<div th:replace="~{base :: barra-inferior}"></div>
 	</div>
 	<div th:insert="~{base :: script}"></div>
 </body>

@@ -6,12 +6,11 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.octadata.pontolite.model.RegistroPonto;
@@ -30,18 +29,18 @@ public class RegistroPontoController {
 	@Autowired
 	private HttpSession session;
 	
-	@RequestMapping(value = "/mensagem", method = RequestMethod.POST)
+	@PostMapping("/mensagem")
 	public String mensagem() {
 		return "Mensagem";
 	}
 	
-	@PreAuthorize("hasRole('ROLE_REGISTRAR_PONTO')")
-	@GetMapping("registrar")
+	///@PreAuthorize("hasRole('ROLE_REGISTRAR_PONTO')")
+	@GetMapping("registrarPonto")
 	public ModelAndView registrarPonto() {
 		ModelAndView mv = new ModelAndView("/mensagem2");
 		
-		RegistroPonto rp = new RegistroPonto();			
-		if(registroPontoService.salvar(rp).getCodigoRegistroPonto() == null) {
+		RegistroPonto registroPonto = new RegistroPonto();			
+		if(registroPontoService.salvar(registroPonto).getCodigoRegistroPonto() == null) {
 			mv.addObject("msg", "Você já registrou ponto a poucos minutos atrás!");
 			return mv;
 		};
@@ -50,7 +49,7 @@ public class RegistroPontoController {
 		return mv;
 	}
 	
-	@PreAuthorize("hasRole('ROLE_LISTAR_REGISTRO_PONTO')")
+	//@PreAuthorize("hasRole('LISTAR_REGISTRO_PONTO')")
 	@GetMapping("listar")
 	public String listarPeriodoPorUsuario(Model model) { 
 		LocalDateTime hoje = LocalDateTime.now();

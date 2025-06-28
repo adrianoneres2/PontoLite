@@ -35,7 +35,7 @@ public class PerfilFuncionalidade implements GrantedAuthority, Serializable{
 	
 	@Override
 	public String getAuthority() {
-		return funcionalidade.getRole();
+		return getFuncionalidade().getRole();
 	}
 	
 	
