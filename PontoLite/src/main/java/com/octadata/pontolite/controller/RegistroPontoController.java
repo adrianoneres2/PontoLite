@@ -58,6 +58,6 @@ public class RegistroPontoController {
 		Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
 		List<RegistroPonto> registros = registroPontoService.listarPeriodoPorUsuario(usuarioLogado, dataHoraIncial, dataHoraFinal);
 		model.addAttribute("registros", registros);
-		return "/ponto/listagemPonto";
+		return "/ponto/listagem-ponto";
 	}
 }

@@ -19,6 +19,7 @@ public class WebSecurityConfig{
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
+                		.requestMatchers("/webjars/jquery/**", "/webjars/bootstrap/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/pontolite/ponto/registrarPonto").hasAnyRole("REGISTRAR_PONTO")

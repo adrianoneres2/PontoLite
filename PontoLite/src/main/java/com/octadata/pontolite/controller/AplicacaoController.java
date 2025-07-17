@@ -25,7 +25,7 @@ public class AplicacaoController {
 	///@PreAuthorize("hasRole('ROLE_ACESSAR_REGISTRO_PONTO')")
 	@GetMapping("acessarRegistroPonto")
 	public String acessarRegistroPonto() {
-		return "/ponto/registroPonto";
+		return "/ponto/registro-ponto";
 	}
 
 	@GetMapping("access-denied")

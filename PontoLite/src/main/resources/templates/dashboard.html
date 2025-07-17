@@ -1,20 +1,5 @@
-<html>
-<div th:replace="~{base :: head}"></div>
-
-<body>
-	<div id="div-container" class="container-fluid">
-		<row>
-			<strong th:replace="~{base :: menu-principal}"></strong>
-		</row>
-		<row>
-			<div id="div-conteudo" align="center" class="col" style="margin-top:60px; margin-bottom: auto">
-		</row>
-	</div>
-	<row>
-		<div th:replace="~{base :: barra-inferior}"></div>
-	</row>
-	</div>
-	<div th:insert="~{base :: script}"></div>
-</body>
-
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+	<main>
+		<h4>Dashboard!!!!</h4>
+	</main> 
 </html>

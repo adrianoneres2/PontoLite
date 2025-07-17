@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div id="div-container" class="container-fluid">
+		<div id="div-conteudo" align="center" class="col" style="margin-top: 70px;">
+			<form>
+				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="validationDefault01">Nome do Cliente</label>
+						<input type="text" class="form-control" id="validationDefault01" placeholder="Nome" value="Mark"
+							required>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="validationDefault02">CNPJ</label>
+						<input type="text" class="form-control" id="validationDefault02" placeholder="Sobrenome"
+							value="Otto" required>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="validationDefault02">E-Mail</label>
+						<input type="text" class="form-control" id="validationDefault02" placeholder="Sobrenome"
+							value="Otto" required>
+					</div>
+				</div>
+				<button class="btn btn-primary" type="submit">Enviar</button>
+			</form>
+		</div>
+</main>
+
+</html>
