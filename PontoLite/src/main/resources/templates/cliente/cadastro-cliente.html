@@ -2,29 +2,54 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<div id="div-container" class="container-fluid">
-		<div id="div-conteudo" align="center" class="col" style="margin-top: 70px;">
-			<form>
+	<h1>Cadastro de Clientes</h1>
+			<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post">
 				<div class="form-row">
 					<div class="col-md-4 mb-3">
-						<label for="validationDefault01">Nome do Cliente</label>
-						<input type="text" class="form-control" id="validationDefault01" placeholder="Nome" value="Mark"
-							required>
+						<label for="input-razao-social">Razão Social</label>
+						<input type="text" class="form-control" id="input-razao-social" placeholder="Razão Social" 
+						required th:field="*{razaoSocial}"
+						maxlength="60">
+						<p th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}" class="error"></p>
 					</div>
 					<div class="col-md-4 mb-3">
-						<label for="validationDefault02">CNPJ</label>
-						<input type="text" class="form-control" id="validationDefault02" placeholder="Sobrenome"
-							value="Otto" required>
+						<label for="input-nome-fantasia">Nome Fantasia</label>
+						<input type="text" class="form-control" id="input-nome-fantasia" placeholder="Nome Fantasia" 
+						value="" required th:field="*{nomeCliente}"
+						maxlength="60">
+						<p th:if="${#fields.hasErrors('nomeCliente')}" th:errors="*{nomeCliente}" class="error"></p>
 					</div>
 					<div class="col-md-4 mb-3">
-						<label for="validationDefault02">E-Mail</label>
-						<input type="text" class="form-control" id="validationDefault02" placeholder="Sobrenome"
-							value="Otto" required>
+						<label for="cnpj">CNPJ</label>
+						<input type="text" class="form-control" id="input-cnpj" placeholder="CNPJ"
+						  value="" required th:field="*{numeroCnpj}"
+						  maxlength="18" 
+						  onkeypress="mascara_cnpj(this)" 
+						  onkeyup="validar_cnpj(this.value)">
+							
+							<p th:if="${#fields.hasErrors('numeroCnpj')}" th:errors="*{numeroCnpj}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-telefone">Telefone</label>
+						<input type="text" class="form-control" id="input-telefone" placeholder="Telefone" 
+						value="" required th:field = "*{numeroTelefone}"
+						maxlength="20">
+						<p th:if="${#fields.hasErrors('numeroTelefone')}" th:errors="*{numeroTelefone}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-email">E-mail</label>
+						<input type="text" class="form-control" id="input-email" placeholder="E-mail" 
+						required th:field = "*{nomeEmail}" 
+						maxlength="80">
+						<p th:if="${#fields.hasErrors('nomeEmail')}" th:errors="*{nomeEmail}" class="error"></p>
 					</div>
 				</div>
-				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="submit" id="bt-enviar">Enviar</button>
+				<button class="btn btn-primary" type="submit" id="bt-voltar">Voltar</button>
 			</form>
-		</div>
+				<div th:if="${msg} != NULL" class="alert alert-success" role="alert" style="margin-top: 20px;">
+					<div th:text="${msg}"></div>
+				</div>
 </main>
 
 </html>

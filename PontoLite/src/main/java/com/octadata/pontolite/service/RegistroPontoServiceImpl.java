@@ -52,9 +52,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 				registroPontoRepository.save(registroPonto);
 				return registroPonto;
 			}
-			
 			return new RegistroPonto();
-			
 		} catch (Exception e) {
 			return new RegistroPonto();
 		}
