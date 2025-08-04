@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.octadata.pontolite.base.Message;
 import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.service.ClienteService;
 
@@ -33,7 +34,10 @@ public class ClienteController {
         	model.addAttribute("org.springframework.validation.BindingResult.cliente", bindingResult);
             return "/cliente/cadastro-cliente"; // Return to the form with errors
         }
-    	model.addAttribute("msg", clienteService.salvar(cliente));
+        Message message = new Message();
+        message =  clienteService.salvar(cliente);
+    	model.addAttribute("codeMessage", message.getCode());
+    	model.addAttribute("msg", message.getMessage());
         return "/cliente/cadastro-cliente";
     }
 	

@@ -23,29 +23,23 @@
 	</div>
 </div>
 
-<div th:fragment="barra-superior" id=DivIdBarraTopo align="center" class="fixed-bottom  text-white">
-	<div style="height: 50px;">
-		<strong style="font-family: Fnt_Oswald-VariableFont_wght; font-size: 15px;">Todos os direitos reservados</strong>
-	</div>
+<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom  text-white">
 </div>
 
-<div th:fragment="menssagem-sucesso(msg)" id=DivIdMensagemSucesso>
-	<div class="alert alert-success" role="alert">
+<div th:fragment="menssagem-sucesso" id="div-menssagem-sucesso">
+	<div th:if="${codeMessage} == 'SUCCESS'" class="alert alert-success" role="alert" style="margin-top: 20px;">
 		<div th:text="${msg}"></div>
 	</div>
 </div>
 
-<div th:fragment="menssagem-erro(msg)" id="div-menssagem-erro">
-	<div class="alert alert-warning" 
-	    role="alert" 
-		th:if="${msg} != NULL" 
-		th:text="${msg}" 
-		style="margin-top:10px; width: 300px">
+<div th:fragment="menssagem-erro" id="div-menssagem-erro">
+	<div th:if="${codeMessage} == 'ERROR'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
+		<div th:text="${msg}"></div>
 	</div>
 </div>
 
 <nav th:fragment="menu-principal" class="navbar navbar-expand navbar-light d-flex justify-content-between mb-3 fixed-top bg-danger text-white">
-    <div></div>
+    <div>sddf</div>
 	<div class="navbar-nav">
 		<a class="nav-item nav-link active" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite}">Home</a>
 		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a>

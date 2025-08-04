@@ -24,6 +24,7 @@ public class WebSecurityConfig{
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/pontolite/ponto/registrarPonto").hasAnyRole("REGISTRAR_PONTO")
                         .requestMatchers("/pontolite/acessarRegistroPonto").hasRole("ACESSAR_REGISTRO_PONTO")
+                        .requestMatchers("/pontolite/cliente/formulario").hasRole("CADASTRAR_CLIENTE")
                         .anyRequest()
                         .authenticated()
                         )
