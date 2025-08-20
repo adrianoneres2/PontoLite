@@ -26,8 +26,7 @@
 						  maxlength="18" 
 						  onkeypress="mascara_cnpj(this)" 
 						  onkeyup="validar_cnpj(this.value)">
-							
-							<p th:if="${#fields.hasErrors('numeroCnpj')}" th:errors="*{numeroCnpj}" class="error"></p>
+						  <p th:if="${#fields.hasErrors('numeroCnpj')}" th:errors="*{numeroCnpj}" class="error"></p>
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="input-telefone">Telefone</label>
@@ -38,14 +37,13 @@
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="input-email">E-mail</label>
-						<input type="text" class="form-control" id="input-email" placeholder="E-mail" 
+						<input type="email" class="form-control" id="input-email" placeholder="E-mail" 
 						required th:field = "*{nomeEmail}" 
 						maxlength="80">
 						<p th:if="${#fields.hasErrors('nomeEmail')}" th:errors="*{nomeEmail}" class="error"></p>
 					</div>
 				</div>
-				<button class="btn btn-primary" type="submit" id="bt-enviar">Enviar</button>
-				<button class="btn btn-primary" type="submit" id="bt-voltar">Voltar</button>
+				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
 			</form>
 </main>
 

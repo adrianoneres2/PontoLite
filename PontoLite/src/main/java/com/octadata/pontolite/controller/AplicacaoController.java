@@ -25,12 +25,6 @@ public class AplicacaoController {
 	public String acessarRegistroPonto() {
 		return "/ponto/registro-ponto";
 	}
-
-	@GetMapping("access-denied")
-	public String acessoImpedido() {
-		System.out.println("Sem acesso!!!");
-		return "access-denied";
-	}
 	
 	@GetMapping("error")
 	public String error() {

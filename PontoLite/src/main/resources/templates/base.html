@@ -1,6 +1,4 @@
 <head th:fragment="head">
-	<!DOCTYPE html>
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width" />
 	<title>Autenticação</title>
@@ -8,47 +6,51 @@
 	<link th:rel="stylesheet" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}" />
 	<link th:rel="stylesheet" th:href="@{/css/estilo.css}" />
 	<link th:rel="stylesheet" th:href="@{/js/formatacao.js}" />
-	<script th:src="@{/js/formatacao.js}"></script>
-	<script th:src="@{/js/validacao.js}"></script>
+	<link th:rel="stylesheet" th:href="@{/js/validacao.js}" />
 </head>
 
 <div th:fragment="script">
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/formatacao.js}"></script>
+	<script th:src="@{/js/validacao.js}"></script>
 </div>
 
-<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-danger text-white">
+<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-secondary text-white">
 	<div style="height: 50px;">
-		<strong style="font-family: Fnt_Oswald-VariableFont_wght; font-size: 15px;">Todos os direitos reservados</strong>
+		<strong style="font-size: 15px;">Todos os direitos reservados</strong>
 	</div>
 </div>
 
-<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom  text-white">
+<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom bg-secondary text-white">
 </div>
 
-<div th:fragment="menssagem-sucesso" id="div-menssagem-sucesso">
+<div th:fragment="menssagem-aplicacao" id="div-menssagem-sucesso">
 	<div th:if="${codeMessage} == 'SUCCESS'" class="alert alert-success" role="alert" style="margin-top: 20px;">
-		<div th:text="${msg}"></div>
+		<div th:text="${msgDescription}" align="center"></div>
+	</div>
+	<div th:if="${codeMessage} == 'ERROR'" class="alert alert-danger" role="alert" style="margin-top: 20px;">
+		<div th:text="${msgDescription}" align="center"></div>
+	</div>
+	<div th:if="${codeMessage} == 'WARNING'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
+		<div th:text="${msgDescription}" align="center"></div>
+	</div>
+	<div th:if="${codeMessage} == 'INFO'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
+		<div th:text="${msgDescription}" align="center"></div>
 	</div>
 </div>
 
-<div th:fragment="menssagem-erro" id="div-menssagem-erro">
-	<div th:if="${codeMessage} == 'ERROR'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
-		<div th:text="${msg}"></div>
-	</div>
-</div>
-
-<nav th:fragment="menu-principal" class="navbar navbar-expand navbar-light d-flex justify-content-between mb-3 fixed-top bg-danger text-white">
-    <div>sddf</div>
+<nav th:fragment="menu-principal" class="navbar navbar-expand navbar-light d-flex justify-content-between fixed-top bg-secondary text-black">
+    <div><img src="images/menu/casa.png" class="rounded-circle" alt="..."></div>
 	<div class="navbar-nav">
-		<a class="nav-item nav-link active" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite}">Home</a>
-		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a>
-		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/ponto/listar}">Meus Pontos</a>
-		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/cliente/formulario}">Clientes</a>
-		<a class="nav-item nav-link" style="color:white; font-size: 20px; font-family: Fnt_Oswald-VariableFont_wght" th:href="@{/pontolite/ponto/listar}">Usuários</a>
+		<a class="nav-item nav-link active" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite}">Home</a>
+		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a>
+		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/ponto/listar}">Meus Pontos</a>
+		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/cliente/formulario}">Clientes</a>
+		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/ponto/listar}">Usuários</a>
 	</div>
-	<div>
-		<strong th:text="${session.usuarioLogado.username}" style="margin-right: 10px"></strong>
-		<a th:href="@{/login/logof}"><button class="btn btn-outline-warning my-2 my-sm-0">Sair</button></a>
+	<div th:if="${session.usuarioLogado} != NULL" >
+		<strong th:text="${session.usuarioLogado.username}" style="margin-right: 10px; font-size: 20px; ; color: white"></strong>
+		<a th:href="@{/login/logof}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0">Sair</button></a>
 	</div>
 </nav>

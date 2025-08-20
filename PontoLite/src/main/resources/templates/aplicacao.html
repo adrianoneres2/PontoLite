@@ -7,13 +7,12 @@
 	<div id="id-container" class="container-fluid">
 		<div th:replace="~{base :: menu-principal}"></div>
 		<div id="id-conteudo" align="center" class="col" style="margin-top: 100px; margin-bottom: auto">
-			<main th:include="${conteudo}"></main>
+			<main th:replace="${conteudo}"></main>
 		</div>
 		<div th:replace="~{base :: barra-inferior}"></div>
 	</div>
-	<div th:replace="~{base :: menssagem-sucesso}"></div>
-	<div th:replace="~{base :: menssagem-erro}"></div>
-	<div th:insert="~{base :: script}"></div>
+	<div th:replace="~{base :: menssagem-aplicacao}"></div>
+	<div th:replace="~{base :: script}"></div>
 </body>
 
 </html>

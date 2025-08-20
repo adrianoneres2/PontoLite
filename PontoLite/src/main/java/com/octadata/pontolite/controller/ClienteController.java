@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.octadata.pontolite.base.Message;
+import com.octadata.pontolite.base.EnumMessage;
 import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.service.ClienteService;
 
@@ -34,11 +34,14 @@ public class ClienteController {
         	model.addAttribute("org.springframework.validation.BindingResult.cliente", bindingResult);
             return "/cliente/cadastro-cliente"; // Return to the form with errors
         }
-        Message message = new Message();
-        message =  clienteService.salvar(cliente);
-    	model.addAttribute("codeMessage", message.getCode());
-    	model.addAttribute("msg", message.getMessage());
+        try{
+        	clienteService.salvar(cliente);
+        	model.addAttribute("codeMessage", EnumMessage.SUCCESS.toString());
+        	model.addAttribute("msgDescription", "Cadastrado com sucesso!!");
+        }catch (Exception e) {
+        	model.addAttribute("codeMessage", EnumMessage.ERROR.toString());
+        	model.addAttribute("msgDescription", e.getMessage());
+		}
         return "/cliente/cadastro-cliente";
     }
-	
 }

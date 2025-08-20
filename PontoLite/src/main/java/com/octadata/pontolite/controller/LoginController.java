@@ -29,4 +29,13 @@ public class LoginController {
 		autenticacaoService.encerrarSessao();
 		return "redirect:/login";
 	}
+	
+	@GetMapping("accessDenied")
+	public String accessDenied() {	
+		if(autenticacaoService.autenticado()) {
+			return "access-denied";
+		}
+		return "redirect:/login";
+	}
+	
 }

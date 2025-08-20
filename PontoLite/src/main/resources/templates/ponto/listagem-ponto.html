@@ -4,21 +4,18 @@
 <main>
 	<div id="div-container" class="container-fluid">
 		<div id="div-conteudo" align="center" class="col" style="margin-top: 70px;">
-			<div class="card mb-1" th:each="registro : ${registros}">
+			<div class="card text-bg-success mb-3" style="max-width: 18rem;" th:each="registro : ${registros}">
+				<div class="card-header">
+					<span style="font-size: 25px;"
+						th:text="${registro.tipoRegistro.nomeTipoRegistro}"></span>
+				</div>
 				<div class="card-body">
-					<div class="row">
-						<div class="col-sm">
-							<span style="font-family: Fnt_Oswald-VariableFont_wght;"
-								th:text="${registro.tipoRegistro.nomeTipoRegistro}"></span>
-						</div>
-						<div class="col-sm">
-							<span style="font-family: Fnt_Oswald-VariableFont_wght;"
-								th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}"></span>
-						</div>
-					</div>
+					<p class="card-text"><span style="font-size: 20px;"
+							th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}"></span</p>
 				</div>
 			</div>
 		</div>
+	</div>
 </main>
 
 </html>

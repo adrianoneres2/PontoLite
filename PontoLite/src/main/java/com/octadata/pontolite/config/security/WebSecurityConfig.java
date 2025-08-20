@@ -10,16 +10,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import com.octadata.pontolite.controller.LoginController;
+
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
 public class WebSecurityConfig{
 
+    private final LoginController loginController;
+
+    WebSecurityConfig(LoginController loginController) {
+        this.loginController = loginController;
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                		.requestMatchers("/webjars/jquery/**", "/webjars/bootstrap/**").permitAll()
+                		.requestMatchers("/webjars/jquery/**", "/webjars/bootstrap/**", "/static/**", "/js/**", "/css/**", "/fontes/**", "/images/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/pontolite/ponto/registrarPonto").hasAnyRole("REGISTRAR_PONTO")
@@ -34,7 +42,7 @@ public class WebSecurityConfig{
                         .permitAll()
                         )
                 .exceptionHandling(handling -> handling
-                        .accessDeniedHandler(accessDeniedHandler()).accessDeniedPage("/login")
+                        .accessDeniedHandler(accessDeniedHandler()).accessDeniedPage("/login/accessDenied")
                         )
                 .logout(logout -> logout.logoutUrl("/login/logout").permitAll()
                 )
