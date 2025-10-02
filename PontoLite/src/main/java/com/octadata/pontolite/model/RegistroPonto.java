@@ -20,6 +20,8 @@ import jakarta.persistence.Table;
 public class RegistroPonto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public RegistroPonto() {};
 
 	@Id	
 	@GeneratedValue(generator = "sq_registro_ponto", strategy = GenerationType.SEQUENCE)
@@ -51,13 +53,6 @@ public class RegistroPonto implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_registro_ponto_ajustado", insertable = true, updatable = true, nullable = true)
 	private RegistroPonto registroPontoAjustado;
-	
-	/*
-	@Override
-	public Long getId() {
-		return codigoRegistroPonto;
-	}
-	*/
 	
 	public Long getCodigoRegistroPonto() {
 		return codigoRegistroPonto;

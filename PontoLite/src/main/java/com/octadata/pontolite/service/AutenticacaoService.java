@@ -9,5 +9,5 @@ public interface AutenticacaoService {
 	boolean autenticado();
 	void encerrarSessao();
 	Usuario getUsuarioAutenticado();
-	boolean registrarUsuarioSessao();
+	void registrarUsuarioSessao();
 }

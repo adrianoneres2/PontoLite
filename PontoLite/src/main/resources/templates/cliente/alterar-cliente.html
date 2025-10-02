@@ -2,9 +2,18 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<h1>Cadastro de Clientes</h1>
-			<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post">
+	<h1>Alteração de Cliente</h1>
+			<form action="#" th:action="@{/pontolite/cliente/alterar}" th:object="${cliente}" method="post">
 				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="input-identificador-cliente">Identificador</label>
+						<input type="text" class="form-control" id="input-identificador-cliente" placeholder="Identificador" 
+						required th:field="*{codigoCliente}"
+						maxlength="60"
+						disabled>
+						<p th:if="${#fields.hasErrors('codigoCliente')}" th:errors="*{codigoCliente}" class="error"></p>
+					</div>
+					<input type="hidden" th:field="*{codigoCliente}">
 					<div class="col-md-4 mb-3">
 						<label for="input-razao-social">Razão Social</label>
 						<input type="text" class="form-control" id="input-razao-social" placeholder="Razão Social" 

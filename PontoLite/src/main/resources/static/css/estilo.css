@@ -22,3 +22,155 @@
   font-family: 'Fnt_Oswald-VariableFont_wght';
   src: url('/fontes/Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
 }
+
+/*Estilo da aplicação*/
+    body {
+        margin: 0;
+		font-family: Fnt_Oswald-VariableFont_wght, Arial, sans-serif;
+        /*background-color: #e30613;*/ /* Vermelho Americanas */
+    }
+
+    /* Barra lateral fixa */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background-color: #2f2f2f; /* Grafite */
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    /* Foto do usuário */
+    .user-profile {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .user-profile img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        object-fit: cover;
+    }
+
+    /* Menu principal */
+    .menu-item {
+        color: #fff;
+        padding: 14px 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    .menu-item span {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .menu-item:hover {
+        background-color: #444;
+    }
+
+    /* Submenus em estilo accordion */
+    .submenu {
+        display: none;
+        background-color: #3a3a3a;
+    }
+
+    .submenu .menu-item {
+        padding-left: 40px;
+        font-size: 14px;
+    }
+
+    .submenu .submenu .menu-item {
+        padding-left: 60px;
+        font-size: 13px;
+    }
+
+    /* Setas */
+    .arrow {
+        font-size: 14px;
+        transition: transform 0.2s;
+    }
+
+    .open > .menu-item .arrow {
+        transform: rotate(90deg);
+    }
+
+    /* Conteúdo da página */
+    .content {
+        margin-left: 240px;
+        padding: 20px;
+        color: rgb(0, 0, 0);
+    }
+
+    h1 {
+        font-size: 24px;
+        color: rgb(164, 0, 0);
+    }
+	
+/*Balão de mensagem*/
+.balao {
+    display: none; /* Começa oculto */
+    position: fixed; /* Fixa o elemento na janela */
+    top: 5px; /* Distância do topo */
+    right: 20px; /* Distância da direita */
+   /* background-color: #f8d7da;*/ /* Cor de fundo da mensagem */
+    /*color: #721c24;*/ /* Cor do texto */
+    padding: 15px;
+    /*border: 0px solid #f5c6cb;*/
+    /*border-radius: 0px;*/
+	font-size: 18px;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    z-index: 1000; /* Garante que esteja acima de outros elementos */
+}
+
+
+/*###### Backgroup da tela de login ##########################################################################*/
+/* 1. Reset Básico para Fullscreen: Remove margens e preenchimentos padrão */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Evita barras de rolagem desnecessárias */
+}
+
+.curva-diagonal-fullscreen {
+    /* 2. Definindo o Container para 100% da tela */
+    width: 100vw; /* 100% da largura do viewport */
+    height: 100vh; /* 100% da altura do viewport */
+    
+    /* 3. Estilos do Conteúdo (Opcional) */
+    color: white; 
+    padding: 50px;
+    font-family: sans-serif;
+    box-sizing: border-box; /* Garante que o padding não adicione tamanho extra */
+    
+    /*
+    * 4. O Gradiente Curvo Diagonal
+    * (Do canto inferior esquerdo para o superior direito)
+    * Usamos porcentagens maiores para garantir que a curva se espalhe bem na tela grande.
+    */
+    background: radial-gradient(
+        ellipse 200% 200% /* Aumentado para 200% para uma curva mais suave em fullscreen */
+        at 0% 100%, /* Posição: canto inferior esquerdo */
+        rgb(243, 243, 243) 50%, /* Cor 1 (ex: Azul escuro) */
+        rgb(164, 0, 0) 50.1% /* Cor 2 (ex: Verde/Lima) */
+    );
+}
+
+.curva-diagonal-fullscreen h1 {
+    margin-top: 0;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+/*###### Backgroup da tela de login ##########################################################################*/

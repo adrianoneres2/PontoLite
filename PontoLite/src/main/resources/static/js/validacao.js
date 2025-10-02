@@ -41,16 +41,34 @@ function validar_cnpj(cnpj) {
 
   marcar_valido();
   return true;
-}
+};
 
 function marcar_valido() {
   const input = document.getElementById("input-cnpj");
   input.classList.remove("background-color: red");
   input.classList.add("background-color: blue");
-}
+};
 
 function marcar_invalido() {
   const input = document.getElementById("input-cnpj");
   input.classList.remove("background-color: blue");
   input.classList.add("background-color: red");
-}
+};
+
+
+/* jQuery para animação dos submenus */
+    $(document).ready(function(){
+        // Altera o evento de hover para click no item de menu
+        $(".has-submenu > .menu-item").on("click", function(event){
+            // Evita que o link direcione para outra página
+            event.preventDefault(); 
+            
+            let parent = $(this).parent();
+
+            // Adiciona/remove a classe "open" para controlar o estado do menu
+            parent.toggleClass("open");
+            
+            // Alterna a exibição do submenu com um efeito de deslize
+            parent.children(".submenu").stop(true, true).slideToggle(200);
+        });
+    });

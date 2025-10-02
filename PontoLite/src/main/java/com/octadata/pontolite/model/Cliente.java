@@ -64,7 +64,11 @@ public class Cliente implements Serializable{
 	private Long situacaoCliente = 1L;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_usuario_cadastro", insertable = true, updatable = true)
+	@JoinColumn(name="id_usuario_cadastro", 
+	            insertable = true, 
+	            updatable = false,
+	            nullable = true,
+	            referencedColumnName = "id_usuario")
 	private Usuario usuarioCadastro;
 	
 	public long getCodigoCliente() {
@@ -139,4 +143,7 @@ public class Cliente implements Serializable{
 		this.nomeEmail = nomeEmail;
 	}
 	
+	public String getDescricaoSituacaoCliente() {
+		return this.getSituacaoCliente().equals(1L) ? "Ativo" : "Inativo"; 
+	}
 }

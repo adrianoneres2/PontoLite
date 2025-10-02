@@ -7,6 +7,7 @@
 	<link th:rel="stylesheet" th:href="@{/css/estilo.css}" />
 	<link th:rel="stylesheet" th:href="@{/js/formatacao.js}" />
 	<link th:rel="stylesheet" th:href="@{/js/validacao.js}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <div th:fragment="script">
@@ -16,41 +17,65 @@
 	<script th:src="@{/js/validacao.js}"></script>
 </div>
 
-<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-secondary text-white">
+<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-danger text-white">
 	<div style="height: 50px;">
 		<strong style="font-size: 15px;">Todos os direitos reservados</strong>
 	</div>
 </div>
 
-<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom bg-secondary text-white">
+<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom bg-danger text-white">
 </div>
 
-<div th:fragment="menssagem-aplicacao" id="div-menssagem-sucesso">
-	<div th:if="${codeMessage} == 'SUCCESS'" class="alert alert-success" role="alert" style="margin-top: 20px;">
+<div th:fragment="mensagem-aplicacao" id="id-mensagem-aplicacao" class="balao">
+	<div th:if="${codeMessage} == 'SUCCESS'" class="alert alert-success" role="alert" style="margin-top: 20px; width: 200px;">
 		<div th:text="${msgDescription}" align="center"></div>
 	</div>
-	<div th:if="${codeMessage} == 'ERROR'" class="alert alert-danger" role="alert" style="margin-top: 20px;">
+	<div th:if="${codeMessage} == 'ERROR'" class="alert alert-danger" role="alert" style="margin-top: 20px; width: 200px;">
 		<div th:text="${msgDescription}" align="center"></div>
 	</div>
-	<div th:if="${codeMessage} == 'WARNING'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
+	<div th:if="${codeMessage} == 'WARNING'" class="alert alert-warning" role="alert" style="margin-top: 20px; width: 200px;">
 		<div th:text="${msgDescription}" align="center"></div>
 	</div>
-	<div th:if="${codeMessage} == 'INFO'" class="alert alert-warning" role="alert" style="margin-top: 20px;">
+	<div th:if="${codeMessage} == 'INFO'" class="alert alert-warning" role="alert" style="margin-top: 20px; width: 200px;">
 		<div th:text="${msgDescription}" align="center"></div>
 	</div>
 </div>
 
-<nav th:fragment="menu-principal" class="navbar navbar-expand navbar-light d-flex justify-content-between fixed-top bg-secondary text-black">
-    <div><img src="images/menu/casa.png" class="rounded-circle" alt="..."></div>
-	<div class="navbar-nav">
-		<a class="nav-item nav-link active" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite}">Home</a>
-		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a>
-		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/ponto/listar}">Meus Pontos</a>
-		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/cliente/formulario}">Clientes</a>
-		<a class="nav-item nav-link" style="color:rgb(255, 255, 255); font-size: 20px; " th:href="@{/pontolite/ponto/listar}">Usuários</a>
+
+<!-- Barra lateral -->
+<div class="sidebar" th:fragment="menu-principal">
+    <!-- Foto do usuário -->
+    <div class="user-profile">
+        <img th:src="@{/images/user.jpg}">
+    </div>
+
+    <!-- Menu -->
+	<div class="menu-item"><span><i class="fa fa-cog"></i> <a th:href="@{/login/logof}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px;">Sair</button></a></span></div>
+    <div class="menu-item"><span><i class="fa fa-home"></i> 
+		<a th:href="@{/pontolite}">Home</a></span>
 	</div>
-	<div th:if="${session.usuarioLogado} != NULL" >
-		<strong th:text="${session.usuarioLogado.username}" style="margin-right: 10px; font-size: 20px; ; color: white"></strong>
-		<a th:href="@{/login/logof}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0">Sair</button></a>
+
+    <div class="has-submenu">
+        <div class="menu-item">
+            <span><i class="fa fa-box"></i> Registro de ponto</span>
+            <i class="fa fa-angle-right arrow"></i>
+        </div>
+        <div class="submenu">
+            <div class="menu-item"><span><i class="fa fa-tv"></i> <a th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a></span></div>
+            <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/ponto/listar}">Meus Pontos</a></span></div>
+       </div>
+    </div>
+
+	<div class="has-submenu">
+	    <div class="menu-item">
+	        <span><i class="fa fa-box"></i> Clientes</span>
+	        <i class="fa fa-angle-right arrow"></i>
+	    </div>
+	    <div class="submenu">
+	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/cliente/formulario}">Cadastrar</a></span></div>
+	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/cliente/listar}">Listagem de Clientes</a></span></div>
+	   </div>
 	</div>
-</nav>
+    <div class="menu-item"><span><i class="fa fa-cog"></i> Usuários</span></div>
+	<div class="menu-item"><span><i class="fa fa-cog"></i> Configurações</span></div>
+</div>

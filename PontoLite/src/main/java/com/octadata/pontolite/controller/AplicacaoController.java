@@ -20,15 +20,8 @@ public class AplicacaoController {
 		return "/dashboard";
 	}
 
-	///@PreAuthorize("hasRole('ROLE_ACESSAR_REGISTRO_PONTO')")
 	@GetMapping("acessarRegistroPonto")
 	public String acessarRegistroPonto() {
 		return "/ponto/registro-ponto";
-	}
-	
-	@GetMapping("error")
-	public String error() {
-		System.out.println("Sem acesso!!!");
-		return "access-denied";
 	}
 }

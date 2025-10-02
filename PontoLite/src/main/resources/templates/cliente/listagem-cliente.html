@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<h1>Listagem de Clientes</h1>
+			
+
+				    <div class="mb-3">
+				        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome, e-mail ou telefone...">
+				    </div>
+
+				    <div class="table-responsive" style="height: 550px; overflow-y: auto;">
+						
+				        <table class="table table-striped table-hover" id="clientTable">
+				            <thead class="table-active">
+				                <tr>
+				                    <th scope="col">#</th>
+				                    <th scope="col">Razão Social</th>
+									<th scope="col">Nome Fantasia</th>
+									<th scope="col">Data de Cadastro</th>
+									<th scope="col">CNPJ</th>
+				                    <th scope="col">E-mail</th>
+				                    <th scope="col">Telefone</th>
+									<th scope="col">Status</th>
+									<th scope="col">Editar</th>
+									<th scope="col">Equipe</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                 <tr th:each="cliente : ${clientes}">
+				                    <th th:text="${cliente.codigoCliente}" scope="row"></th>
+				                    <td th:text="${cliente.razaoSocial}"></td>
+				                    <td th:text="${cliente.nomeCliente}"></td>
+									<td th:text="${cliente.dataCadastro}"></td>
+				                    <td th:text="${cliente.numeroCnpj}"></td>
+									<td th:text="${cliente.nomeEmail}"></td>
+									<td th:text="${cliente.numeroTelefone}"></td>
+									<td><form action="#" th:action="@{/pontolite/cliente/alterar-status/{codCliente}(codCliente = ${cliente.codigoCliente})}"  method="post">
+										<button id="bt-status" th:text="${cliente.getDescricaoSituacaoCliente}" type="submit" style="width: 65px;" 
+										 class="btn btn-success"
+										 th:classappend="${cliente.situacaoCliente==1} ? 'btn btn-success' : 'btn btn-danger'">
+									    </button>
+									   </form>
+								   </td>
+									<td><a th:href="@{/pontolite/cliente/alterar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
+								   		 type="submit" style="width: 65px;" 
+								   		 class="btn btn-success">
+										 Editar
+								   	    </a>
+									</td>
+									<td><button type="button" class="btn btn-primary">Usuários</button></td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>
+
+				    <div class="alert alert-warning mt-3" role="alert" id="noResults" style="display: none;">
+				        Nenhum cliente encontrado.
+				    </div>
+				
+</main>
+
+</html>

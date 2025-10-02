@@ -1,28 +1,30 @@
 package com.octadata.pontolite.exception;
 
-public class NegocioException extends RuntimeException{
+import org.springframework.ui.Model;
+
+public class ViewException extends RuntimeException{
 	
 	private static final long serialVersionUID = 1L;
 	private final String code;
-	private final String detail;
 	private final String message;
+	private Model model;
 	
-	public NegocioException(String code,String message, String detail) {
+	public ViewException(String code,String message, Model model) {
 		super(message);
 		this.code = code;
-		this.detail = detail;
 		this.message = message;
+		this.model = model;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public String getDetail() {
-		return detail;
-	}
-
 	public String getMessage() {
 		return message;
+	}
+
+	public Model getModel() {
+		return model;
 	}
 }

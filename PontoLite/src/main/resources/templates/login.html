@@ -4,44 +4,48 @@
 <div th:replace="~{base :: head}"></div>
 
 <body>
-	<div id="div-container" class="container-fluid">
-		<div id="div-conteudo" align="center" class="col"
-			style="margin-top: 100px; margin-left:auto; margin-right: auto;">
+	<div class="curva-diagonal-fullscreen">
+		<div id="div-container" class="container-fluid">
+			<div id="div-conteudo" align="center" class="col"
+				style="margin-top: 200px; margin-left:auto; margin-right: auto;">
 
-			<div id="divLoginRowInformacao" class="row justify-content-md-center">
-				<span>
-					<h1>ACESSO..</h1>
-				</span>
+				<div id="div-login-informacao" class="row justify-content-md-center">
+					<span>
+						<h1>Faça seu acesso!</h1>
+					</span>
+				</div>
+				<div style="margin: 30px;"></div>
+				<form method="post" th:action="@{/login}" th:object="${loginDto}">
+					<div id="div-login-nome" class="row justify-content-md-center form-group">
+
+						<input th:field="*{username}" th:value="${username}" type="text"
+							style="width: 400px; height: 40px" placeholder="Nome do usuário" class="form-control"
+							required>
+					</div>
+
+					<div id="div-login-senha" class="row justify-content-md-center mt-2 form-group">
+						<input th:field="*{password}" th:value="${password}" type="password"
+							style="width: 400px; height: 40px" placeholder="Senha" class="form-control" required>
+					</div>
+					<div id="div-login-botao-submit" class="row justify-content-md-center mt-2 form-group">
+						<input type="submit" name="btLoginEnviar" value="Acessar" class="btn btn-danger btn-lg"
+							style="width: 400px">
+					</div>
+					<div><strong><a href="#">Clique aqui para recuperar a senha!</a></strong></div>
+					<hr style="width: 400px">
+
+					<div class="alert alert-warning" role="alert" th:if="${param.error}"
+						style="margin-top:10px; width: 400px">
+						<div th:text="${param.error}"></div>
+						<strong>Usuário ou senha inválidos.</strong>
+					</div>
+				</form>
 			</div>
-			<form method="post" th:action="@{/login}" th:object="${loginDto}">
-				<div id="div-login-nome" class="row justify-content-md-center form-group">
-
-					<input th:field="*{username}" th:value="${username}" type="text" style="width: 400px; height: 40px"
-						placeholder="Nome do usuário" class="form-control" required>
-				</div>
-
-				<div id="div-login-senha" class="row justify-content-md-center mt-2 form-group">
-					<input th:field="*{password}" th:value="${password}" type="password"
-						style="width: 400px; height: 40px" placeholder="Senha" class="form-control" required>
-				</div>
-				<div id="div-login-botao-submit" class="row justify-content-md-center mt-2 form-group">
-					<input type="submit" name="btLoginEnviar" value="Acessar" class="btn btn-success btn-lg"
-						style="width: 400px">
-				</div>
-
-				<hr style="width: 400px">
-
-				<div class="alert alert-warning" role="alert" th:if="${param.error}"
-					style="margin-top:10px; width: 400px">
-					<div th:text="${param.error}"></div>
-					<strong>Invalid username or password.</strong>
-				</div>
-			</form>
 		</div>
-	</div>
-	<div>
-		<div th:replace="~{base :: menssagem-aplicacao}"></div>
-		<div th:replace="~{base :: script}"></div>
+		<div>
+			<div th:replace="~{base :: mensagem-aplicacao}"></div>
+			<div th:replace="~{base :: script}"></div>
+		</div>
 	</div>
 </body>
 

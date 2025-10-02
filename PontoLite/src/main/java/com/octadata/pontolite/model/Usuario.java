@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -53,21 +54,32 @@ public class Usuario implements UserDetails, Serializable{
 		private Long   situacaoUsuario;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name = "id_perfil", insertable = false, updatable = false)
+		@JoinColumn(name = "id_perfil", insertable = true, updatable = false)
 		private Perfil perfil;	
 		
-		@Column(name = "id_usuario_cadastro	", nullable = false)
-		private Long  codigoUsuarioCadastro;
+		//@Column(name = "id_usuario_cadastro	", nullable = false)
+		//private Long  codigoUsuarioCadastro;
+
+		@OneToOne(fetch = FetchType.EAGER)
+		@JoinColumn(name="id_usuario_cadastro", insertable = true, updatable = false)
+		private Usuario usuarioCadastro;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name="id_jornada", insertable = false, updatable = false)
+		@JoinColumn(name="id_jornada", insertable = true, updatable = false)
 		private Jornada jornada;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name="id_cliente", insertable = false, updatable = false)
+		@JoinColumn(name="id_cliente", insertable = true, updatable = false)
 		private Cliente cliente;
 		
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuarioCadastro", cascade = CascadeType.REFRESH)
+		/*
+		 * Referência de cadastro com o Cliente
+		 * Usuário que cadastra o cliente na Classe "Cliente"
+		 * Faz o papel de chave primária (id_usuario)
+		 * */
+		@OneToMany(fetch = FetchType.EAGER, 
+				   mappedBy = "usuarioCadastro", 
+				   cascade = CascadeType.ALL)
 		private List<Cliente> clientes;
 		
 		public Long getCodigoUsuario() {
@@ -101,16 +113,23 @@ public class Usuario implements UserDetails, Serializable{
 		public void setSituacaoUsuario(Long situacaoUsuario) {
 			this.situacaoUsuario = situacaoUsuario;
 		}		
-		
+		/*
 		public Long getCodigoUsuarioCadastro() {
 			return codigoUsuarioCadastro;
 		}
 		public void setCodigoUsuarioCadastro(Long codigoUsuarioCadastro) {
 			this.codigoUsuarioCadastro = codigoUsuarioCadastro;
 		}
+		*/
 				
 		public Perfil getPerfil() {
 			return perfil;
+		}
+		public Usuario getUsuarioCadastro() {
+			return usuarioCadastro;
+		}
+		public void setUsuarioCadastro(Usuario usuarioCadastro) {
+			this.usuarioCadastro = usuarioCadastro;
 		}
 		public void setPerfil(Perfil perfil) {
 			this.perfil = perfil;

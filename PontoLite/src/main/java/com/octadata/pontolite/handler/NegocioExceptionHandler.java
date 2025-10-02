@@ -10,8 +10,7 @@ import com.octadata.pontolite.exception.NegocioException;
 public class NegocioExceptionHandler {
 	
 	@ExceptionHandler(NegocioException.class)
-	public MessageHandlerDto handler(NegocioException ex) {
+	public MessageHandlerDto handleNegocioException(NegocioException ex) {
 		return new MessageHandlerDto(ex.getCode(), ex.getMessage(), ex.getDetail());
 	}
-
 }

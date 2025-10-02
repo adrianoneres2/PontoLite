@@ -45,13 +45,12 @@ public class AutenticacaoServiceImpl implements AutenticacaoService {
 	}
 	
 	@Override
-	public boolean registrarUsuarioSessao() {
-		if (autenticado()) {
+	public void registrarUsuarioSessao() {
+		/*Verifica se já houve autenticação via spring, caso sim, ele registra o usuário na sessão. */
+		if (getUsuarioAutenticado() == null) {
 			Optional<Usuario> user = usuarioRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 			session.setAttribute("usuarioLogado", user.get());
-			return true;
-		}
-		return false;
+		};
 	}
 	
 	@Override
