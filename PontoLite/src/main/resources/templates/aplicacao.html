@@ -11,7 +11,9 @@
 		<div class="content">
 		    <h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}">Bem-vindo, Usuário</h1>
 		    <p>Este é um exemplo de página com layout inspirado nas Lojas Americanas.</p>
-			<hr style="margin-top: 50px;">
+			<a th:href="@{/pontolite}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px;">Home</button></a>
+			<a th:href="@{/login/logof}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px;">Sair</button></a>
+			<hr style="margin-top: 20px;">
 			<main th:replace="${conteudo}"></main>
 			
 			<div th:replace="~{base :: mensagem-aplicacao}"></div>

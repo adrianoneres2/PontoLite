@@ -1,12 +1,19 @@
 package com.octadata.pontolite.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.model.Usuario;
 
 @Service
 public interface UsuarioService {
-
+	
+	Usuario getById(Long codigoUsuario);
 	Usuario salvar(Usuario usuario);
+	Usuario criarUsuarioPadrao(Cliente cliente);
+	List<Usuario> findAllByCliente(Cliente cliente);
+	Usuario updateStatus(Usuario usuario);
 
 }

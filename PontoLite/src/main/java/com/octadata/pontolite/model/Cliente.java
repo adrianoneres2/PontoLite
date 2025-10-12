@@ -2,7 +2,12 @@ package com.octadata.pontolite.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.octadata.pontolite.base.DefaultConstant;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -63,6 +69,10 @@ public class Cliente implements Serializable{
 	@Column(name="st_cliente", nullable=false)
 	private Long situacaoCliente = 1L;
 	
+	/*
+	 * Referencia do usuário que cadastrou o cliente.
+	 * Foreing key id_usuario_cadastro vinda da entidade cliente a partir da entidade de usuário.
+	 * */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_usuario_cadastro", 
 	            insertable = true, 
@@ -70,6 +80,14 @@ public class Cliente implements Serializable{
 	            nullable = true,
 	            referencedColumnName = "id_usuario")
 	private Usuario usuarioCadastro;
+	
+	/*
+	 * Lista de usuários pertencentes a um cliente.
+	 * */
+	@OneToMany(fetch = FetchType.LAZY,
+			   mappedBy = "cliente",
+			   cascade = CascadeType.PERSIST)
+	private Set<Usuario> usuarios = new HashSet<>();
 	
 	public long getCodigoCliente() {
 		return codigoCliente;
@@ -144,6 +162,6 @@ public class Cliente implements Serializable{
 	}
 	
 	public String getDescricaoSituacaoCliente() {
-		return this.getSituacaoCliente().equals(1L) ? "Ativo" : "Inativo"; 
+		return this.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? "Ativo" : "Inativo"; 
 	}
 }

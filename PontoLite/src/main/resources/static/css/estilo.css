@@ -28,6 +28,7 @@
         margin: 0;
 		font-family: Fnt_Oswald-VariableFont_wght, Arial, sans-serif;
         /*background-color: #e30613;*/ /* Vermelho Americanas */
+		font-size: 15px;
     }
 
     /* Barra lateral fixa */

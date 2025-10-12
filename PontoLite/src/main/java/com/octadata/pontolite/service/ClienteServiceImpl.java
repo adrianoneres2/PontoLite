@@ -1,17 +1,15 @@
 package com.octadata.pontolite.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.octadata.pontolite.base.DefaultConstant;
 import com.octadata.pontolite.base.EnumMessage;
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.Cliente;
-import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.repository.ClienteRepository;
 
 import jakarta.transaction.Transactional;
@@ -20,28 +18,21 @@ import jakarta.transaction.Transactional;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-   // private final UsuarioRepository usuarioRepository;
-
-    private final PerfilServiceImpl perfilServiceImpl;
-
     private final UsuarioService usuarioService;
 
 	@Autowired
 	private ClienteRepository clienteRepository;
 
-    ClienteServiceImpl(UsuarioService usuarioService, PerfilServiceImpl perfilServiceImpl /*, UsuarioRepository usuarioRepository*/) {
+    ClienteServiceImpl(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
-        this.perfilServiceImpl = perfilServiceImpl;
-        ///this.usuarioRepository = usuarioRepository;
     }
     
 	@Override
 	@Transactional
 	public Cliente salvar(Cliente cliente) throws NegocioException{
 		validar(cliente);
-		cliente.setUsuarioCadastro(usuarioPadrao(cliente));
 		cliente = clienteRepository.save(cliente);
-		///usuarioService.salvar(usuarioPadrao(cliente));
+		usuarioService.salvar(usuarioService.criarUsuarioPadrao(cliente));
 		return cliente;
 	}
 	
@@ -83,7 +74,7 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	@Override
 	public Cliente alterarStatus(Cliente cliente) {
-		cliente.setSituacaoCliente(cliente.getSituacaoCliente().equals(1L) ? 2L : 1L);
+		cliente.setSituacaoCliente(cliente.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? DefaultConstant.INATIVO : DefaultConstant.ATIVO);
 		clienteRepository.save(cliente);
 		return cliente;
 	}
@@ -91,24 +82,6 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public Cliente porId(Long codigoCliente) {
 		return clienteRepository.getReferenceById(codigoCliente);
-	}
-	
-	/*
-	 * Método para criar automaticamente o usuário administrador default do cliente.
-	 * @param: cliente. Objeto do cliente associado ao novo usuário.
-	 * @return: usuarioPadrao. Objeto de usuário.
-	 * */
-	protected Usuario usuarioPadrao(Cliente cliente) {
-		Usuario usuarioPadrao = new Usuario();
-		usuarioPadrao.setUsername(cliente.getNomeEmail());
-		usuarioPadrao.setEmail(cliente.getNomeEmail());
-		usuarioPadrao.setPassword(new BCryptPasswordEncoder().encode("12345"));
-		usuarioPadrao.setSituacaoUsuario(1L);
-		usuarioPadrao.setDataCadastro(new Date());
-		usuarioPadrao.setUsuarioCadastro(cliente.getUsuarioCadastro());
-		usuarioPadrao.setPerfil(perfilServiceImpl.porNome("Administrador"));
-		usuarioPadrao.setCliente(cliente);
-		return usuarioPadrao;
 	}
 	
 }

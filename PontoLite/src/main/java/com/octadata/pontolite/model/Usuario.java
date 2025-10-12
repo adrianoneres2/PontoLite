@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.octadata.pontolite.base.DefaultConstant;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,7 +53,7 @@ public class Usuario implements UserDetails, Serializable{
 		private String   email;
 		
 		@Column(name = "st_usuario", nullable = true)
-		private Long   situacaoUsuario;
+		private Long   status;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
 		@JoinColumn(name = "id_perfil", insertable = true, updatable = false)
@@ -68,6 +70,10 @@ public class Usuario implements UserDetails, Serializable{
 		@JoinColumn(name="id_jornada", insertable = true, updatable = false)
 		private Jornada jornada;
 		
+		/*
+		 * Foreing key de cliente na entidade de usuário.
+		 * Referencia de qual cliente esse usuário pertence.
+		 * */
 		@ManyToOne(fetch = FetchType.EAGER)
 		@JoinColumn(name="id_cliente", insertable = true, updatable = false)
 		private Cliente cliente;
@@ -107,11 +113,11 @@ public class Usuario implements UserDetails, Serializable{
 			this.email = email;
 		}
 		
-		public Long getSituacaoUsuario() {
-			return situacaoUsuario;
+		public Long getStatus() {
+			return status;
 		}
-		public void setSituacaoUsuario(Long situacaoUsuario) {
-			this.situacaoUsuario = situacaoUsuario;
+		public void setStatus(Long status) {
+			this.status = status;
 		}		
 		/*
 		public Long getCodigoUsuarioCadastro() {
@@ -164,6 +170,11 @@ public class Usuario implements UserDetails, Serializable{
 			*/
 			return this.getPerfil().getPerfilFuncionalidades();
 		}
+
+		public String getDescricaoStatus() {
+			return this.getStatus().equals(DefaultConstant.ATIVO) ? "Ativo" : "Inativo"; 
+		}
+		
 		@Override
 		public String getPassword() {
 			return password;

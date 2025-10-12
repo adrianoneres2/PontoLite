@@ -72,3 +72,10 @@ function marcar_invalido() {
             parent.children(".submenu").stop(true, true).slideToggle(200);
         });
     });
+
+	
+	// Adicione um evento de clique ao botão
+	document.getElementById("default-botao-voltar").addEventListener("click", function() {
+	  // Redireciona para a página anterior no histórico do navegador
+	  history.back();
+	});
