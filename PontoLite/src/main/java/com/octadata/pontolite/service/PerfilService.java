@@ -1,5 +1,7 @@
 package com.octadata.pontolite.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.octadata.pontolite.model.Perfil;
@@ -8,5 +10,7 @@ import com.octadata.pontolite.model.Perfil;
 public interface PerfilService {
 
 	Perfil porNome(String nome);
+
+	List<Perfil> findAll();
 	
 }

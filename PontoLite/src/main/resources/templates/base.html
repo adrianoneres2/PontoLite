@@ -15,6 +15,7 @@
 	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/formatacao.js}"></script>
 	<script th:src="@{/js/validacao.js}"></script>
+	<script th:src="@{/js/usuario/funcoes.js}"></script>
 </div>
 
 <div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-danger text-white">
@@ -71,6 +72,25 @@
 	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/cliente/listar}">Listagem de Clientes</a></span></div>
 	   </div>
 	</div>
-    <div class="menu-item"><span><i class="fa fa-cog"></i> Usuários</span></div>
+	<div class="has-submenu">
+	    <div class="menu-item">
+	        <span><i class="fa fa-box"></i> Usuários</span>
+	        <i class="fa fa-angle-right arrow"></i>
+	    </div>
+	    <div class="submenu">
+	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/usuario/formulario}">Cadastrar</a></span></div>
+	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/usuario/listar}">Listagem de usuários</a></span></div>
+	   </div>
+	</div>
+	<div class="has-submenu">
+	    <div class="menu-item">
+	        <span><i class="fa fa-box"></i> Jornada</span>
+	        <i class="fa fa-angle-right arrow"></i>
+	    </div>
+	    <div class="submenu">
+	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/jornada/formulario}">Cadastrar</a></span></div>
+	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/jornada/listar}">Listagem de jornadas</a></span></div>
+	   </div>
+	</div>
 	<div class="menu-item"><span><i class="fa fa-cog"></i> Configurações</span></div>
 </div>

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -46,7 +47,8 @@ public class Usuario implements UserDetails, Serializable{
 		@Column(name = "nm_senha", nullable = false)
 		private String   password;
 		
-		@Column(name = "dt_cadastro", nullable = true)
+		@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") // Adjust pattern as needed
+		@Column(name = "dt_cadastro", nullable = false)
 		private Date dataCadastro;
 				
 		@Column(name = "nm_email", nullable = false)
@@ -56,18 +58,15 @@ public class Usuario implements UserDetails, Serializable{
 		private Long   status;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name = "id_perfil", insertable = true, updatable = false)
+		@JoinColumn(name = "id_perfil", insertable = true, updatable = true, nullable = false)
 		private Perfil perfil;	
-		
-		//@Column(name = "id_usuario_cadastro	", nullable = false)
-		//private Long  codigoUsuarioCadastro;
 
 		@OneToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name="id_usuario_cadastro", insertable = true, updatable = false)
+		@JoinColumn(name="id_usuario_cadastro", insertable = true, updatable = false, nullable = false)
 		private Usuario usuarioCadastro;
 		
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name="id_jornada", insertable = true, updatable = false)
+		@JoinColumn(name="id_jornada", insertable = true, updatable = true, nullable = true)
 		private Jornada jornada;
 		
 		/*
@@ -75,7 +74,7 @@ public class Usuario implements UserDetails, Serializable{
 		 * Referencia de qual cliente esse usuário pertence.
 		 * */
 		@ManyToOne(fetch = FetchType.EAGER)
-		@JoinColumn(name="id_cliente", insertable = true, updatable = false)
+		@JoinColumn(name="id_cliente", insertable = true, updatable = false, nullable = false)
 		private Cliente cliente;
 		
 		/*
@@ -119,14 +118,6 @@ public class Usuario implements UserDetails, Serializable{
 		public void setStatus(Long status) {
 			this.status = status;
 		}		
-		/*
-		public Long getCodigoUsuarioCadastro() {
-			return codigoUsuarioCadastro;
-		}
-		public void setCodigoUsuarioCadastro(Long codigoUsuarioCadastro) {
-			this.codigoUsuarioCadastro = codigoUsuarioCadastro;
-		}
-		*/
 				
 		public Perfil getPerfil() {
 			return perfil;

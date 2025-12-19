@@ -2,6 +2,7 @@ package com.octadata.pontolite.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -56,6 +57,23 @@ public class JornadaDataHora implements Serializable {
 
 	public void setJornada(Jornada jornada) {
 		this.jornada = jornada;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dataJornada, numeroOrdem);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		JornadaDataHora other = (JornadaDataHora) obj;
+		return Objects.equals(dataJornada, other.dataJornada) && Objects.equals(numeroOrdem, other.numeroOrdem);
 	}
 	
 }

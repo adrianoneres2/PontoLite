@@ -37,6 +37,8 @@ public class WebSecurityConfig{
                         .requestMatchers("/pontolite/cliente/alterar-status/{codCliente}").hasRole("ALTERAR_STATUS_CLIENTE")
                         .requestMatchers("/pontolite/cliente/alterar").hasRole("ALTERAR_CLIENTE")
                         .requestMatchers("/pontolite/usuario/listar").hasRole("LISTAR_USUARIO")
+                        .requestMatchers("/pontolite/usuario/formulario").hasRole("CADASTRAR_USUARIO")
+                        .requestMatchers("/pontolite/usuario/alterar").hasRole("ALTERAR_USUARIO")
                         .anyRequest()
                         .authenticated()
                         )

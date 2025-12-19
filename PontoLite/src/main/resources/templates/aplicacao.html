@@ -9,16 +9,23 @@
 		
 		<!-- Conteúdo principal -->
 		<div class="content">
-		    <h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}">Bem-vindo, Usuário</h1>
-		    <p>Este é um exemplo de página com layout inspirado nas Lojas Americanas.</p>
-			<a th:href="@{/pontolite}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px;">Home</button></a>
-			<a th:href="@{/login/logof}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px;">Sair</button></a>
+			
+			<nav class="navbar bg-body-tertiary">
+			  <div class="container-fluid">
+				<div>
+					<h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}">Bem-vindo, Usuário</h1>
+					<h1 th:text="${session.usuarioLogado.perfil.nomePerfil}"></h1>
+					<p style="color: rgb(252, 233, 79);">Este é um exemplo de página com layout inspirado nas Lojas Americanas.</p>
+				</div>
+				<div class="d-flex" role="search">
+					<a th:href="@{/pontolite}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px; height: 100px;">Home</button></a>
+					<a th:href="@{/login/logof}" style="font-size: 20px;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px; height: 100px;">Sair</button></a>
+			  </div>
+			</nav>
 			<hr style="margin-top: 20px;">
 			<main th:replace="${conteudo}"></main>
-			
 			<div th:replace="~{base :: mensagem-aplicacao}"></div>
 		</div>
-		
 	</div>
 	<div th:replace="~{base :: script}"></div>
 </body>

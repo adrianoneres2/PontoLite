@@ -6,6 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.octadata.pontolite.base.DefaultConstant;
+import com.octadata.pontolite.base.EnumMessage;
+import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.repository.UsuarioRepository;
@@ -15,9 +17,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     private final UsuarioRepository usuarioRepository;
     private final PerfilServiceImpl perfilServiceImpl;
-    
-    ///@Autowired
-   // ClienteService clienteService;
 
     UsuarioServiceImpl(UsuarioRepository usuarioRepository, PerfilServiceImpl perfilServiceImpl) {
         this.usuarioRepository = usuarioRepository;
@@ -26,7 +25,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
     @Override
 	public Usuario salvar(Usuario usuario) {
-		return usuarioRepository.save(usuario);
+    	validar(usuario);
+		return usuarioRepository.save(preparaCadastro(usuario));
 	}
     
 	/*
@@ -39,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Usuario usuarioPadrao = new Usuario();
 		usuarioPadrao.setUsername(cliente.getNomeEmail());
 		usuarioPadrao.setEmail(cliente.getNomeEmail());
-		usuarioPadrao.setPassword(new BCryptPasswordEncoder().encode("12345"));
+		usuarioPadrao.setPassword(criptografarSenha("12345"));
 		usuarioPadrao.setStatus(DefaultConstant.ATIVO);
 		usuarioPadrao.setDataCadastro(new Date());
 		usuarioPadrao.setUsuarioCadastro(cliente.getUsuarioCadastro());
@@ -48,13 +48,20 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioPadrao;
 	}
      
+    public Usuario preparaCadastro(Usuario usuario) {
+    	usuario.setStatus(DefaultConstant.ATIVO);
+    	usuario.setDataCadastro(new Date());
+    	usuario.setPassword(criptografarSenha(usuario.getPassword()));
+    	return usuario;
+    }
+    
     @Override
     public List<Usuario> findAllByCliente(Cliente cliente){
     	return usuarioRepository.findAllByCliente(cliente);
     }
     
     @Override
-    public Usuario getById(Long codigoUsurio) {
+    public Usuario porId(Long codigoUsurio) {
     	return usuarioRepository.getReferenceById(codigoUsurio);
     }
     
@@ -64,4 +71,33 @@ public class UsuarioServiceImpl implements UsuarioService{
     	usuarioRepository.save(usuario);
     	return usuario;
     }
+    
+	@Override
+	public Usuario alterar(Usuario usuario) throws NegocioException{
+		validar(usuario);
+		return usuarioRepository.save(usuario);
+	}
+
+	@Override
+	public Usuario alterarSenha(Usuario usuario) throws NegocioException{
+		usuario.setPassword(criptografarSenha(usuario.getPassword()));
+		return usuarioRepository.save(usuario);
+	}
+	
+	protected void validar(Usuario usuario) {
+		Usuario usuarioValidacao = usuarioRepository.findByUsername(usuario.getUsername()).orElse(new Usuario());
+		if(usuarioValidacao.getCodigoUsuario() != null && !usuarioValidacao.getCodigoUsuario().equals(usuario.getCodigoUsuario())) {
+			throw new NegocioException(EnumMessage.ERROR.toString(), "Usuário já existe na base!", "");
+		}
+		
+		usuarioValidacao = usuarioRepository.findByEmail(usuario.getEmail()).orElse(new Usuario());
+		if(usuarioValidacao.getCodigoUsuario() != null && !usuarioValidacao.getCodigoUsuario().equals(usuario.getCodigoUsuario())) {
+			throw new NegocioException(EnumMessage.ERROR.toString(), "E-mail já cadastrado na base!", "");
+		} 
+	}
+	
+	public String criptografarSenha(String senha) {
+		return new BCryptPasswordEncoder().encode(senha);
+	}
+    
 }

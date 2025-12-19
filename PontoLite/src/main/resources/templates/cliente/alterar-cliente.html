@@ -3,16 +3,11 @@
 
 <main>
 	<h1>Alteração de Cliente</h1>
+	<hr style="margin-top: 20px;">
+	
 			<form action="#" th:action="@{/pontolite/cliente/alterar}" th:object="${cliente}" method="post">
+			    <strong id="strong-codigo-cliente" style="font-size: 50px;" th:text="${cliente.codigoCliente}"></strong>
 				<div class="form-row">
-					<div class="col-md-4 mb-3">
-						<label for="input-identificador-cliente">Identificador</label>
-						<input type="text" class="form-control" id="input-identificador-cliente" placeholder="Identificador" 
-						required th:field="*{codigoCliente}"
-						maxlength="60"
-						disabled>
-						<p th:if="${#fields.hasErrors('codigoCliente')}" th:errors="*{codigoCliente}" class="error"></p>
-					</div>
 					<input type="hidden" th:field="*{codigoCliente}">
 					<div class="col-md-4 mb-3">
 						<label for="input-razao-social">Razão Social</label>
@@ -54,6 +49,9 @@
 						required th:field = "*{nomeEmail}" 
 						maxlength="80">
 						<p th:if="${#fields.hasErrors('nomeEmail')}" th:errors="*{nomeEmail}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+  				      <input type="hidden" id="input-identificador-cliente" th:field="*{codigoCliente}">
 					</div>
 				</div>
 				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>

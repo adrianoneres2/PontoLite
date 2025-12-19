@@ -31,6 +31,9 @@ public class Jornada implements Serializable{
 	@Column(name="id_jornada", nullable=false)
 	private Long codigoJornada;
 	
+	@Column(name = "nm_jornada", nullable=false)
+	private String nomeJornada;
+	
 	@Column(name="dt_criacao", nullable=false)
 	private Date dataCriacao;
 	
@@ -94,6 +97,14 @@ public class Jornada implements Serializable{
 
 	public void setJornadaDataHora(List<JornadaDataHora> jornadaDataHora) {
 		this.jornadaDataHora = jornadaDataHora;
+	}
+
+	public String getNomeJornada() {
+		return nomeJornada;
+	}
+
+	public void setNomeJornada(String nomeJornada) {
+		this.nomeJornada = nomeJornada;
 	}
 	
 }

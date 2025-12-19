@@ -1,5 +1,7 @@
 package com.octadata.pontolite.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class PerfilServiceImpl implements PerfilService {
 	@Override
 	public Perfil porNome(String nome) {
 		return perfilRepostory.findByNomePerfil(nome).get();
+	}
+	
+	@Override
+	public List<Perfil> findAll(){
+		return perfilRepostory.findAll();
 	}
 	
 }
