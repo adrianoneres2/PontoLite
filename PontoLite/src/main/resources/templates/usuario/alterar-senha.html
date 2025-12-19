@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<h1>Alteração de senha</h1>
+	<hr style="margin-top: 20px;">
+	
+	<div class="col-md-4 mb-3" style="margin-top: 50px;">
+		<strong id="strong-nome-usuario" th:text="${usuario.codigoUsuario}" style="font-size: 30px;"></strong>
+		<strong style="font-size: 30px;">-</strong>
+		<strong id="strong-nome-usuario" th:text="${usuario.username}" style="font-size: 30px;"></strong>
+	</div>
+			<form action="#" th:action="@{/pontolite/usuario/alterar-senha}" th:object="${usuario}" method="post">
+				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="input-password">Password</label>
+						<input type="password" class="form-control" id="input-password" placeholder="Password" 
+						value="" required th:field="*{password}"
+						maxlength="60">
+						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-password-confirm">Confirmar Password</label>
+						<input type="password" class="form-control" id="input-password-confirm" placeholder="Confirmar Password" 
+						value="" required
+						onblur="validar_confirmacao_senha()"
+						maxlength="60">
+					</div>
+				</div>
+				<div>
+					<input type="hidden" id="input-codigo-usuario"th:field="*{codigoUsuario}">
+					<input type="hidden" id="input-username"th:field="*{username}">
+					<input type="hidden" id="input-data-cadastro"th:field="*{dataCadastro}">
+					<input type="hidden" id="input-email"th:field="*{email}">
+					<input type="hidden" id="input-status"th:field="*{status}">
+					<input type="hidden" id="input-perfil"th:field="*{perfil}">
+					<input type="hidden" id="input-usuario-cadastro"th:field="*{usuarioCadastro}">
+					<input type="hidden" id="input-jornada"th:field="*{jornada}">
+					<input type="hidden" id="input-cliente"th:field="*{cliente}">
+					
+
+				</div>
+				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
+				<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit">Voltar</button>
+			</form>
+</main>
+</html>

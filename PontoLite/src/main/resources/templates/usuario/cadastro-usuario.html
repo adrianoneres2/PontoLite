@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<h1>Cadastro de Usuário</h1>
+	<hr style="margin-top: 20px;">
+			<form action="#" th:action="@{/pontolite/usuario/formulario}" th:object="${usuario}" method="post">
+				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-usuario">Nome do Usuário</label>
+						<input type="text" class="form-control" id="input-nome-usuario" placeholder="Nome do Usuário" 
+						required th:field="*{username}"
+						maxlength="60">
+						<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-password">Password</label>
+						<input type="password" class="form-control" id="input-password" placeholder="Password" 
+						value="" required th:field="*{password}"
+						maxlength="60">
+						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-password-confirm">Confirmar Password</label>
+						<input type="password" class="form-control" id="input-password-confirm" placeholder="Confirmar Password" 
+						value="" required
+						onblur="validar_confirmacao_senha()"
+						maxlength="60">
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-email">E-mail</label>
+						<input type="email" class="form-control" id="input-email" placeholder="E-mail" 
+						required th:field = "*{email}" 
+						maxlength="80">
+						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></p>
+					</div>				
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-perfil">Perfil</label>
+						<select id="input-nome-perfil" required th:field="*{perfil}">
+							<option value="" style="font-size: 18px;">Selecione um perfil</option>
+							<option value="" style="font-size: 18px;" 
+								th:each="perfil : ${perfis}"
+								th:value="${perfil.codigoPerfil}"
+								th:text="${perfil.nomePerfil}">
+							</option>
+						</select>
+						<p th:if="${#fields.hasErrors('perfil')}" th:errors="*{perfil}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-jornada">Jornada</label>
+						<select id="input-nome-jornada">
+							<option value="" style="font-size: 18px;">Selecione uma jornada</option>
+							<option value="" style="font-size: 18px;" 
+								th:each="jornada : ${jornadas}"
+								th:value="${jornada.codigoJornada}"
+								th:text="${jornada.nomeJornada}">
+							</option>
+						</select>
+						<p th:if="${#fields.hasErrors('jornada')}" th:errors="*{jornada}" class="error"></p>
+					</div>
+					<div class="col-md-4 mb-3" sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')">
+						<label for="input-nome-cliente">Cliente</label>
+						<select id="input-nome-cliente" required th:field="*{cliente}">
+							<option value="" style="font-size: 18px;">Selecione um cliente</option>
+							<option value="" style="font-size: 18px;" 
+								th:each="cliente : ${clientes}"
+								th:value="${cliente.codigoCliente}"
+								th:text="${cliente.nomeCliente}">
+							</option>
+						</select>
+						<p th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}" class="error"></p>
+					</div>
+				</div>
+				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
+				<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit">Voltar</button>
+			</form>
+</main>
+</html>
