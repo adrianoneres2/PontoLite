@@ -268,3 +268,16 @@ table tbody tr:last-of-type {
 }
 
 
+.grid-container {
+  display: grid;
+  /* Cria colunas com largura mínima de 200px, preenchendo o espaço */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 10px;
+}
+
+.grid-item {
+  padding: 15px;
+  /*border: 1px solid #ddd;*/
+  /*background-color: #eee;*/
+}
+

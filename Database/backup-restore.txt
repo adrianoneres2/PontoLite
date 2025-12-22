@@ -1,0 +1,50 @@
+https://www.google.com/search?client=ubuntu&channel=fs&q=como+fazer+o+dump+de+database+do+postgres+com+os+usu%C3%A1rios
+
+
+
+Para fazer o dump do banco de dados PostgreSQL
+incluindo os usuários e suas definições de privilégios (roles), você precisa utilizar uma combinação de ferramentas de linha de comando. O pg_dump extrai apenas os dados e a estrutura do banco de dados, não os usuários globais [2]. 
+Aqui está um guia passo a passo:
+Pré-requisitos
+Você precisará de acesso à linha de comando (terminal) no servidor PostgreSQL ou em uma máquina cliente com as ferramentas de cliente instaladas (pg_dump, pg_dumpall e psql).
+Passo 1: Fazer o Dump dos Usuários e Roles (pg_dumpall)
+O pg_dumpall é a ferramenta correta para extrair informações globais do cluster, como usuários, grupos e privilégios. 
+Execute o seguinte comando como um superusuário do PostgreSQL (como postgres):
+bash
+
+pg_dumpall --globals-only --username=postgres > roles.sql
+
+    --globals-only: Esta opção instrui o pg_dumpall a despejar apenas as definições de usuários e espaços de tabela, ignorando os bancos de dados.
+    --username=postgres: Especifica o usuário com privilégios para executar o comando. Pode ser necessário digitar a senha.
+    > roles.sql: Redireciona a saída (o dump) para um arquivo chamado roles.sql. 
+
+Este arquivo roles.sql conterá comandos SQL como CREATE ROLE, ALTER ROLE, e GRANT necessários para recriar seus usuários. 
+Passo 2: Fazer o Dump do Banco de Dados Específico (pg_dump) 
+Em seguida, use o pg_dump para fazer o dump do esquema e dos dados do banco de dados específico que você deseja migrar. 
+bash
+
+pg_dump --dbname=seu_banco_de_dados --format=c --username=postgres > seu_banco_de_dados.dump
+
+    --dbname=seu_banco_de_dados: Substitua seu_banco_de_dados pelo nome real do seu banco de dados.
+    --format=c: Cria um arquivo em formato "custom" (personalizado), que é o formato recomendado, pois é comprimido e permite restauração seletiva.
+    > seu_banco_de_dados.dump: Redireciona a saída para um arquivo chamado seu_banco_de_dados.dump. 
+
+Passo 3: Restaurar em um Novo Servidor
+Para restaurar em um novo servidor PostgreSQL:
+
+    Restaure os usuários/roles: Primeiro, você deve criar os usuários globais no novo servidor. Use o psql para executar o arquivo roles.sql que você criou no Passo 1.
+    bash
+
+psql --file=roles.sql --username=postgres postgres
+
+Isso garante que os usuários referenciados pelas permissões do banco de dados existam antes de restaurar o banco de dados principal.
+Crie o banco de dados vazio: Crie o banco de dados vazio no novo servidor (opcional, pois o pg_restore pode fazer isso se o usuário tiver permissões):
+bash
+
+createdb --username=postgres seu_banco_de_dados
+
+Restaure o banco de dados: Finalmente, use o pg_restore para carregar os dados e o esquema do arquivo .dump (Passo 2) no novo banco de dados.
+bash
+
+pg_restore --dbname=seu_banco_de_dados --username=postgres seu_banco_de_dados.dump
+

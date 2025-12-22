@@ -4,19 +4,38 @@
 <main>
 	<h1>Cadastro de jornada</h1>
 	<hr style="margin-top: 20px;">
-			<form action="#" th:action="@{/pontolite/jornada/formulario}" th:object="${jornada}" method="post">
-				<div class="form-row">
-					<div class="col-md-4 mb-3">
-						<label for="input-nome-jornada">Nome Jornada</label>
-						<input type="text" class="form-control" id="input-nome-jornada" placeholder="Nome Jornada" 
-						value="" required th:field="*{nomeJornada}"
-						maxlength="60">
-						<p th:if="${#fields.hasErrors('nomeJornada')}" th:errors="*{nomeJornada}" class="error"></p>
-					</div>
-				</div>
-				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
-				<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit">Voltar</button>
-			</form>
+	<form action="#" th:action="@{/pontolite/jornada/formulario}" th:object="${jornada}" method="post">
+		<div class="form-row">
+			<div class="col-md-4 mb-3">
+				<label for="input-nome-jornada">Nome Jornada</label>
+				<input type="text" class="form-control" id="input-nome-jornada" placeholder="Nome Jornada" value=""
+					required th:field="*{nomeJornada}" maxlength="60">
+				<p th:if="${#fields.hasErrors('nomeJornada')}" th:errors="*{nomeJornada}" class="error"></p>
+			</div>
+		</div>
+		<div style="width: 70%;">
+			<div class="grid-container" style="width: 60%;">
+				<div class="grid-item">Período</div>
+				<div class="grid-item">Hora inicial</div>
+				<div class="grid-item">Hora final</div>
+			</div>
+			<div class="grid-container" style="width: 60%; ">
+				<div class="grid-item"><strong>Manhã</strong></div>
+				<div class="grid-item"><input type="text" id="id-entrada" class="form-control" required style="height: 80px; ; font-size: 50px;"></div>
+				<div class="grid-item"><input type="text" id="id-intervalo" class="form-control" required style="height: 80px; font-size: 50px;"></div>
+			</div>
+			<div class="grid-container" style="width: 60%;">
+				<div class="grid-item"><strong>Tarde</strong></div>
+				<div class="grid-item"><input type="text" id="id-retorno" class="form-control" required style="height: 80px; ; font-size: 50px;"></div>
+				<div class="grid-item"><input type="text" id="id-saida" class="form-control" required style="height: 80px; ; font-size: 50px;"></div>
+			</div>
+		</div>
+
+		<button class="btn btn-secondary" style="width: 400px; height: 45px; margin-top: 50px;" type="submit"
+			id="bt-enviar">Enviar</button>
+		<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px; ; margin-top: 50px;"
+			type="submit">Voltar</button>
+	</form>
 </main>
 
 </html>

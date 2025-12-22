@@ -11,6 +11,7 @@ $(document).ready(function(){
 });
 */
 
+
 // Máscara de CNPJ
 function mascara_cnpj(campo) {
   let cnpj = campo.value.replace(/\D/g, '');

@@ -1,0 +1,25 @@
+
+
+/var/lib/postgresql/backup
+
+
+---Backup
+pg_dumpall --globals-only --username=postgres > 01-roles.sql
+pg_dump --dbname=octadb --format=c --username=postgres > 02-octadb-21122025-2135.dump
+
+
+
+---Restore
+psql --file=01-roles.sql --username=postgres postgres
+caso necessário ---> createdb --username=postgres octadb
+pg_restore --dbname=octadb --username=postgres 02-octadb-21122025-2135.dump
+
+
+
+---copiar para a máquina de destino.
+scp * adriano@192.168.1.8:/home/adriano/Projeto/PontoLite/Database/
+
+--- caso o ssh falhar, instale o serviço na máquina de destino
+---apt install ssh openssh-server vim -y
+----tente copiar novamente
+
