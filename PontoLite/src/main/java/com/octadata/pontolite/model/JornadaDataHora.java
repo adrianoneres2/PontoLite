@@ -2,7 +2,6 @@ package com.octadata.pontolite.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,26 +12,24 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tb_jornada_data_hora", schema = "pontolite")
+@Table(name = "tb_jornada_data_hora", schema = "pontolite")
 public class JornadaDataHora implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	public JornadaDataHora(){};
-	
-    //@Id
-    //@GeneratedValue(strategy=GenerationType.IDENTITY)
-    //private Long id;
-	
-	@Column(name="dt_jornada", nullable = false)
+
+	public JornadaDataHora() {
+	};
+
+	// @Id
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
+	// private Long id;
+
+	@Column(name = "dt_jornada", nullable = false)
 	private Date dataJornada;
-	
-	@Column(name="nr_ordem", nullable = false)
-	private Long numeroOrdem;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_jornada", insertable = false, updatable = false)
+	@JoinColumn(name = "id_jornada", insertable = true, updatable = true)
 	private Jornada jornada;
 
 	public Date getDataJornada() {
@@ -43,14 +40,6 @@ public class JornadaDataHora implements Serializable {
 		this.dataJornada = dataJornada;
 	}
 
-	public Long getNumeroOrdem() {
-		return numeroOrdem;
-	}
-
-	public void setNumeroOrdem(Long numeroOrdem) {
-		this.numeroOrdem = numeroOrdem;
-	}
-
 	public Jornada getJornada() {
 		return jornada;
 	}
@@ -59,21 +48,4 @@ public class JornadaDataHora implements Serializable {
 		this.jornada = jornada;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(dataJornada, numeroOrdem);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		JornadaDataHora other = (JornadaDataHora) obj;
-		return Objects.equals(dataJornada, other.dataJornada) && Objects.equals(numeroOrdem, other.numeroOrdem);
-	}
-	
 }

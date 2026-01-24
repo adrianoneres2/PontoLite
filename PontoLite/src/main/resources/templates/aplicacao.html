@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html th:fragment="layout(conteudo)" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="~{base :: head}"></head>
 
 <body>
@@ -14,12 +13,12 @@
 			  <div class="container-fluid">
 				<div>
 					<h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}">Bem-vindo, Usuário</h1>
-					<h1 th:text="${session.usuarioLogado.perfil.nomePerfil}"></h1>
-					<p style="color: rgb(252, 233, 79);">Este é um exemplo de página com layout inspirado nas Lojas Americanas.</p>
+					<div align="center" style="border-radius: 20px 20px 20px 20px; background-color: rgb(252, 175, 62); color: black;"><h1 th:text="${session.usuarioLogado.perfil.nomePerfil}"></h1></div>
 				</div>
 				<div class="d-flex" role="search">
-					<a th:href="@{/pontolite}" style="font-size: 20px; ;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px; height: 100px;">Home</button></a>
-					<a th:href="@{/login/logof}" style="font-size: 20px;"><button class="btn btn-outline-warning my-2 my-sm-0" style="width: 180px; height: 100px;">Sair</button></a>
+					<a th:href="@{/pontolite}" style="font-size: 20px; border-radius: 20px 20px 20px 20px; width: 80px; font-size: 14px;" class="btn btn-success">Home</a>
+					<div style="margin-left: 5px;"></div>
+					<a th:href="@{/login/logof}" style="font-size: 20px; border-radius: 20px 20px 20px 20px; width: 80px; font-size: 14px;" class="btn btn-danger">Logoff</a>
 			  </div>
 			</nav>
 			<hr style="margin-top: 20px;">

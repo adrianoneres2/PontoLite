@@ -4,53 +4,57 @@
 <main>
 	<h1>Cadastro de Clientes</h1>
 	<hr style="margin-top: 20px;">
-			<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post">
-				<div class="form-row">
-					<div class="col-md-4 mb-3">
-						<label for="input-razao-social">Razão Social</label>
-						<input type="text" class="form-control" id="input-razao-social" placeholder="Razão Social" 
-						required th:field="*{razaoSocial}"
-						maxlength="60">
-						<p th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}" class="error"></p>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="input-nome-fantasia">Nome Fantasia</label>
-						<input type="text" class="form-control" id="input-nome-fantasia" placeholder="Nome Fantasia" 
-						value="" required th:field="*{nomeCliente}"
-						maxlength="60">
-						<p th:if="${#fields.hasErrors('nomeCliente')}" th:errors="*{nomeCliente}" class="error"></p>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="cnpj">CNPJ</label>
-						<input type="text" class="form-control" id="input-cnpj" placeholder="CNPJ"
-						  value="" required th:field="*{numeroCnpj}"
-						  maxlength="18" 
-						  onkeypress="mascara_cnpj(this)" 
-						  onkeydown="mascara_cnpj(this)" 
-						  onkeyup="validar_cnpj(this.value)">
-						  <p th:if="${#fields.hasErrors('numeroCnpj')}" th:errors="*{numeroCnpj}" class="error"></p>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="input-telefone">Telefone</label>
-						<input type="text" class="form-control" id="input-telefone" placeholder="Telefone" 
-						value="" required th:field = "*{numeroTelefone}"
-						maxlength="20"
-						onkeyup="mascaraTelefonefone(event,'input-telefone')"
-						onkeydown="mascaraTelefonefone(event,'input-telefone')"
-						>
-						<p th:if="${#fields.hasErrors('numeroTelefone')}" th:errors="*{numeroTelefone}" class="error"></p>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="input-email">E-mail</label>
-						<input type="email" class="form-control" id="input-email" placeholder="E-mail" 
-						required th:field = "*{nomeEmail}" 
-						maxlength="80">
-						<p th:if="${#fields.hasErrors('nomeEmail')}" th:errors="*{nomeEmail}" class="error"></p>
-					</div>
+	<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post">
+		<div class="mb-3" style="background-color:rgb(147, 148, 146); border-radius: 30px 40px 30px 40px; ">
+			<div class="card-header">Dados da Empresa</div>
+			<div class="card-body text-dark">
+				<div class="col-lg-6 mb-3">
+					<label for="input-razao-social">Razão Social</label>
+					<input type="text" class="form-control" id="input-razao-social" placeholder="Razão Social" required
+						th:field="*{razaoSocial}" maxlength="60">
+					<p th:if="${#fields.hasErrors('razaoSocial')}" th:errors="*{razaoSocial}" class="error"></p>
 				</div>
-				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
-				<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit">Voltar</button>
-			</form>
+				<div class="col-lg-6 mb-3">
+					<label for="input-nome-fantasia">Nome Fantasia</label>
+					<input type="text" class="form-control" id="input-nome-fantasia" placeholder="Nome Fantasia"
+						value="" required th:field="*{nomeCliente}" maxlength="60">
+					<p th:if="${#fields.hasErrors('nomeCliente')}" th:errors="*{nomeCliente}" class="error"></p>
+				</div>
+				<div class="col-lg-6 mb-3">
+					<label for="cnpj">CNPJ</label>
+					<input type="text" class="form-control" id="input-cnpj" placeholder="CNPJ" value="" required
+						th:field="*{numeroCnpj}" maxlength="18" onkeypress="mascara_cnpj(this)"
+						onkeydown="mascara_cnpj(this)" onkeyup="validar_cnpj(this.value)">
+					<p th:if="${#fields.hasErrors('numeroCnpj')}" th:errors="*{numeroCnpj}" class="error"></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-3" style="background-color: rgb(147, 148, 146); border-radius: 30px 40px 30px 40px;">
+			<div class="card-header">Contato</div>
+			<div class="card-body text-dark">
+				<div class="col-lg-6 mb-3">
+					<label for="input-telefone">Telefone</label>
+					<input type="text" class="form-control" id="input-telefone" placeholder="Telefone" value="" required
+						th:field="*{numeroTelefone}" maxlength="20"
+						onkeyup="mascaraTelefonefone(event,'input-telefone')"
+						onkeydown="mascaraTelefonefone(event,'input-telefone')">
+					<p th:if="${#fields.hasErrors('numeroTelefone')}" th:errors="*{numeroTelefone}" class="error"></p>
+				</div>
+				<div class="col-lg-6 mb-3">
+					<label for="input-email">E-mail</label>
+					<input type="email" class="form-control" id="input-email" placeholder="E-mail" required
+						th:field="*{nomeEmail}" maxlength="80">
+					<p th:if="${#fields.hasErrors('nomeEmail')}" th:errors="*{nomeEmail}" class="error"></p>
+				</div>
+			</div>
+		</div>
+
+		<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit"
+			id="bt-enviar">Enviar</button>
+		<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;"
+			type="submit">Voltar</button>
+	</form>
 </main>
 
 </html>

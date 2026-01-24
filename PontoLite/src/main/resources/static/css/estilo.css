@@ -42,6 +42,7 @@
 	    overflow: hidden; /* Evita barras de rolagem desnecessárias */
 		background-color: rgb(136, 138, 133);
 		font-family: Fnt_Oswald-VariableFont_wght, Arial, sans-serif;
+		font-size: 14px;
 	}
 	
     /* Barra lateral fixa */
@@ -50,7 +51,7 @@
         top: 0;
         left: 0;
         height: 100%;
-        width: 240px;
+        width: 180px;
         background-color: #2f2f2f; /* Grafite */
         overflow-y: auto;
         padding-top: 20px;
@@ -64,13 +65,35 @@
     }
 
     .user-profile img {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         border: 3px solid #fff;
         object-fit: cover;
     }
 
+	.circulo {
+	    width: 200px;
+	    height: 200px;
+	    border-radius: 50%;
+	    border: 3px solid #fff;
+	    background-color: rgb(78, 154, 6);
+	    
+	    /* Regras de centralização */
+	    display: flex;
+	    justify-content: center; /* Centraliza horizontalmente */
+	    align-items: center;     /* Centraliza verticalmente */
+	    text-align: center;      /* Garante que linhas múltiplas de texto fiquem no centro */
+	}
+	
+	.centralizado-horizontal-vertical {    
+	    /* Regras de centralização */
+	    display: flex;
+	    justify-content: center; /* Centraliza horizontalmente */
+	    /*align-items: center;*/     /* Centraliza verticalmente */
+	    text-align: center;      /* Garante que linhas múltiplas de texto fiquem no centro */
+	}
+	
     /* Menu principal */
     .menu-item {
         color: #fff;
@@ -79,7 +102,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 15px;
+        font-size: 12px;
         white-space: nowrap;
     }
 
@@ -101,7 +124,7 @@
 
     .submenu .menu-item {
         padding-left: 40px;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .submenu .submenu .menu-item {
@@ -121,30 +144,40 @@
 
     /* Conteúdo da página */
     .content {
-        margin-left: 240px;
+        margin-left: 180px;
         padding: 15px;
         color: rgb(255, 255, 255);
     }
 
     h1 {
-        font-size: 24px;
+        font-size: 18px;
         color: rgb(238, 238, 236);
     }
 	
 /*Balão de mensagem*/
 .balao {
     display: none; /* Começa oculto */
+	
+	/*display: flex; */            /* Ativa o flexbox */
+	align-items: center;       /* Alinha verticalmente */
+	justify-content: center;    /* Alinha horizontalmente (opcional) */
+	text-align: center;        /* Garante que o texto multi-linha fique centralizado */
+	
     position: fixed; /* Fixa o elemento na janela */
     top: 5px; /* Distância do topo */
-    right: 20px; /* Distância da direita */
-   /* background-color: #f8d7da;*/ /* Cor de fundo da mensagem */
+    right: 40%; /* Distância da direita */
+    background-color: rgb(46, 52, 54); /* Cor de fundo da mensagem */
     /*color: #721c24;*/ /* Cor do texto */
     padding: 15px;
     /*border: 0px solid #f5c6cb;*/
     /*border-radius: 0px;*/
-	font-size: 18px;
-    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+	font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000; /* Garante que esteja acima de outros elementos */
+	border-radius: 18px; /* Cantos arredondados */
+	margin-top: 20px; 
+	width: 400px;
+	height: 150px;
 }
 
 
@@ -232,7 +265,7 @@ table thead tr {
 
 /* Linhas do corpo da tabela */
 table tbody tr {
-    background-color: #1e1e1e; /* Fundo escuro para linhas pares/ímpares */
+    background-color: rgb(85, 87, 83); /* Fundo escuro para linhas pares/ímpares */
     border-bottom: 1px solid #3c3c3c; /* Apenas uma linha divisória fina e escura */
 }
 
@@ -276,7 +309,7 @@ table tbody tr:last-of-type {
 }
 
 .grid-item {
-  padding: 15px;
+  padding: 10px;
   /*border: 1px solid #ddd;*/
   /*background-color: #eee;*/
 }
