@@ -2,63 +2,79 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<h1>Listagem de Clientes</h1>
-	<hr style="margin-top: 20px;">
-	<div class="mb-3">
-		<input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome, e-mail ou telefone...">
-	</div>
-	<table id="clientTable" class="scrollable-table">
-		<thead>
-			<tr>
-				<th scope="col">#</th>
-				<th scope="col">Razão Social</th>
-				<th scope="col">Nome Fantasia</th>
-				<th scope="col">Data de Cadastro</th>
-				<th scope="col">CNPJ</th>
-				<th scope="col">E-mail</th>
-				<th scope="col">Telefone</th>
-				<th scope="col">Status</th>
-				<th scope="col">Ação</th>
-				<th scope="col">Equipe</th>
-			</tr>
-		</thead>
-		<tbody >
-			<tr th:each="cliente : ${clientes}">
-				<th th:text="${cliente.codigoCliente}" scope="row"></th>
-				<td th:text="${cliente.razaoSocial}"></td>
-				<td th:text="${cliente.nomeCliente}"></td>
-				<td th:text="${cliente.dataCadastro}"></td>
-				<td th:text="${cliente.numeroCnpj}"></td>
-				<td th:text="${cliente.nomeEmail}"></td>
-				<td th:text="${cliente.numeroTelefone}"></td>
-				<td>
-					<form action="#"
-						th:action="@{/pontolite/cliente/alterar-status/{codCliente}(codCliente = ${cliente.codigoCliente})}"
-						method="post">
-						<button id="bt-status" th:text="${cliente.getDescricaoSituacaoCliente}" type="submit"
-							style="width: 65px;"
-							th:classappend="${cliente.situacaoCliente==1} ? 'btn btn-success' : 'btn btn-danger'">
-						</button>
-					</form>
-				</td>
-				<td><a th:href="@{/pontolite/cliente/alterar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
-						type="submit" style="width: 65px;" class="btn btn-dark">
-						Editar
-					</a>
-				</td>
-				<td><a th:href="@{/pontolite/usuario/listar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
-						type="submit" style="width: 75px;" class="btn btn-dark" th:text="Usuários">
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<span>Listagem de Clientes</span>
+			<a th:href="@{/pontolite}" class="btn btn-secondary btn-sm">Voltar</a>
+		</div>
+		<div class="card-body">
+			<!-- Search Bar -->
+			<div class="mb-4">
+				<div class="input-group">
+					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+					<input type="text" class="form-control" id="searchInput"
+						placeholder="Buscar por nome, e-mail ou telefone...">
+				</div>
+			</div>
 
-	<div class="alert alert-warning mt-3" role="alert" id="noResults" style="display: none;">
-		Nenhum cliente encontrado.
+			<!-- Table -->
+			<div class="table-responsive">
+				<table id="clientTable" class="table table-hover align-middle">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Razão Social</th>
+							<th scope="col">Nome Fantasia</th>
+							<th scope="col">Cadastro</th>
+							<th scope="col">CNPJ</th>
+							<th scope="col">E-mail</th>
+							<th scope="col">Telefone</th>
+							<th scope="col" class="text-center">Status</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente : ${clientes}">
+							<th th:text="${cliente.codigoCliente}" scope="row"></th>
+							<td th:text="${cliente.razaoSocial}"></td>
+							<td th:text="${cliente.nomeCliente}"></td>
+							<td th:text="${cliente.dataCadastro}"></td>
+							<td th:text="${cliente.numeroCnpj}"></td>
+							<td th:text="${cliente.nomeEmail}"></td>
+							<td th:text="${cliente.numeroTelefone}"></td>
+							<td class="text-center">
+								<form action="#"
+									th:action="@{/pontolite/cliente/alterar-status/{codCliente}(codCliente = ${cliente.codigoCliente})}"
+									method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm"
+										th:classappend="${cliente.situacaoCliente==1} ? 'btn-success' : 'btn-danger'"
+										th:text="${cliente.getDescricaoSituacaoCliente}" style="min-width: 80px;">
+									</button>
+								</form>
+							</td>
+							<td class="text-center">
+								<div class="btn-group" role="group">
+									<a th:href="@{/pontolite/cliente/alterar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
+										class="btn btn-outline-primary btn-sm" title="Editar">
+										<i class="bi bi-pencil"></i>
+									</a>
+									<a th:href="@{/pontolite/usuario/listar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
+										class="btn btn-outline-info btn-sm" title="Usuários">
+										<i class="bi bi-people"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="alert alert-warning mt-3 border-0 bg-warning-light" role="alert" id="noResults"
+				style="display: none;">
+				<i class="bi bi-info-circle me-2"></i> Nenhum cliente encontrado.
+			</div>
+		</div>
 	</div>
-	<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;"
-		type="submit">Voltar</button>
 </main>
 
 </html>

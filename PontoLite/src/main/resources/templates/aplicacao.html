@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html th:fragment="layout(conteudo)" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{base :: head}"></head>
 
 <body>
-	<div id="id-container" class="container-fluid">
+	<div class="layout-wrapper">
+		<!-- Sidebar from Base Fragment -->
 		<div th:replace="~{base :: menu-principal}"></div>
-		
-		<!-- Conteúdo principal -->
-		<div class="content">
-			
-			<nav class="navbar bg-body-tertiary">
-			  <div class="container-fluid">
+
+		<!-- Main Content Area -->
+		<div class="main-content">
+			<!-- Header / Topbar (Simplified) -->
+			<div class="page-header d-flex justify-content-between align-items-center">
 				<div>
-					<h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}">Bem-vindo, Usuário</h1>
-					<div align="center" style="border-radius: 20px 20px 20px 20px; background-color: rgb(252, 175, 62); color: black;"><h1 th:text="${session.usuarioLogado.perfil.nomePerfil}"></h1></div>
+					<h1 th:text="'Bem-vindo, ' + ${session.usuarioLogado.username}"
+						style="font-size: 20px; font-weight: normal; color: #666;">Bem-vindo</h1>
+					<small class="text-muted" th:text="${session.usuarioLogado.perfil.nomePerfil}"></small>
 				</div>
-				<div class="d-flex" role="search">
-					<a th:href="@{/pontolite}" style="font-size: 20px; border-radius: 20px 20px 20px 20px; width: 80px; font-size: 14px;" class="btn btn-success">Home</a>
-					<div style="margin-left: 5px;"></div>
-					<a th:href="@{/login/logof}" style="font-size: 20px; border-radius: 20px 20px 20px 20px; width: 80px; font-size: 14px;" class="btn btn-danger">Logoff</a>
-			  </div>
-			</nav>
-			<hr style="margin-top: 20px;">
-			<main th:replace="${conteudo}"></main>
+				<div class="d-flex gap-2">
+					<a th:href="@{/pontolite}" class="btn btn-outline-primary btn-sm"><i class="bi bi-house"></i>
+						Home</a>
+					<div style="width: 10px;"></div>
+					<a th:href="@{/login/logof}" class="btn btn-outline-danger btn-sm"><i
+							class="bi bi-box-arrow-right"></i> Sair</a>
+				</div>
+			</div>
+
+			<!-- Dynamic Content Injection -->
+			<div style="margin-top: 20px;">
+				<main th:replace="${conteudo}"></main>
+			</div>
+
+			<!-- Floating Messages -->
 			<div th:replace="~{base :: mensagem-aplicacao}"></div>
 		</div>
 	</div>
+
+	<!-- Scripts Fragment -->
 	<div th:replace="~{base :: script}"></div>
 </body>
 

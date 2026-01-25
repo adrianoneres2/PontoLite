@@ -2,45 +2,71 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<h1>Cadastro de jornada</h1>
-	<hr style="margin-top: 20px;">
-	<form action="#" th:action="@{/pontolite/jornada/formulario}" th:object="${jornada}" method="post">
-		<div class="form-row">
-			<div class="col-md-4 mb-3">
-				<label for="input-nome-jornada">Nome Jornada</label>
-				<input type="text" class="form-control" id="input-nome-jornada" placeholder="Nome Jornada" value="" required th:field="*{nomeJornada}" maxlength="60">
-				<p th:if="${#fields.hasErrors('nomeJornada')}" th:errors="*{nomeJornada}" class="error"></p>
-			</div>
+	<div class="card">
+		<div class="card-header">
+			<h5 class="mb-0"><i class="bi bi-calendar-week"></i> Cadastro de Jornada</h5>
 		</div>
-		<div style="width: 70%;">
-			<table id="table-jornada">
-				<thead>
-					<tr>
-						<th class="grid-item">Dia</th>
-						<th class="grid-item">Entrada</th>
-						<th class="grid-item">Intervalo</th>
-						<th class="grid-item">Retorno</th>
-						<th class="grid-item">Saída</th>
-						<th class="grid-item">Ação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="jornadaDataHora : ${jornada.jornadaDataHora}">
-						<td class="grid-item"><strong>Segunda</strong></td>
-						<td class="grid-item"><input type="time" id="id-entrada"   th:field="{jornadaDataHora.dataJornada}" class="form-control" required style="height: 40px; font-size: 20px; width: 60pt;"></td>
-						<td class="grid-item"><input type="time" id="id-intervalo" th:field="{jornadaDataHora.dataJornada}" class="form-control" required style="height: 40px; font-size: 20px; width: 60pt;"></td>
-						<td class="grid-item"><input type="time" id="id-retorno"   th:field="{jornadaDataHora.dataJornada}" class="form-control" required style="height: 40px; font-size: 20px; width: 60pt;"></td>
-						<td class="grid-item"><input type="time" id="id-saida"     th:field="{jornadaDataHora.dataJornada}" class="form-control" required style="height: 40px; font-size: 20px; width: 60pt;"></td>
-						<td class="grid-item"><button class="btn btn-danger">-</button></td>
-					</tr>
-				</tbody>
-			</table>
-			<button class="btn btn-danger">+ Adicionar dia</button>
-		</div>
+		<div class="card-body">
+			<form action="#" th:action="@{/pontolite/jornada/formulario}" th:object="${jornada}" method="post">
 
-		<button class="btn btn-secondary" style="width: 400px; height: 45px; margin-top: 50px;" type="submit" id="bt-enviar">Enviar</button>
-		<button id="default-botao-voltar" class="btn btn-secondary"	style="width: 400px; height: 45px; ; margin-top: 50px;" type="submit">Voltar</button>
-	</form>
+				<div class="mb-4">
+					<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>
+					<input type="text" class="form-control" id="input-nome-jornada"
+						placeholder="Ex: Comercial (08:00 - 18:00)" required th:field="*{nomeJornada}" maxlength="60">
+					<div class="text-danger small mt-1" th:if="${#fields.hasErrors('nomeJornada')}"
+						th:errors="*{nomeJornada}"></div>
+				</div>
+
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Quadro de Horários</h6>
+				<div class="table-responsive mb-3">
+					<table id="table-jornada" class="table table-bordered align-middle">
+						<thead class="table-light">
+							<tr>
+								<th style="width: 15%;">Dia</th>
+								<th>Entrada</th>
+								<th>Intervalo</th>
+								<th>Retorno</th>
+								<th>Saída</th>
+								<th style="width: 50px;">Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="jornadaDataHora : ${jornada.jornadaDataHora}">
+								<td class="fw-bold">Segunda</td>
+								<td><input type="time" class="form-control" th:field="{jornadaDataHora.dataJornada}"
+										required></td>
+								<td><input type="time" class="form-control" th:field="{jornadaDataHora.dataJornada}"
+										required></td>
+								<td><input type="time" class="form-control" th:field="{jornadaDataHora.dataJornada}"
+										required></td>
+								<td><input type="time" class="form-control" th:field="{jornadaDataHora.dataJornada}"
+										required></td>
+								<td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm"><i
+											class="bi bi-trash"></i></button></td>
+							</tr>
+							<!-- Example row since loop might be empty initially -->
+							<tr th:if="${jornada.jornadaDataHora == null or jornada.jornadaDataHora.isEmpty()}">
+								<td colspan="6" class="text-center text-muted">Nenhum horário definido</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="mb-4">
+					<button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-lg"></i> Adicionar
+						Dia</button>
+				</div>
+
+				<hr class="my-4">
+
+				<div class="d-flex justify-content-end gap-2">
+					<button class="btn btn-primary" type="submit" id="bt-enviar"><i class="bi bi-check-lg"></i> Salvar
+						Jornada</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </main>
 
 </html>

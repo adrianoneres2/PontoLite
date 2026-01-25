@@ -1,96 +1,116 @@
 <head th:fragment="head">
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width" />
-	<title>Autenticação</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>PontoLite - Corporate</title>
+	<!-- Bootstrap CSS -->
 	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
-	<link th:rel="stylesheet" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}" />
+	<!-- Icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+	<!-- Custom Styles -->
 	<link th:rel="stylesheet" th:href="@{/css/estilo.css}" />
+
+	<!-- Scripts -->
 	<link th:rel="stylesheet" th:href="@{/js/formatacao.js}" />
 	<link th:rel="stylesheet" th:href="@{/js/validacao.js}" />
-	<!---<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <div th:fragment="script">
+	<!-- JQuery & Bootstrap -->
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/formatacao.js}"></script>
 	<script th:src="@{/js/validacao.js}"></script>
+	<script>
+		// Toggle Sidebar Submenus
+		$(document).ready(function () {
+			$('.has-submenu > .menu-item').click(function () {
+				$(this).parent().find('.submenu');/*.slideToggle(5000)*/
+				$(this).toggleClass('active');
+				$(this).find('.arrow').toggleClass('bi-chevron-right bi-chevron-down');
+			});
+
+			// Auto-hide alerts
+			setTimeout(function () {
+				$(".alert-float").fadeOut(500);
+			}, 5000);
+		});
+	</script>
 </div>
 
-<div th:fragment="barra-inferior" id="div-rodape" align="center" class="fixed-bottom bg-danger text-white">
-	<div style="height: 50px;">
-		<strong style="font-size: 15px;">Todos os direitos reservados</strong>
+<!-- Modern Floating Alert -->
+<div th:fragment="mensagem-aplicacao">
+	<div th:if="${codeMessage} != null" class="alert-float">
+		<div th:if="${codeMessage} == 'SUCCESS'" class="alert alert-success" role="alert">
+			<i class="bi bi-check-circle-fill me-2"></i> <span th:text="${msgDescription}"></span>
+		</div>
+		<div th:if="${codeMessage} == 'ERROR'" class="alert alert-danger" role="alert">
+			<i class="bi bi-exclamation-triangle-fill me-2"></i> <span th:text="${msgDescription}"></span>
+		</div>
+		<div th:if="${codeMessage} == 'WARNING'" class="alert alert-warning" role="alert">
+			<i class="bi bi-exclamation-circle-fill me-2"></i> <span th:text="${msgDescription}"></span>
+		</div>
+		<div th:if="${codeMessage} == 'INFO'" class="alert alert-info" role="alert">
+			<i class="bi bi-info-circle-fill me-2"></i> <span th:text="${msgDescription}"></span>
+		</div>
 	</div>
 </div>
 
-<div th:fragment="barra-superior" id="id-barra-superior" align="center" class="fixed-bottom bg-danger text-white">
-</div>
-
-<div th:fragment="mensagem-aplicacao" id="id-mensagem-aplicacao" class="balao">
-	<div th:if="${codeMessage} == 'SUCCESS'" role="alert">
-		<div th:text="${msgDescription}" align="center"></div>
-	</div>
-	<div th:if="${codeMessage} == 'ERROR'" role="alert">
-		<div th:text="${msgDescription}" align="center"></div>
-	</div>
-	<div th:if="${codeMessage} == 'WARNING'" role="alert">
-		<div th:text="${msgDescription}" align="center"></div>
-	</div>
-	<div th:if="${codeMessage} == 'INFO'" role="alert">
-		<div th:text="${msgDescription}" align="center"></div>
-	</div>
-</div>
-
-
-<!-- Barra lateral -->
+<!-- Sidebar -->
 <div class="sidebar" th:fragment="menu-principal">
-    <!-- Foto do usuário -->
-    <div class="user-profile">
-        <img th:src="@{/images/user-default.jpeg}">
-    </div>
+	<div class="sidebar-header">
+		<img th:src="@{/images/logo-octadata-001.png}" class="sidebar-logo" alt="PontoLite">
+	</div>
 
-    <!-- Menu -->
-    <div class="has-submenu">
-        <div class="menu-item">
-            <span><i class="bi bi-receipt"></i> Registro de ponto</span>
-            <i class="bi bi-arrow-right-circle-fill arrow"></i>
-        </div>
-        <div class="submenu">
-            <div class="menu-item"><span><i class="bi bi-arrow-bar-right"></i><a th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a></span></div>
-            <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/ponto/listar}">Meus Pontos</a></span></div>
-       </div>
-    </div>
+	<div class="user-profile">
+		<img th:src="@{/images/user-default.jpeg}">
+	</div>
 
-	<div class="has-submenu">
-	    <div class="menu-item">
-	        <span><i class="bi bi-person-standing"></i>Clientes</span>
-	        <i class="bi bi-arrow-right-circle-fill arrow"></i>
-	    </div>
-	    <div class="submenu">
-	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/cliente/formulario}">Cadastrar</a></span></div>
-	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/cliente/listar}">Listagem de Clientes</a></span></div>
-	   </div>
+	<div class="sidebar-menu">
+		<div class="has-submenu">
+			<div class="menu-item">
+				<span><i class="bi bi-clock-history"></i> Registro de Ponto</span>
+				<i class="bi bi-chevron-right arrow"></i>
+			</div>
+			<div class="submenu">
+				<div class="menu-item"><a th:href="@{/pontolite/acessarRegistroPonto}">Registrar</a></div>
+				<div class="menu-item"><a th:href="@{/pontolite/ponto/listar}">Meus Pontos</a></div>
+			</div>
+		</div>
+
+		<div class="has-submenu">
+			<div class="menu-item">
+				<span><i class="bi bi-building"></i> Clientes</span>
+				<i class="bi bi-chevron-right arrow"></i>
+			</div>
+			<div class="submenu">
+				<div class="menu-item"><a th:href="@{/pontolite/cliente/formulario}">Cadastrar</a></div>
+				<div class="menu-item"><a th:href="@{/pontolite/cliente/listar}">Listagem</a></div>
+			</div>
+		</div>
+
+		<div class="has-submenu">
+			<div class="menu-item">
+				<span><i class="bi bi-people"></i> Usuários</span>
+				<i class="bi bi-chevron-right arrow"></i>
+			</div>
+			<div class="submenu">
+				<div class="menu-item"><a th:href="@{/pontolite/usuario/formulario}">Cadastrar</a></div>
+				<div class="menu-item"><a th:href="@{/pontolite/usuario/listar}">Listagem</a></div>
+			</div>
+		</div>
+
+		<div class="has-submenu">
+			<div class="menu-item">
+				<span><i class="bi bi-calendar-range"></i> Jornada</span>
+				<i class="bi bi-chevron-right arrow"></i>
+			</div>
+			<div class="submenu">
+				<div class="menu-item"><a th:href="@{/pontolite/jornada/formulario}">Cadastrar</a></div>
+				<div class="menu-item"><a th:href="@{/pontolite/jornada/listar}">Listagem</a></div>
+			</div>
+		</div>
+
+		<div class="menu-item"><span><i class="bi bi-gear"></i> Configurações</span></div>
 	</div>
-	<div class="has-submenu">
-	    <div class="menu-item">
-	        <span><i class="bi bi-people-fill"></i> Usuários</span>
-	        <i class="bi bi-arrow-right-circle-fill arrow"></i>
-	    </div>
-	    <div class="submenu">
-	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/usuario/formulario}">Cadastrar</a></span></div>
-	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/usuario/listar}">Listagem de usuários</a></span></div>
-	   </div>
-	</div>
-	<div class="has-submenu">
-	    <div class="menu-item">
-	        <span><i class="bi bi-person-workspace"></i> Jornada</span>
-	        <i class="bi bi-arrow-right-circle-fill arrow"></i>
-	    </div>
-	    <div class="submenu">
-	        <div class="menu-item"><span><i class="fa fa-tv"></i><a th:href="@{/pontolite/jornada/formulario}">Cadastrar</a></span></div>
-	        <div class="menu-item"><span><i class="fa fa-tshirt"></i><a th:href="@{/pontolite/jornada/listar}">Listagem de jornadas</a></span></div>
-	   </div>
-	</div>
-	<div class="menu-item"><span><i class="fa fa-cog"></i> Configurações</span></div>
 </div>

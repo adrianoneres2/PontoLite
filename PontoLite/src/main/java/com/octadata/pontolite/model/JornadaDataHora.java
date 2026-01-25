@@ -25,19 +25,25 @@ public class JornadaDataHora implements Serializable {
 	// private Long id;
 
 	@Column(name = "dt_jornada", nullable = false)
-	private Date dataJornada;
+	private Date dataJornadaDataHora;
+
+	@Column(name = "id_dia", nullable = false)
+	private Long codigoDia;
+
+	@Column(name = "id_tipo_registro", nullable = false)
+	private Long codigoTipoRegistro;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_jornada", insertable = true, updatable = true)
 	private Jornada jornada;
 
-	public Date getDataJornada() {
-		return dataJornada;
+	public Date getDataJornadaDataHora() {
+		return dataJornadaDataHora;
 	}
 
-	public void setDataJornada(Date dataJornada) {
-		this.dataJornada = dataJornada;
+	public void setDataJornadaDataHora(Date dataJornadaDataHora) {
+		this.dataJornadaDataHora = dataJornadaDataHora;
 	}
 
 	public Jornada getJornada() {
@@ -46,6 +52,22 @@ public class JornadaDataHora implements Serializable {
 
 	public void setJornada(Jornada jornada) {
 		this.jornada = jornada;
+	}
+
+	public Long getCodigoDia() {
+		return codigoDia;
+	}
+
+	public void setCodigoDia(Long codigoDia) {
+		this.codigoDia = codigoDia;
+	}
+
+	public Long getCodigoTipoRegistro() {
+		return codigoTipoRegistro;
+	}
+
+	public void setCodigoTipoRegistro(Long codigoTipoRegistro) {
+		this.codigoTipoRegistro = codigoTipoRegistro;
 	}
 
 }

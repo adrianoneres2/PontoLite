@@ -1,12 +1,12 @@
 package com.octadata.pontolite.dto;
 
-public class MessageHandlerDto {
-	
+public class MessageHandlerDTO {
+
 	public String code;
 	public String message;
 	public String detail;
-	
-	public MessageHandlerDto(String code, String message, String detail) {
+
+	public MessageHandlerDTO(String code, String message, String detail) {
 		this.code = code;
 		this.message = message;
 		this.detail = detail;

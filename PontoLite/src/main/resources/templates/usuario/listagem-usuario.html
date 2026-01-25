@@ -2,65 +2,85 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<h1>Listagem de Usuários</h1>
-	<hr style="margin-top: 20px;">
-	<div class="mb-2">
-		<input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome, e-mail ou telefone...">
-	</div>
+	<!-- Card Wrapper -->
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<h5 class="mb-0">Listagem de Usuários</h5>
+			<a th:href="@{/pontolite}" class="btn btn-secondary btn-sm">Voltar</a>
+		</div>
+		<div class="card-body">
+			<!-- Search -->
+			<div class="mb-4">
+				<div class="input-group">
+					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+					<input type="text" class="form-control" id="searchInput"
+						placeholder="Buscar por nome, e-mail ou telefone...">
+				</div>
+			</div>
 
-	<div class="table-responsive" style="height: 450px; overflow-y: auto;">
-		<table id="clientTable" class="scrollable-table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Nome</th>
-					<th scope="col">E-mail</th>
-					<th scope="col">Data de Cadastro</th>
-					<th scope="col">Perfil</th>
-					<th scope="col">Cadastrou</th>
-					<th scope="col">Cliente</th>
-					<th scope="col">Status</th>
-					<th scope="col">Ação</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="usuario : ${usuarios}">
-					<th th:text="${usuario.codigoUsuario}" scope="row"></th>
-					<td th:text="${usuario.username}"></td>
-					<td th:text="${usuario.email}"></td>
-					<td th:text="${usuario.dataCadastro}"></td>
-					<td th:text="${usuario.perfil.nomePerfil}"></td>
-					<td th:text="${usuario.usuarioCadastro.username}"></td>
-					<td th:text="${usuario.cliente.nomeCliente}"></td>
-					<td>
-						<form action="#"
-							th:action="@{/pontolite/usuario/alterar-status/{codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
-							method="post">
-							<button id="bt-status" th:text="${usuario.getDescricaoStatus}" type="submit"
-								style="width: 65px;"
-								th:classappend="${usuario.status==1} ? 'btn btn-success' : 'btn btn-danger'">
-							</button>
-						</form>
-					</td>
-					<!--Faz os objetos internos do div ou -->
-					<td class="container-div-flex">
-						<a th:href="@{/pontolite/usuario/alterar?codUsuario={codUsuario}(codUsuario = ${usuario.codigoUsuario})}" type="submit" class="btn btn-dark">Editar</a>
-						<form sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')" action="#"
-							th:action="@{/pontolite/usuario/formulario-alterar-senha/{codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
-							method="post">
-							<button id="bt-alterar-senha" type="submit" class="btn btn-dark">Alterar Senha</button>
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+			<!-- Table -->
+			<div class="table-responsive">
+				<table id="clientTable" class="table table-hover align-middle">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nome</th>
+							<th scope="col">E-mail</th>
+							<th scope="col">Cadastro</th>
+							<th scope="col">Perfil</th>
+							<th scope="col">Cadastrou</th>
+							<th scope="col">Cliente</th>
+							<th scope="col" class="text-center">Status</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="usuario : ${usuarios}">
+							<th th:text="${usuario.codigoUsuario}" scope="row"></th>
+							<td th:text="${usuario.username}"></td>
+							<td th:text="${usuario.email}"></td>
+							<td th:text="${usuario.dataCadastro}"></td>
+							<td th:text="${usuario.perfil.nomePerfil}"></td>
+							<td th:text="${usuario.usuarioCadastro.username}"></td>
+							<td th:text="${usuario.cliente.nomeCliente}"></td>
+							<td class="text-center">
+								<form action="#"
+									th:action="@{/pontolite/usuario/alterar-status/{codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
+									method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm"
+										th:classappend="${usuario.status==1} ? 'btn-success' : 'btn-danger'"
+										th:text="${usuario.getDescricaoStatus}" style="min-width: 80px;">
+									</button>
+								</form>
+							</td>
+							<td class="text-center">
+								<div class="btn-group" role="group">
+									<a th:href="@{/pontolite/usuario/alterar?codUsuario={codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
+										class="btn btn-outline-dark btn-sm" title="Editar">
+										<i class="bi bi-pencil"></i>
+									</a>
+									<!-- Only Admin Octadata can change password here -->
+									<form sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')" action="#"
+										th:action="@{/pontolite/usuario/formulario-alterar-senha/{codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
+										method="post" style="display:inline;">
+										<button type="submit" class="btn btn-outline-warning btn-sm"
+											title="Alterar Senha">
+											<i class="bi bi-key"></i>
+										</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-	<div class="alert alert-warning mt-3" role="alert" id="noResults" style="display: none;">
-		Nenhum usuário encontrado.
+			<div class="alert alert-warning mt-3 border-0 bg-warning-light" role="alert" id="noResults"
+				style="display: none;">
+				<i class="bi bi-info-circle me-2"></i> Nenhum usuário encontrado.
+			</div>
+		</div>
 	</div>
-	<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;"
-		type="submit">Voltar</button>
 </main>
 
 </html>
