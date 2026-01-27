@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.octadata.pontolite.base.DefaultConstant;
+import com.octadata.pontolite.util.DefaultConstant;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,70 +25,66 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_cliente", schema = "pontolite")
-public class Cliente implements Serializable{
-	
+public class Cliente implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	public Cliente() {}
-	
+
+	public Cliente() {
+	}
+
 	@Id
-	@SequenceGenerator(name="sq_cliente", sequenceName="pontolite.sq_cliente", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sq_cliente")
-	@Column(name="id_cliente", nullable=false)
+	@SequenceGenerator(name = "sq_cliente", sequenceName = "pontolite.sq_cliente", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_cliente")
+	@Column(name = "id_cliente", nullable = false)
 	private long codigoCliente;
-	
+
 	@NotNull
-	@Size(max=65)
-	@Column(name="nm_cliente", nullable=false)
+	@Size(max = 65)
+	@Column(name = "nm_cliente", nullable = false)
 	private String nomeCliente;
-	
+
 	@NotNull
-	@Size(max=19)
-	@Column(name="nr_cnpj", nullable=false)
+	@Size(max = 19)
+	@Column(name = "nr_cnpj", nullable = false)
 	private String numeroCnpj;
-	
-	@Column(name="dt_cadastro", nullable=false)
+
+	@Column(name = "dt_cadastro", nullable = false)
 	private Date dataCadastro = new Date();
-	
+
 	@NotNull
-	@Size(max=60)
-	@Column(name="nm_razao_social",  nullable=false)
+	@Size(max = 60)
+	@Column(name = "nm_razao_social", nullable = false)
 	private String razaoSocial;
 
 	@NotNull
-	@Size(max=20)
-	@Column(name="nr_telefone", nullable=false)
+	@Size(max = 20)
+	@Column(name = "nr_telefone", nullable = false)
 	private String numeroTelefone;
-	
+
 	@NotNull
-	@Size(max=200)
+	@Size(max = 200)
 	@Email
-	@Column(name="nm_email", nullable=false)
+	@Column(name = "nm_email", nullable = false)
 	private String nomeEmail;
-	
-	@Column(name="st_cliente", nullable=false)
+
+	@Column(name = "st_cliente", nullable = false)
 	private Long situacaoCliente = 1L;
-	
+
 	/*
 	 * Referencia do usuário que cadastrou o cliente.
-	 * Foreing key id_usuario_cadastro vinda da entidade cliente a partir da entidade de usuário.
-	 * */
+	 * Foreing key id_usuario_cadastro vinda da entidade cliente a partir da
+	 * entidade de usuário.
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_usuario_cadastro", 
-	            insertable = true, 
-	            updatable = false,
-	            nullable = true,
-	            referencedColumnName = "id_usuario")
+	@JoinColumn(name = "id_usuario_cadastro", insertable = true, updatable = false, nullable = true, referencedColumnName = "id_usuario")
 	private Usuario usuarioCadastro;
-	
+
 	/*
 	 * Lista de usuários pertencentes a um cliente.
-	 * */
-	@OneToMany(fetch = FetchType.LAZY,
-			   mappedBy = "cliente",
-			   cascade = CascadeType.PERSIST)
+	 */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.PERSIST)
 	private Set<Usuario> usuarios = new HashSet<>();
-	
+
 	public long getCodigoCliente() {
 		return codigoCliente;
 	}
@@ -160,8 +156,8 @@ public class Cliente implements Serializable{
 	public void setNomeEmail(String nomeEmail) {
 		this.nomeEmail = nomeEmail;
 	}
-	
+
 	public String getDescricaoSituacaoCliente() {
-		return this.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? "Ativo" : "Inativo"; 
+		return this.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? "Ativo" : "Inativo";
 	}
 }
