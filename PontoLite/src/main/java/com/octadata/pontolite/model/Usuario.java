@@ -1,6 +1,5 @@
 package com.octadata.pontolite.model;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +27,7 @@ import jakarta.persistence.Table;
 @Entity
 /// @Data
 @Table(name = "tb_usuario", schema = "pontolite")
-public class Usuario implements UserDetails, Serializable {
+public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
