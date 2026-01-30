@@ -288,6 +288,8 @@ a:hover {
     border: none;
     border-radius: 6px;
     animation: slideIn 0.5s ease-out;
+    width: 400px;
+    height: 80px;
 }
 
 @keyframes slideIn {

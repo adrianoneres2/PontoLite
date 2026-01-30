@@ -7,7 +7,8 @@
 			<h5 class="mb-0"><i class="bi bi-calendar-week"></i> Cadastro de Jornada</h5>
 		</div>
 		<div class="card-body">
-			<form action="#" th:action="@{/pontolite/jornada/formulario}" th:object="${jornadaDTO}" method="post">
+			<form action="#" onsubmit="return validateForm()" th:action="@{/pontolite/jornada/formulario}"
+				th:object="${jornadaDTO}" method="post" id="form-jornada">
 
 				<div class="mb-4">
 					<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>
@@ -19,8 +20,9 @@
 
 				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
 					style="font-size: 0.8rem; letter-spacing: 1px;">Quadro de Horários</h6>
+
 				<div class="table-responsive mb-3">
-					<table id="table-jornada" class="table table-bordered align-middle">
+					<table id="table-jornada" class="table table-bordered align-middle table-hover">
 						<thead class="table-light">
 							<tr>
 								<th style="width: 15%;">Dia</th>
@@ -31,32 +33,16 @@
 								<th style="width: 50px;">Ação</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr th:each="jornadaDataHora : ${jornadaDTO.listaJornadaDataHora}">
-								<td class="fw-bold">Segunda</td>
-								<td><input type="time" class="form-control"
-										th:field="{jornadaDataHora.dataJornadaDataHora}" required></td>
-								<td><input type="time" class="form-control"
-										th:field="{jornadaDataHora.dataJornadaDataHora}" required></td>
-								<td><input type="time" class="form-control"
-										th:field="{jornadaDataHora.dataJornadaDataHora}" required></td>
-								<td><input type="time" class="form-control"
-										th:field="{jornadaDataHora.dataJornadaDataHora}" required></td>
-								<td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm"><i
-											class="bi bi-trash"></i></button></td>
-							</tr>
-							<!-- Example row since loop might be empty initially -->
-							<tr
-								th:if="${jornadaDTO.listaJornadaDataHora == null or jornadaDTO.listaJornadaDataHora.isEmpty()}">
-								<td colspan="6" class="text-center text-muted">Nenhum horário definido</td>
-							</tr>
+						<tbody id="table-jornada-body">
+							<!-- Rows will be added dynamically -->
 						</tbody>
 					</table>
 				</div>
 
 				<div class="mb-4">
-					<button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-lg"></i> Adicionar
-						Dia</button>
+					<button type="button" class="btn btn-outline-primary btn-sm" onclick="adicionarDia()">
+						<i class="bi bi-plus-lg"></i> Adicionar Dia
+					</button>
 				</div>
 
 				<hr class="my-4">
@@ -68,6 +54,7 @@
 			</form>
 		</div>
 	</div>
+	<script th:src="@{/js/jornada/jornada.js}"></script>
 </main>
 
 </html>
