@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.octadata.pontolite.dto.JornadaDTO;
+import com.octadata.pontolite.model.Jornada;
+import com.octadata.pontolite.service.ClienteService;
 import com.octadata.pontolite.service.JornadaService;
 
 @Controller
@@ -17,17 +19,22 @@ public class JornadaController {
 	@Autowired
 	JornadaService jornadaService;
 
+	@Autowired
+	ClienteService clienteService;
+
 	@GetMapping("/formulario")
 	public String acessarFormularioJornada(Model model) {
 
 		JornadaDTO jornadaDTO = new JornadaDTO(null, null, null, null, null, null);
 		model.addAttribute("jornadaDTO", jornadaDTO);
-		// model.addAttribute("jornadaDataHora", new JornadaDataHora());
+		model.addAttribute("clientes", clienteService.listarTodos());
 		return "/jornada/cadastro-jornada";
 	}
 
 	@PostMapping("/formulario")
 	public String salvarJornada(JornadaDTO jornadaDTO) {
+		Jornada jornada = new Jornada();
+		jornada = jornadaDTO.toJornada(jornadaDTO);
 		/* jornadaService.salvarJornada(jornadaDTO); */
 		return "redirect:/pontolite/jornada/formulario";
 	}

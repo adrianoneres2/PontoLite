@@ -18,39 +18,40 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tb_jornada", schema="pontolite")
-public class Jornada implements Serializable{
-	
+@Table(name = "tb_jornada", schema = "pontolite")
+public class Jornada implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	public Jornada() {};
-	
+
+	public Jornada() {
+	};
+
 	@Id
-	@SequenceGenerator(name="sq_jornada", sequenceName = "sq_jornada", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name = "sq_jornada", sequenceName = "sq_jornada", allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_jornada")
-	@Column(name="id_jornada", nullable=false)
+	@Column(name = "id_jornada", nullable = false)
 	private Long codigoJornada;
-	
-	@Column(name = "nm_jornada", nullable=false)
+
+	@Column(name = "nm_jornada", nullable = false)
 	private String nomeJornada;
-	
-	@Column(name="dt_criacao", nullable=false)
+
+	@Column(name = "dt_criacao", nullable = false)
 	private Date dataCriacao;
-	
-	@Column(name="st_jornada", nullable=false)
+
+	@Column(name = "st_jornada", nullable = false)
 	private Long situacaoJornada;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_cliente", insertable = false, updatable = false)
+	@JoinColumn(name = "id_cliente", insertable = false, updatable = false)
 	private Cliente cliente;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_usuario_cadastro", insertable = false, updatable = false)
+	@JoinColumn(name = "id_usuario_cadastro", insertable = false, updatable = false)
 	private Usuario usuarioCadastro;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jornada", cascade = CascadeType.REFRESH)
-	private List<JornadaDataHora> jornadaDataHora;
-	
+	private List<JornadaDataHora> listaJornadaDataHora;
+
 	public Long getCodigoJornada() {
 		return codigoJornada;
 	}
@@ -91,12 +92,12 @@ public class Jornada implements Serializable{
 		this.usuarioCadastro = usuarioCadastro;
 	}
 
-	public List<JornadaDataHora> getJornadaDataHora() {
-		return jornadaDataHora;
+	public List<JornadaDataHora> getListaJornadaDataHora() {
+		return listaJornadaDataHora;
 	}
 
-	public void setJornadaDataHora(List<JornadaDataHora> jornadaDataHora) {
-		this.jornadaDataHora = jornadaDataHora;
+	public void setListaJornadaDataHora(List<JornadaDataHora> listaJornadaDataHora) {
+		this.listaJornadaDataHora = listaJornadaDataHora;
 	}
 
 	public String getNomeJornada() {
@@ -106,5 +107,5 @@ public class Jornada implements Serializable{
 	public void setNomeJornada(String nomeJornada) {
 		this.nomeJornada = nomeJornada;
 	}
-	
+
 }

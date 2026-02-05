@@ -1,7 +1,7 @@
 package com.octadata.pontolite.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ public class JornadaDataHora implements Serializable {
 	// private Long id;
 
 	@Column(name = "dt_jornada", nullable = false)
-	private Date dataJornadaDataHora;
+	private LocalDateTime dataJornadaDataHora;
 
 	@Column(name = "id_dia", nullable = false)
 	private Long codigoDia;
@@ -38,11 +38,11 @@ public class JornadaDataHora implements Serializable {
 	@JoinColumn(name = "id_jornada", insertable = true, updatable = true)
 	private Jornada jornada;
 
-	public Date getDataJornadaDataHora() {
+	public LocalDateTime getDataJornadaDataHora() {
 		return dataJornadaDataHora;
 	}
 
-	public void setDataJornadaDataHora(Date dataJornadaDataHora) {
+	public void setDataJornadaDataHora(LocalDateTime dataJornadaDataHora) {
 		this.dataJornadaDataHora = dataJornadaDataHora;
 	}
 

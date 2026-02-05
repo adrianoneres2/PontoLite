@@ -95,7 +95,7 @@ function updateIndexes() {
             // listaJornadaDataHora[0], listaJornadaDataHora[1], etc.
 
             // 1. Data/Hora Input
-            input.name = `listaJornadaDataHora[${overallIndex}].dataJornadaDataHora`;
+            input.name = `listaJornadaDataHora[${overallIndex}].hora`;
 
             // 2. Hidden inputs for IDs
             // Check if hidden inputs already exist for this slot, else create them

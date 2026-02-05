@@ -1,12 +1,38 @@
 package com.octadata.pontolite.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.octadata.pontolite.model.JornadaDataHora;
 
 import jakarta.validation.constraints.NotNull;
 
 public record JornadaDataHoraDTO(
-                @NotNull LocalTime dataJornadaDataHora,
-                Long codigoJornada,
-                @NotNull Long codigoDia,
-                @NotNull Long codigoTipoRegistro) {
+        @NotNull LocalTime hora,
+        LocalDateTime dataJornadaDataHora,
+        Long codigoJornada,
+        @NotNull Long codigoDia,
+        @NotNull Long codigoTipoRegistro) {
+
+    public List<JornadaDataHora> toJornadaDataHora(List<JornadaDataHoraDTO> listaJornadaDataHoraDTO) {
+        List<JornadaDataHora> jornadaDataHoraList = new ArrayList<>();
+        for (JornadaDataHoraDTO jornadaDataHoraDTO : listaJornadaDataHoraDTO) {
+            JornadaDataHora jornadaDataHora = new JornadaDataHora();
+            jornadaDataHora.setCodigoDia(jornadaDataHoraDTO.codigoDia());
+            jornadaDataHora.setDataJornadaDataHora(
+                    jornadaDataHoraDTO.toLocalDateTime(jornadaDataHoraDTO.hora));
+            jornadaDataHora.setCodigoTipoRegistro(jornadaDataHoraDTO.codigoTipoRegistro());
+            // jornadaDataHora.setJornada(jornadaDataHoraDTO.getJornada());
+            jornadaDataHoraList.add(jornadaDataHora);
+        }
+        return jornadaDataHoraList;
+    }
+
+    public LocalDateTime toLocalDateTime(LocalTime localTime) {
+        LocalDate localDate = LocalDate.now();
+        return localDate.atTime(localTime);
+    }
 }
