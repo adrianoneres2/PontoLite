@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.octadata.pontolite.dto.JornadaDTO;
 import com.octadata.pontolite.model.Jornada;
+import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
 import com.octadata.pontolite.service.JornadaService;
+import com.octadata.pontolite.util.EnumMessage;
+import com.octadata.pontolite.util.ModelMessage;
 
 @Controller
 @RequestMapping("pontolite/jornada")
@@ -22,6 +25,9 @@ public class JornadaController {
 	@Autowired
 	ClienteService clienteService;
 
+	@Autowired
+	AutenticacaoService autenticacaoService;
+
 	@GetMapping("/formulario")
 	public String acessarFormularioJornada(Model model) {
 
@@ -32,10 +38,12 @@ public class JornadaController {
 	}
 
 	@PostMapping("/formulario")
-	public String salvarJornada(JornadaDTO jornadaDTO) {
+	public String salvarJornada(JornadaDTO jornadaDTO, Model model) {
 		Jornada jornada = new Jornada();
 		jornada = jornadaDTO.toJornada(jornadaDTO);
-		/* jornadaService.salvarJornada(jornadaDTO); */
-		return "redirect:/pontolite/jornada/formulario";
+		jornada.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
+		jornadaService.salvar(jornada);
+		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Cadastrado com sucesso!!");
+		return "/jornada/cadastro-jornada";
 	}
 }

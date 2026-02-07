@@ -25,7 +25,6 @@ public record JornadaDataHoraDTO(
             jornadaDataHora.setDataJornadaDataHora(
                     jornadaDataHoraDTO.toLocalDateTime(jornadaDataHoraDTO.hora));
             jornadaDataHora.setCodigoTipoRegistro(jornadaDataHoraDTO.codigoTipoRegistro());
-            // jornadaDataHora.setJornada(jornadaDataHoraDTO.getJornada());
             jornadaDataHoraList.add(jornadaDataHora);
         }
         return jornadaDataHoraList;

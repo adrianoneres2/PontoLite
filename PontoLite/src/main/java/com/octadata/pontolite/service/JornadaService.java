@@ -9,8 +9,9 @@ import com.octadata.pontolite.model.Jornada;
 
 @Service
 public interface JornadaService {
-	
+
 	Jornada salvar(Jornada jornada);
+
 	List<Jornada> porCliente(Cliente cliente);
 
 }

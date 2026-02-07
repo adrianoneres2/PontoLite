@@ -27,7 +27,7 @@ public class Jornada implements Serializable {
 	};
 
 	@Id
-	@SequenceGenerator(name = "sq_jornada", sequenceName = "sq_jornada", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name = "sq_jornada", sequenceName = "pontolite.sq_jornada", allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_jornada")
 	@Column(name = "id_jornada", nullable = false)
 	private Long codigoJornada;
@@ -42,14 +42,14 @@ public class Jornada implements Serializable {
 	private Long situacaoJornada;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+	@JoinColumn(name = "id_cliente", insertable = true, updatable = false)
 	private Cliente cliente;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_usuario_cadastro", insertable = false, updatable = false)
+	@JoinColumn(name = "id_usuario_cadastro", insertable = true, updatable = false)
 	private Usuario usuarioCadastro;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "jornada", cascade = CascadeType.REFRESH)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jornada", cascade = CascadeType.REFRESH)
 	private List<JornadaDataHora> listaJornadaDataHora;
 
 	public Long getCodigoJornada() {

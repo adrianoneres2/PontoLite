@@ -6,9 +6,12 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,9 +23,11 @@ public class JornadaDataHora implements Serializable {
 	public JornadaDataHora() {
 	};
 
-	// @Id
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)
-	// private Long id;
+	@Id
+	@SequenceGenerator(name = "sq_jornada_data_hora", sequenceName = "pontolite.sq_jornada_data_hora", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_jornada_data_hora")
+	@Column(name = "id_jornada_data_hora", nullable = false)
+	private Long codigoJornadaDataHora;
 
 	@Column(name = "dt_jornada", nullable = false)
 	private LocalDateTime dataJornadaDataHora;
@@ -33,7 +38,6 @@ public class JornadaDataHora implements Serializable {
 	@Column(name = "id_tipo_registro", nullable = false)
 	private Long codigoTipoRegistro;
 
-	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_jornada", insertable = true, updatable = true)
 	private Jornada jornada;
@@ -70,4 +74,11 @@ public class JornadaDataHora implements Serializable {
 		this.codigoTipoRegistro = codigoTipoRegistro;
 	}
 
+	public Long getCodigoJornadaDataHora() {
+		return codigoJornadaDataHora;
+	}
+
+	public void setCodigoJornadaDataHora(Long codigoJornadaDataHora) {
+		this.codigoJornadaDataHora = codigoJornadaDataHora;
+	}
 }
