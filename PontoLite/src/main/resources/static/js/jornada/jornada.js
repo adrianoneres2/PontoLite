@@ -20,9 +20,27 @@ const TIPOS_REGISTRO = [
 let minimumNumberOfDays = 0;
 
 function adicionarDia() {
-    minimumNumberOfDays++;
+    clearValidationMessage();
     const tbody = document.getElementById('table-jornada-body');
     const existingRows = Array.from(tbody.querySelectorAll('tr'));
+
+    // 1. Validate the last row if it exists
+    let valuesToCopy = [];
+    if (existingRows.length > 0) {
+        const lastRow = existingRows[existingRows.length - 1]; // Validate the last added day
+        const validation = validateRowTimes(lastRow);
+
+        if (!validation.valid) {
+            displayValidationMessage(validation.message);
+            return; // Stop if invalid
+        }
+
+        // 2. Capture values to copy
+        const inputs = lastRow.querySelectorAll('input[type="time"]');
+        valuesToCopy = Array.from(inputs).map(i => i.value);
+    }
+
+    minimumNumberOfDays++;
 
     // Find existing day IDs
     const existingDayIds = existingRows.map(row => parseInt(row.dataset.diaId));
@@ -52,16 +70,20 @@ function adicionarDia() {
 			`;
 
     // Insert in correct order (visual "manter a ordem")
-    // We want to insert this row such that the running order of diaId is maintained.
-    // Since we iterate DIAS_SEMANA in order, finding the *first* missing one guarantees
-    // we just need to find the first existing row with ID > nextDay.id and insert before it.
-
     const insertBeforeRow = existingRows.find(row => parseInt(row.dataset.diaId) > nextDay.id);
 
     if (insertBeforeRow) {
         tbody.insertBefore(tr, insertBeforeRow);
     } else {
         tbody.appendChild(tr);
+    }
+
+    // 3. Auto-fill values
+    if (valuesToCopy.length === 4) {
+        const newInputs = tr.querySelectorAll('input[type="time"]');
+        newInputs.forEach((input, index) => {
+            input.value = valuesToCopy[index];
+        });
     }
 
     updateIndexes();
@@ -72,6 +94,7 @@ function excluirDia(btn) {
     row.remove();
     updateIndexes();
     minimumNumberOfDays--;
+    clearValidationMessage();
 }
 
 function updateIndexes() {
@@ -124,13 +147,55 @@ function updateIndexes() {
     });
 }
 
+function validateRowTimes(row) {
+    const inputs = row.querySelectorAll('input[type="time"]');
+    if (inputs.length !== 4) return { valid: false, message: 'Erro interno: número incorreto de campos.' };
+
+    const times = Array.from(inputs).map(input => input.value);
+
+    // Check if all fields are filled
+    if (times.some(t => !t)) {
+        return { valid: false, message: 'Preencha todos os horários do dia anterior antes de adicionar o próximo.' };
+    }
+
+    // Validation logic: Entrada < Intervalo < Retorno < Saída
+    // String comparison works for HH:mm format (24h)
+    if (times[0] >= times[1]) return { valid: false, message: 'A Entrada deve ser menor que o Intervalo.' };
+    if (times[1] >= times[2]) return { valid: false, message: 'O Intervalo deve ser menor que o Retorno.' };
+    if (times[2] >= times[3]) return { valid: false, message: 'O Retorno deve ser menor que a Saída.' };
+
+    return { valid: true };
+}
+
+function displayValidationMessage(message, type = 'danger') {
+    const msgDiv = document.getElementById('validation-message');
+    msgDiv.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+}
+
+function clearValidationMessage() {
+    const msgDiv = document.getElementById('validation-message');
+    if (msgDiv) msgDiv.innerHTML = '';
+}
+
 function validateForm() {
+    clearValidationMessage();
     if (minimumNumberOfDays < 1) {
-        const message = document.getElementById('validation-message');
-        message.classList.add('alert', 'alert-danger');
-        message.textContent = 'Pelo menos um dia deve ser adicionado.';
-        message.style.marginTop = '1rem';
+        displayValidationMessage('Pelo menos um dia deve ser adicionado.');
         return false;
+    }
+
+    const tbody = document.getElementById('table-jornada-body');
+    const rows = tbody.querySelectorAll('tr');
+    for (const row of rows) {
+        const validation = validateRowTimes(row);
+        if (!validation.valid) {
+            const diaNome = row.querySelector('td.fw-bold').textContent;
+            displayValidationMessage(`<strong>${diaNome}</strong>: ${validation.message}`);
+            return false;
+        }
     }
     return true;
 }
