@@ -76,4 +76,16 @@ public class JornadaServiceImpl implements JornadaService {
 		}
 	}
 
+	@Override
+	public void alterarStatus(Jornada jornada) {
+		jornada.setSituacaoJornada(jornada.getSituacaoJornada() == DefaultConstant.ATIVO ? DefaultConstant.INATIVO
+				: DefaultConstant.ATIVO);
+		jornadaRepository.save(jornada);
+	}
+
+	@Override
+	public Jornada buscarPorId(Long codigoJornada) {
+		return jornadaRepository.findById(codigoJornada).orElse(null);
+	}
+
 }

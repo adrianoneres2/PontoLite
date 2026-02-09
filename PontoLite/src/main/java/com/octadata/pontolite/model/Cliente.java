@@ -1,3 +1,4 @@
+
 package com.octadata.pontolite.model;
 
 import java.io.Serializable;

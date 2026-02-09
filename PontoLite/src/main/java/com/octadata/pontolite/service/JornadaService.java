@@ -14,4 +14,8 @@ public interface JornadaService {
 
 	List<Jornada> porCliente(Cliente cliente);
 
+	Jornada buscarPorId(Long id);
+
+	void alterarStatus(Jornada jornada);
+
 }

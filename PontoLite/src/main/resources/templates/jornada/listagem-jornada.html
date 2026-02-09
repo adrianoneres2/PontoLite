@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<span>Listagem de Jornadas</span>
+			<a th:href="@{/pontolite}" class="btn btn-secondary btn-sm">Voltar</a>
+		</div>
+		<div class="card-body">
+			<!-- Search Bar -->
+			<div class="mb-4">
+				<div class="input-group">
+					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+					<input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome...">
+				</div>
+			</div>
+
+			<!-- Table -->
+			<div class="table-responsive">
+				<table id="clientTable" class="table table-hover align-middle">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nome da Jornada</th>
+							<th scope="col">Cadastro</th>
+							<th scope="col">Cliente</th>
+							<th scope="col">Usuário Cadastro</th>
+							<th scope="col">Status</th>
+							<th scope="col" class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="jornada : ${jornadas}">
+							<th th:text="${jornada.codigoJornada}" scope="row"></th>
+							<td th:text="${jornada.nomeJornada}"></td>
+							<td th:text="${jornada.dataCriacao}"></td>
+							<td th:text="${jornada.cliente.nomeCliente}"></td>
+							<td th:text="${jornada.usuarioCadastro.username}"></td>
+							<td class="text-center">
+								<form action="#"
+									th:action="@{/pontolite/jornada/alterar-status/{codJornada}(codJornada = ${jornada.codigoJornada})}"
+									method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm"
+										th:classappend="${jornada.situacaoJornada==1} ? 'btn-success' : 'btn-danger'"
+										th:text="${jornada.getDescricaoSituacaoJornada}" style="min-width: 80px;">
+									</button>
+								</form>
+							</td>
+							<td class="text-center">
+								<div class="btn-group" role="group">
+									<a th:href="@{/pontolite/jornada/alterar?codJornada={codJornada}(codJornada = ${jornada.codigoJornada})}"
+										class="btn btn-outline-primary btn-sm" title="Editar">
+										<i class="bi bi-pencil"></i>
+									</a>
+									<a th:href="@{/pontolite/jornada/listar?codJornada={codJornada}(codJornada = ${jornada.codigoJornada})}"
+										class="btn btn-outline-info btn-sm" title="Quadro de Horários">
+										<i class="bi bi-calendar"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="alert alert-warning mt-3 border-0 bg-warning-light" role="alert" id="noResults"
+				style="display: none;">
+				<i class="bi bi-info-circle me-2"></i> Nenhuma jornada encontrado.
+			</div>
+		</div>
+	</div>
+</main>
+
+</html>

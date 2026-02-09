@@ -1,9 +1,13 @@
 package com.octadata.pontolite.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -44,6 +48,36 @@ public class JornadaController {
 		jornada.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
 		jornadaService.salvar(jornada);
 		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Cadastrado com sucesso!!");
+		return "/jornada/cadastro-jornada";
+	}
+
+	@GetMapping("/listar")
+	public String listarJornadas(Model model) {
+		List<Jornada> jornadas = new ArrayList<>();
+		jornadas = jornadaService.porCliente(autenticacaoService.getUsuarioAutenticado().getCliente());
+		model.addAttribute("jornadas", jornadas);
+		return "/jornada/listagem-jornada";
+	}
+
+	@GetMapping("/quadro-horarios")
+	public String acessarQuadroHorarios(Model model) {
+		return "/jornada/quadro-horarios";
+	}
+
+	@PostMapping("/alterar-status/{codJornada}")
+	public String alterarStatusJornada(@PathVariable("codJornada") Long codJornada, Model model) {
+		Jornada jornada = jornadaService.buscarPorId(codJornada);
+		jornadaService.alterarStatus(jornada);
+		return "redirect:/pontolite/jornada/listar";
+	}
+
+	@GetMapping("/alterar/{codJornada}")
+	public String acessarFormularioAlterarJornada(@PathVariable Long codJornada, Model model) {
+		Jornada jornada = jornadaService.buscarPorId(codJornada);
+		JornadaDTO jornadaDTO = new JornadaDTO();
+		jornadaDTO.fromJornada(jornada);
+		model.addAttribute("jornadaDTO", jornadaDTO);
+		model.addAttribute("clientes", clienteService.listarTodos());
 		return "/jornada/cadastro-jornada";
 	}
 }

@@ -11,14 +11,25 @@ import jakarta.validation.constraints.NotNull;
 public record JornadaDTO(
         @NotNull String nomeJornada,
         Long situacaoJornada,
-
         @NotNull Long codigoJornada,
-
         Date dataCriacao,
-
         @NotNull Cliente cliente,
-
         @NotNull List<JornadaDataHoraDTO> listaJornadaDataHora) {
+
+    public JornadaDTO() {
+        this(null, null, null, null, null, null);
+    }
+
+    public static JornadaDTO fromJornada(Jornada jornada) {
+        return new JornadaDTO(
+                jornada.getNomeJornada(),
+                jornada.getSituacaoJornada(),
+                jornada.getCodigoJornada(),
+                jornada.getDataCriacao(),
+                jornada.getCliente(),
+                jornada.getListaJornadaDataHora().stream()
+                        .map(JornadaDataHoraDTO::fromJornadaDataHora).toList());
+    }
 
     public Jornada toJornada(JornadaDTO jornadaDTO) {
         Jornada jornada = new Jornada();
@@ -32,7 +43,7 @@ public record JornadaDTO(
     }
 
     public List<JornadaDataHora> toJornadaDataHora(List<JornadaDataHoraDTO> listaJornadaDataHoraDTO) {
-        JornadaDataHoraDTO jornadaDataHoraDTO = new JornadaDataHoraDTO(null, null, null, null, null);
+        JornadaDataHoraDTO jornadaDataHoraDTO = new JornadaDataHoraDTO(null, null, null, null, null, null);
         return jornadaDataHoraDTO.toJornadaDataHora(listaJornadaDataHoraDTO);
     }
 }

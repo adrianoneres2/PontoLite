@@ -11,6 +11,7 @@ import com.octadata.pontolite.model.JornadaDataHora;
 import jakarta.validation.constraints.NotNull;
 
 public record JornadaDataHoraDTO(
+        Long codigoJornadaDataHora,
         @NotNull LocalTime hora,
         LocalDateTime dataJornadaDataHora,
         Long codigoJornada,
@@ -34,4 +35,15 @@ public record JornadaDataHoraDTO(
         LocalDate localDate = LocalDate.now();
         return localDate.atTime(localTime);
     }
+
+    public static JornadaDataHoraDTO fromJornadaDataHora(JornadaDataHora jornadaDataHora) {
+        return new JornadaDataHoraDTO(
+                jornadaDataHora.getCodigoJornadaDataHora(),
+                jornadaDataHora.getDataJornadaDataHora().toLocalTime(),
+                jornadaDataHora.getDataJornadaDataHora(),
+                jornadaDataHora.getJornada().getCodigoJornada(),
+                jornadaDataHora.getCodigoDia(),
+                jornadaDataHora.getCodigoTipoRegistro());
+    }
+
 }

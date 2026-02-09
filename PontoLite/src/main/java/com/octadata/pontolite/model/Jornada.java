@@ -1,7 +1,7 @@
 package com.octadata.pontolite.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -108,4 +108,7 @@ public class Jornada implements Serializable {
 		this.nomeJornada = nomeJornada;
 	}
 
+	public String getDescricaoSituacaoJornada() {
+		return situacaoJornada == 1 ? "Ativo" : "Inativo";
+	}
 }
