@@ -20,7 +20,7 @@ public record JornadaDTO(
         this(null, null, null, null, null, null);
     }
 
-    public static JornadaDTO fromJornada(Jornada jornada) {
+    public JornadaDTO fromJornada(Jornada jornada) {
         return new JornadaDTO(
                 jornada.getNomeJornada(),
                 jornada.getSituacaoJornada(),
