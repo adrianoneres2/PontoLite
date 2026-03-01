@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.octadata.pontolite.dto.JornadaDTO;
+import com.octadata.pontolite.dto.JornadaDataHoraDTOResumo;
 import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
@@ -75,10 +76,13 @@ public class JornadaController {
 	@GetMapping("/alterar")
 	public String acessarFormularioAlteracaoJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
 			Model model) {
+
 		Jornada jornada = jornadaService.buscarPorId(codJornada);
 		JornadaDTO jornadaDTO = new JornadaDTO();
 		jornadaDTO = jornadaDTO.fromJornada(jornada);
 		model.addAttribute("jornadaDTO", jornadaDTO);
+		model.addAttribute("jornadaResumo",
+				JornadaDataHoraDTOResumo.toListaJornadaDataHoraDTOResumo(jornada.getListaJornadaDataHora()));
 		model.addAttribute("clientes", clienteService.listarTodos());
 		return "/jornada/alteracao-jornada";
 	}

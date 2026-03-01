@@ -40,6 +40,7 @@
 						<thead class="table-light">
 							<tr>
 								<th style="width: 15%;">Dia</th>
+								<th style="width: 15%;">Jornada</th>
 								<th>Entrada</th>
 								<th>Intervalo</th>
 								<th>Retorno</th>
@@ -49,6 +50,20 @@
 						</thead>
 						<tbody id="table-jornada-body">
 							<!-- Rows will be added dynamically -->
+							<tr th:each="jornadaDataHoraResumo : ${jornadaResumo}">
+								<td th:text="${jornadaDataHoraResumo.codigoDia}"></td>
+								<td th:text="${jornadaDataHoraResumo.codigoJornada}"></td>
+
+								<th><input type="time" th:value="${jornadaDataHoraResumo.horaEntrada}"></th>
+								<th><input type="time" th:value="${jornadaDataHoraResumo.horaIntervalo}"></th>
+								<th><input type="time" th:value="${jornadaDataHoraResumo.horaRetorno}"></th>
+								<th><input type="time" th:value="${jornadaDataHoraResumo.horaSaida}"></th>
+								<td>
+									<button type="button" class="btn btn-outline-danger btn-sm" onclick="removerDia()">
+										<i class="bi bi-trash"></i>
+									</button>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
