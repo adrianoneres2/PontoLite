@@ -9,6 +9,7 @@
 		<div class="card-body">
 			<form action="#" onsubmit="return validateForm()" th:action="@{/pontolite/jornada/formulario}"
 				th:object="${jornadaDTO}" method="post" id="form-jornada">
+
 				<div class="row">
 					<div class="mb-4">
 						<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>
@@ -40,7 +41,6 @@
 						<thead class="table-light">
 							<tr>
 								<th style="width: 15%;">Dia</th>
-								<th style="width: 15%;">Jornada</th>
 								<th>Entrada</th>
 								<th>Intervalo</th>
 								<th>Retorno</th>
@@ -51,15 +51,22 @@
 						<tbody id="table-jornada-body">
 							<!-- Rows will be added dynamically -->
 							<tr th:each="jornadaDataHoraResumo : ${jornadaResumo}">
-								<td th:text="${jornadaDataHoraResumo.codigoDia}"></td>
-								<td th:text="${jornadaDataHoraResumo.codigoJornada}"></td>
+								<input type="hidden" th:field="*{listaJornadaDataHora[0].codigoDia}"
+									th:value="${jornadaDataHoraResumo.codigoDia}">
 
-								<th><input type="time" th:value="${jornadaDataHoraResumo.horaEntrada}"></th>
-								<th><input type="time" th:value="${jornadaDataHoraResumo.horaIntervalo}"></th>
-								<th><input type="time" th:value="${jornadaDataHoraResumo.horaRetorno}"></th>
-								<th><input type="time" th:value="${jornadaDataHoraResumo.horaSaida}"></th>
+								<td th:text="${jornadaDataHoraResumo.nomeDiaSemana}"></td>
+
+								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[0].hora}"
+										th:value="${jornadaDataHoraResumo.horaEntrada}"></th>
+								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[1].hora}"
+										th:value="${jornadaDataHoraResumo.horaIntervalo}"></th>
+								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[2].hora}"
+										th:value="${jornadaDataHoraResumo.horaRetorno}"></th>
+								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[3].hora}"
+										th:value="${jornadaDataHoraResumo.horaSaida}"></th>
 								<td>
-									<button type="button" class="btn btn-outline-danger btn-sm" onclick="removerDia()">
+									<button type="button" class="btn btn-outline-danger btn-sm"
+										onclick="excluirDia(this)">
 										<i class="bi bi-trash"></i>
 									</button>
 								</td>

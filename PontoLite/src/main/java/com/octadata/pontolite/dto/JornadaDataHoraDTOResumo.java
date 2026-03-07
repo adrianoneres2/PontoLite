@@ -7,6 +7,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.NotNull;
 import com.octadata.pontolite.model.JornadaDataHora;
+import com.octadata.pontolite.util.EnumDiaSemana;
 
 public record JornadaDataHoraDTOResumo(
         Long codigoJornadaDataHora,
@@ -17,7 +18,8 @@ public record JornadaDataHoraDTOResumo(
         LocalDateTime dataJornadaDataHora,
         Long codigoJornada,
         @NotNull Long codigoDia,
-        @NotNull Long codigoTipoRegistro) {
+        @NotNull Long codigoTipoRegistro,
+        @NotNull String nomeDiaSemana) {
 
     public static List<JornadaDataHoraDTOResumo> toListaJornadaDataHoraDTOResumo(
             List<JornadaDataHora> listaJornadaDataHora) {
@@ -58,7 +60,8 @@ public record JornadaDataHoraDTOResumo(
                         jornadaDataHora.getDataJornadaDataHora(),
                         jornadaDataHora.getJornada().getCodigoJornada(),
                         jornadaDataHora.getCodigoDia(),
-                        jornadaDataHora.getCodigoTipoRegistro()));
+                        jornadaDataHora.getCodigoTipoRegistro(),
+                        EnumDiaSemana.values()[jornadaDataHora.getCodigoDia().intValue() - 1].getNomeDiaSemana()));
             }
         }
         return listaJornadaDataHoraDTOResumo;
