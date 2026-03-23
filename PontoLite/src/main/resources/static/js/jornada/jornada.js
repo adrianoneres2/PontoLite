@@ -199,3 +199,13 @@ function validateForm() {
     }
     return true;
 }
+
+
+function updateIndexesAlteracao() {
+    /**
+     * Atualiza os índices dos campos de data e hora da jornada.
+     * Isso é necessário para que o Spring consiga mapear os campos corretamente.
+     */
+    const tbody = document.getElementById('table-jornada-body');
+    const rows = tbody.querySelectorAll('tr');
+}

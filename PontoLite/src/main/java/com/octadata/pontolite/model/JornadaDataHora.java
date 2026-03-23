@@ -2,6 +2,7 @@ package com.octadata.pontolite.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_jornada_data_hora", schema = "pontolite")
@@ -41,6 +43,9 @@ public class JornadaDataHora implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_jornada", insertable = true, updatable = true)
 	private Jornada jornada;
+
+	@Transient
+	private LocalTime hora;
 
 	public LocalDateTime getDataJornadaDataHora() {
 		return dataJornadaDataHora;
@@ -80,5 +85,14 @@ public class JornadaDataHora implements Serializable {
 
 	public void setCodigoJornadaDataHora(Long codigoJornadaDataHora) {
 		this.codigoJornadaDataHora = codigoJornadaDataHora;
+	}
+
+	public LocalTime getHora() {
+		return this.getDataJornadaDataHora().toLocalTime();
+	}
+
+	public void setHora(LocalTime hora) {
+		this.setDataJornadaDataHora(
+				this.getDataJornadaDataHora().withHour(hora.getHour()).withMinute(hora.getMinute()));
 	}
 }

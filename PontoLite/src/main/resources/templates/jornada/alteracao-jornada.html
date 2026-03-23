@@ -13,6 +13,9 @@
 				<div class="row">
 					<div class="mb-4">
 						<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>
+						<input type="hidden" th:field="*{codigoJornada}">
+						<input type="hidden" th:field="*{dataCriacao}">
+						<input type="hidden" th:field="*{situacaoJornada}">
 						<input type="text" class="form-control" id="input-nome-jornada"
 							placeholder="Ex: Comercial (08:00 - 18:00)" required th:field="*{nomeJornada}"
 							maxlength="60">
@@ -50,27 +53,56 @@
 						</thead>
 						<tbody id="table-jornada-body">
 							<!-- Rows will be added dynamically -->
-							<tr th:each="jornadaDataHoraResumo : ${jornadaResumo}">
-								<input type="hidden" th:field="*{listaJornadaDataHora[0].codigoDia}"
-									th:value="${jornadaDataHoraResumo.codigoDia}">
+							<!--<th:block th:each="i, dia : ${#numbers.sequence(1, 8)}"> -->
 
-								<td th:text="${jornadaDataHoraResumo.nomeDiaSemana}"></td>
+							<tr th:each="jornadaDataHora, indice : ${jornadaDTO.listaJornadaDataHora}">
+								<input type="hidden" th:field="*{listaJornadaDataHora[__${indice.index}__].codigoDia}"
+									th:value="${jornadaDataHora.codigoDia}">
+								<input type="hidden"
+									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoTipoRegistro}"
+									th:value="${jornadaDataHora.codigoTipoRegistro}">
+								<input type="hidden"
+									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornada}"
+									th:value="${jornadaDataHora.codigoJornada}">
+								<input type="hidden"
+									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornadaDataHora}"
+									th:value="${jornadaDataHora.codigoJornadaDataHora}">
+								<input type="hidden"
+									th:field="*{listaJornadaDataHora[__${indice.index}__].dataJornadaDataHora}"
+									th:value="${jornadaDataHora.dataJornadaDataHora}">
 
-								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[0].hora}"
-										th:value="${jornadaDataHoraResumo.horaEntrada}"></th>
-								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[1].hora}"
-										th:value="${jornadaDataHoraResumo.horaIntervalo}"></th>
-								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[2].hora}"
-										th:value="${jornadaDataHoraResumo.horaRetorno}"></th>
-								<th><input type="time" class="form-control" th:field="*{listaJornadaDataHora[3].hora}"
-										th:value="${jornadaDataHoraResumo.horaSaida}"></th>
-								<td>
-									<button type="button" class="btn btn-outline-danger btn-sm"
-										onclick="excluirDia(this)">
-										<i class="bi bi-trash"></i>
-									</button>
-								</td>
+								<!--<p th:text="${jornadaDataHora.dataJornadaDataHora}"></p> -->
+
+								<div th:if="${jornadaDataHora.codigoTipoRegistro == 1}">
+									<td class="fw-bold">
+										<p th:text="${jornadaDataHora.nomeDiaSemana}" scope="row"></p>
+									</td>
+
+									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
+											th:field="*{listaJornadaDataHora[__${indice.index+0}__].hora}"
+											name="listaJornadaDataHora[__${indice.index+0}__].hora">
+									</td>
+									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
+											th:field="*{listaJornadaDataHora[__${indice.index+1}__].hora}"
+											name="listaJornadaDataHora[__${indice.index+1}__].hora">
+									</td>
+									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
+											th:field="*{listaJornadaDataHora[__${indice.index+2}__].hora}"
+											name="listaJornadaDataHora[__${indice.index+2}__].hora">
+									</td>
+									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
+											th:field="*{listaJornadaDataHora[__${indice.index+3}__].hora}"
+											name="listaJornadaDataHora[__${indice.index+3}__].hora">
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-danger btn-sm"
+											onclick="excluirDia(this)">
+											<i class="bi bi-trash"></i>
+										</button>
+									</td>
+								</div>
 							</tr>
+							<!--</th:block>-->
 						</tbody>
 					</table>
 				</div>

@@ -43,7 +43,7 @@ public record JornadaDTO(
     }
 
     public List<JornadaDataHora> toJornadaDataHora(List<JornadaDataHoraDTO> listaJornadaDataHoraDTO) {
-        JornadaDataHoraDTO jornadaDataHoraDTO = new JornadaDataHoraDTO(null, null, null, null, null, null);
+        JornadaDataHoraDTO jornadaDataHoraDTO = new JornadaDataHoraDTO(null, null, null, null, null, null, null);
         return jornadaDataHoraDTO.toJornadaDataHora(listaJornadaDataHoraDTO);
     }
 }

@@ -81,8 +81,6 @@ public class JornadaController {
 		JornadaDTO jornadaDTO = new JornadaDTO();
 		jornadaDTO = jornadaDTO.fromJornada(jornada);
 		model.addAttribute("jornadaDTO", jornadaDTO);
-		model.addAttribute("jornadaResumo",
-				JornadaDataHoraDTOResumo.toListaJornadaDataHoraDTOResumo(jornada.getListaJornadaDataHora()));
 		model.addAttribute("clientes", clienteService.listarTodos());
 		return "/jornada/alteracao-jornada";
 	}

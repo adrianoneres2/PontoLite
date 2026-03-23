@@ -2,6 +2,7 @@ package com.octadata.pontolite.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -93,6 +94,9 @@ public class Jornada implements Serializable {
 	}
 
 	public List<JornadaDataHora> getListaJornadaDataHora() {
+		listaJornadaDataHora.sort(
+				Comparator.comparing(JornadaDataHora::getCodigoDia)
+						.thenComparing(JornadaDataHora::getCodigoTipoRegistro));
 		return listaJornadaDataHora;
 	}
 
