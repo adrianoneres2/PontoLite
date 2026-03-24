@@ -52,57 +52,65 @@
 							</tr>
 						</thead>
 						<tbody id="table-jornada-body">
-							<!-- Rows will be added dynamically -->
-							<!--<th:block th:each="i, dia : ${#numbers.sequence(1, 8)}"> -->
-
-							<tr th:each="jornadaDataHora, indice : ${jornadaDTO.listaJornadaDataHora}">
-								<input type="hidden" th:field="*{listaJornadaDataHora[__${indice.index}__].codigoDia}"
-									th:value="${jornadaDataHora.codigoDia}">
-								<input type="hidden"
-									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoTipoRegistro}"
-									th:value="${jornadaDataHora.codigoTipoRegistro}">
-								<input type="hidden"
-									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornada}"
-									th:value="${jornadaDataHora.codigoJornada}">
-								<input type="hidden"
-									th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornadaDataHora}"
-									th:value="${jornadaDataHora.codigoJornadaDataHora}">
-								<input type="hidden"
-									th:field="*{listaJornadaDataHora[__${indice.index}__].dataJornadaDataHora}"
-									th:value="${jornadaDataHora.dataJornadaDataHora}">
-
-								<!--<p th:text="${jornadaDataHora.dataJornadaDataHora}"></p> -->
-
-								<div th:if="${jornadaDataHora.codigoTipoRegistro == 1}">
-									<td class="fw-bold">
-										<p th:text="${jornadaDataHora.nomeDiaSemana}" scope="row"></p>
-									</td>
-
-									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
-											th:field="*{listaJornadaDataHora[__${indice.index+0}__].hora}"
-											name="listaJornadaDataHora[__${indice.index+0}__].hora">
-									</td>
-									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
-											th:field="*{listaJornadaDataHora[__${indice.index+1}__].hora}"
-											name="listaJornadaDataHora[__${indice.index+1}__].hora">
-									</td>
-									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
-											th:field="*{listaJornadaDataHora[__${indice.index+2}__].hora}"
-											name="listaJornadaDataHora[__${indice.index+2}__].hora">
-									</td>
-									<td><input type="time" class="form-control" th:value="${jornadaDataHora.hora}"
-											th:field="*{listaJornadaDataHora[__${indice.index+3}__].hora}"
-											name="listaJornadaDataHora[__${indice.index+3}__].hora">
-									</td>
-									<td>
-										<button type="button" class="btn btn-outline-danger btn-sm"
-											onclick="excluirDia(this)">
-											<i class="bi bi-trash"></i>
-										</button>
-									</td>
-								</div>
+							<tr th:each="jornadaDataHora, indice : ${jornadaDTO.listaJornadaDataHora}"
+								th:if="${jornadaDataHora.codigoTipoRegistro == 1}"
+								th:data-dia-id="${jornadaDataHora.codigoDia}">
+								<td class="fw-bold" th:text="${jornadaDataHora.nomeDiaSemana}"></td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoJornadaDataHora}">
+								</td>
+								<td class="text-center">
+									<button type="button" class="btn btn-outline-danger btn-sm"
+										onclick="excluirDia(this)">
+										<i class="bi bi-trash"></i>
+									</button>
+								</td>
 							</tr>
-							<!--</th:block>-->
 						</tbody>
 					</table>
 				</div>
@@ -122,7 +130,7 @@
 			</form>
 		</div>
 	</div>
-	<script th:src="@{/js/jornada/jornada.js}"></script>
+	<script th:src="@{/js/jornada/jornada-alteracao.js}"></script>
 </main>
 
 </html>
