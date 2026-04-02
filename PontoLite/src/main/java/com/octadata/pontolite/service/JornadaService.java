@@ -12,8 +12,6 @@ public interface JornadaService {
 
 	Jornada salvar(Jornada jornada);
 
-	Jornada alterar(Jornada jornada);
-
 	List<Jornada> porCliente(Cliente cliente);
 
 	Jornada buscarPorId(Long id);

@@ -39,20 +39,6 @@ public class JornadaServiceImpl implements JornadaService {
 	}
 
 	@Override
-	@Transactional
-	public Jornada alterar(Jornada jornada) {
-		validar(jornada);
-		Jornada jornadaSalva;
-		try {
-			jornadaSalva = jornadaRepository.save(jornada);
-			return jornadaSalva;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			throw new NegocioException(EnumMessage.ERROR.toString(), "Erro ao salvar jornada!", "");
-		}
-	}
-
-	@Override
 	public List<Jornada> porCliente(Cliente cliente) {
 		return jornadaRepository.findByCliente(cliente);
 	}

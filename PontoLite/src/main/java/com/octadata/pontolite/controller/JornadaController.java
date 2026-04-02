@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.octadata.pontolite.dto.JornadaDTO;
-import com.octadata.pontolite.dto.JornadaDataHoraDTOResumo;
 import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
