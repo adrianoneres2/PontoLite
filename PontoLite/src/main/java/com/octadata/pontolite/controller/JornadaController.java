@@ -49,7 +49,7 @@ public class JornadaController {
 		jornada = jornadaDTO.toJornada(jornadaDTO);
 		jornada.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
 		jornadaService.salvar(jornada);
-		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Cadastrado com sucesso!!");
+		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Processado com sucesso!!");
 		return "/jornada/cadastro-jornada";
 	}
 
@@ -84,4 +84,5 @@ public class JornadaController {
 		model.addAttribute("clientes", clienteService.listarTodos());
 		return "/jornada/alteracao-jornada";
 	}
+
 }

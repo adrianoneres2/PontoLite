@@ -29,15 +29,25 @@ public class JornadaServiceImpl implements JornadaService {
 	@Transactional
 	public Jornada salvar(Jornada jornada) {
 		validar(jornada);
+		Jornada jornadaSalva;
 		try {
-			Jornada jornadaSalva = jornadaRepository.save(jornada);
-			jornadaSalva.setListaJornadaDataHora(jornada.getListaJornadaDataHora());
-			jornadaSalva.getListaJornadaDataHora().forEach(jornadaDataHora -> {
-				jornadaDataHora.setJornada(jornadaSalva);
-				jornadaDataHoraRepository.save(jornadaDataHora);
-			});
+			jornadaSalva = jornadaRepository.save(jornada);
 			return jornadaSalva;
 		} catch (Exception e) {
+			throw new NegocioException(EnumMessage.ERROR.toString(), "Erro ao salvar jornada!", "");
+		}
+	}
+
+	@Override
+	@Transactional
+	public Jornada alterar(Jornada jornada) {
+		validar(jornada);
+		Jornada jornadaSalva;
+		try {
+			jornadaSalva = jornadaRepository.save(jornada);
+			return jornadaSalva;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new NegocioException(EnumMessage.ERROR.toString(), "Erro ao salvar jornada!", "");
 		}
 	}

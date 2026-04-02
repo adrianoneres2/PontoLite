@@ -50,7 +50,7 @@ public class Jornada implements Serializable {
 	@JoinColumn(name = "id_usuario_cadastro", insertable = true, updatable = false)
 	private Usuario usuarioCadastro;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jornada", cascade = CascadeType.REFRESH)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JornadaDataHora> listaJornadaDataHora;
 
 	public Long getCodigoJornada() {
@@ -101,7 +101,13 @@ public class Jornada implements Serializable {
 	}
 
 	public void setListaJornadaDataHora(List<JornadaDataHora> listaJornadaDataHora) {
-		this.listaJornadaDataHora = listaJornadaDataHora;
+		listaJornadaDataHora.forEach(jdh -> jdh.setJornada(this));
+		if (this.listaJornadaDataHora != null) {
+			this.listaJornadaDataHora.clear();
+			this.listaJornadaDataHora.addAll(listaJornadaDataHora);
+		} else {
+			this.listaJornadaDataHora = listaJornadaDataHora;
+		}
 	}
 
 	public String getNomeJornada() {
