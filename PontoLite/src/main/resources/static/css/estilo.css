@@ -172,9 +172,13 @@ a:hover {
 }
 
 .page-header {
-    margin-bottom: 25px;
+    margin: -20px -40px 25px -40px;
+    padding: 20px 40px 15px 40px;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--secondary-color);
 }
 
 .page-header h1 {

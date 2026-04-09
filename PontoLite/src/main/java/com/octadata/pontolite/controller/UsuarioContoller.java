@@ -22,6 +22,7 @@ import com.octadata.pontolite.service.ClienteService;
 import com.octadata.pontolite.service.JornadaService;
 import com.octadata.pontolite.service.PerfilService;
 import com.octadata.pontolite.service.UsuarioService;
+import com.octadata.pontolite.util.ClienteHelper;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
 
@@ -68,8 +69,7 @@ public class UsuarioContoller {
 		try {
 			/* Usuário que efetua o cadastro */
 			usuario.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
-			usuario.setCliente(usuario.getCliente() == null ? autenticacaoService.getUsuarioAutenticado().getCliente()
-					: usuario.getCliente());
+			usuario.setCliente(ClienteHelper.getClienteSelecionado(usuario.getCliente(), autenticacaoService));
 			usuarioService.salvar(usuario);
 			ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Cadastrado com sucesso!!");
 		} catch (NegocioException e) {
@@ -81,8 +81,7 @@ public class UsuarioContoller {
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "codCliente", required = true, defaultValue = "0") Long codigoCliente,
 			Model model) {
-		codigoCliente = codigoCliente == 0 ? autenticacaoService.getUsuarioAutenticado().getCliente().getCodigoCliente()
-				: codigoCliente;
+		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente, autenticacaoService);
 		atualizarListaUsuarioPorCliente(model, codigoCliente);
 		return "/usuario/listagem-usuario";
 	}

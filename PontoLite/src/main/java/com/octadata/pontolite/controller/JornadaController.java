@@ -17,6 +17,7 @@ import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
 import com.octadata.pontolite.service.JornadaService;
+import com.octadata.pontolite.util.ClienteHelper;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
 
@@ -47,6 +48,7 @@ public class JornadaController {
 		Jornada jornada = new Jornada();
 		jornada = jornadaDTO.toJornada(jornadaDTO);
 		jornada.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
+		jornada.setCliente(ClienteHelper.getClienteSelecionado(jornada.getCliente(), autenticacaoService));
 		jornadaService.salvar(jornada);
 		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Processado com sucesso!!");
 		return "/jornada/cadastro-jornada";
