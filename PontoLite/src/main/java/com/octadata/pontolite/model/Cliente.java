@@ -4,6 +4,7 @@ package com.octadata.pontolite.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.octadata.pontolite.util.DefaultConstant;
@@ -86,6 +87,9 @@ public class Cliente implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.PERSIST)
 	private Set<Usuario> usuarios = new HashSet<>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente", cascade = CascadeType.REFRESH)
+	private List<PerfilFuncionalidade> perfilFuncionalidades;
+
 	public long getCodigoCliente() {
 		return codigoCliente;
 	}
@@ -160,5 +164,13 @@ public class Cliente implements Serializable {
 
 	public String getDescricaoSituacaoCliente() {
 		return this.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? "Ativo" : "Inativo";
+	}
+
+	public List<PerfilFuncionalidade> getPerfilFuncionalidades() {
+		return perfilFuncionalidades;
+	}
+
+	public void setPerfilFuncionalidades(List<PerfilFuncionalidade> perfilFuncionalidades) {
+		this.perfilFuncionalidades = perfilFuncionalidades;
 	}
 }

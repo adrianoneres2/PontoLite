@@ -10,4 +10,8 @@ import com.octadata.pontolite.model.Perfil;
 @Repository
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
 	Optional<Perfil> findByNomePerfil(String nomePerfil);
+
+	Optional<Perfil> findByCodigoPerfil(Long codigoPerfil);
+
+	// Optional<List<Perfil>> findByCodigoCliente(Long codigoCliente);
 }

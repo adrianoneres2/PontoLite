@@ -10,18 +10,23 @@ import com.octadata.pontolite.repository.PerfilRepository;
 
 @Service
 public class PerfilServiceImpl implements PerfilService {
-	
+
 	@Autowired
 	private PerfilRepository perfilRepostory;
-	
+
 	@Override
 	public Perfil porNome(String nome) {
 		return perfilRepostory.findByNomePerfil(nome).get();
 	}
-	
+
 	@Override
-	public List<Perfil> findAll(){
+	public List<Perfil> findAll() {
 		return perfilRepostory.findAll();
 	}
-	
+
+	@Override
+	public Perfil porId(Long codigoPerfil) {
+		return perfilRepostory.findByCodigoPerfil(codigoPerfil).get();
+	}
+
 }

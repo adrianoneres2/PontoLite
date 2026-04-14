@@ -12,5 +12,7 @@ public interface PerfilService {
 	Perfil porNome(String nome);
 
 	List<Perfil> findAll();
-	
+
+	Perfil porId(Long codigoPerfil);
+
 }
