@@ -2,16 +2,42 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<div id="div-container" class="centralizado-horizontal-vertical">
-		<div id="div-conteudo" class="row">
-			<div class="circulo" th:each="registro : ${registros}" style="margin-left: 50px;">
-				<div class="col">
-					<div><span style="font-size: 18px; color: rgb(0, 0, 0);"
-							th:text="${registro.tipoRegistro.nomeTipoRegistro}"></span></div>
-					<div>
-						<p class="card-text"><span style="font-size: 18px;"
-								th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy kk:mm:ss')}">
-							</span>
+	<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 180px);">
+		<div class="container">
+			<div class="row justify-content-center g-4">
+				<div class="col-auto d-flex" th:each="registro : ${registros}">
+					<div class="card shadow border-0 h-100"
+						style="min-width: 260px; border-radius: 12px; overflow: hidden;">
+						<!-- Header with thematic color -->
+						<div class="card-header text-white text-center py-3 border-0"
+							th:classappend="${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Entrada')} ? 'bg-success' : 
+											(${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Intervalo') and !#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Retorno')} ? 'bg-warning text-dark' : 
+											(${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Retorno')} ? 'bg-info' : 
+											(${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Saída') or #strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Saida')} ? 'bg-danger' : 'bg-primary')))">
+							<h5 class="card-title mb-0 d-flex justify-content-center align-items-center gap-2"
+								style="font-weight: 600;">
+								<i th:if="${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Entrada')}"
+									class="bi bi-box-arrow-in-right fs-4"></i>
+								<i th:if="${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Intervalo') and !#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Retorno')}"
+									class="bi bi-cup-hot fs-4"></i>
+								<i th:if="${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Retorno')}"
+									class="bi bi-arrow-return-right fs-4"></i>
+								<i th:if="${#strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Saída') or #strings.containsIgnoreCase(registro.tipoRegistro.nomeTipoRegistro, 'Saida')}"
+									class="bi bi-box-arrow-right fs-4"></i>
+								<span th:text="${registro.tipoRegistro.nomeTipoRegistro}"></span>
+							</h5>
+						</div>
+						<!-- Body with soft background -->
+						<div class="card-body d-flex flex-column justify-content-center align-items-center py-4"
+							style="background-color: #f0f4f8;">
+							<p class="mb-2 text-muted text-uppercase"
+								style="font-size: 0.85rem; letter-spacing: 1.5px; font-weight: 600;">Horário Registrado
+							</p>
+							<h4 class="card-text mb-1 fw-bold text-secondary" style="font-size: 1.1rem;"
+								th:text="${#temporals.format(registro.dataRegistroPonto, 'dd/MM/yyyy')}"></h4>
+							<h2 class="card-text mt-0 fw-bold" style="color: #2c3e50;"
+								th:text="${#temporals.format(registro.dataRegistroPonto, 'HH:mm:ss')}"></h2>
+						</div>
 					</div>
 				</div>
 			</div>
