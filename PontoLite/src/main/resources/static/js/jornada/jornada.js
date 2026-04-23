@@ -167,6 +167,7 @@ function validateRowTimes(row) {
     return { valid: true };
 }
 
+/*
 function displayValidationMessage(message, type = 'danger') {
     const msgDiv = document.getElementById('validation-message');
     msgDiv.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
@@ -179,6 +180,7 @@ function clearValidationMessage() {
     const msgDiv = document.getElementById('validation-message');
     if (msgDiv) msgDiv.innerHTML = '';
 }
+*/
 
 function validateForm() {
     clearValidationMessage();

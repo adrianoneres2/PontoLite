@@ -57,25 +57,50 @@ function marcar_invalido() {
 
 
 /* jQuery para animação dos submenus */
-    $(document).ready(function(){
-        // Altera o evento de hover para click no item de menu
-        $(".has-submenu > .menu-item").on("click", function(event){
-            // Evita que o link direcione para outra página
-            event.preventDefault(); 
-            
-            let parent = $(this).parent();
+$(document).ready(function () {
+  // Altera o evento de hover para click no item de menu
+  $(".has-submenu > .menu-item").on("click", function (event) {
+    // Evita que o link direcione para outra página
+    event.preventDefault();
 
-            // Adiciona/remove a classe "open" para controlar o estado do menu
-            parent.toggleClass("open");
-            
-            // Alterna a exibição do submenu com um efeito de deslize
-            parent.children(".submenu").stop(true, true).slideToggle(200);
-        });
-    });
+    let parent = $(this).parent();
 
-	
-	// Adicione um evento de clique ao botão
-	document.getElementById("default-botao-voltar").addEventListener("click", function() {
-	  // Redireciona para a página anterior no histórico do navegador
-	  history.back();
-	});
+    // Adiciona/remove a classe "open" para controlar o estado do menu
+    parent.toggleClass("open");
+
+    // Alterna a exibição do submenu com um efeito de deslize
+    parent.children(".submenu").stop(true, true).slideToggle(200);
+  });
+});
+
+
+// Adicione um evento de clique ao botão
+document.getElementById("default-botao-voltar").addEventListener("click", function () {
+  // Redireciona para a página anterior no histórico do navegador
+  history.back();
+});
+
+function displayValidationMessage(message, type = 'danger') {
+  const msgDiv = document.getElementById('validation-message');
+  msgDiv.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                            ${message}
+                        </div>`;
+}
+
+function clearValidationMessage() {
+  const msgDiv = document.getElementById('validation-message');
+  if (msgDiv) msgDiv.innerHTML = '';
+}
+
+function displayFloatValidationMessage(message) {
+  //alert(message);
+  const msgDiv = document.getElementById('validation-message');
+  msgDiv.innerHTML = `<div class="alert-float alert alert-success" role="alert">
+                            ${message}
+                        </div>`;
+  $('#validation-message').fadeIn(500); // Mostra o balão gradualmente
+  // Fecha o balão com efeito fade-out após 3 segundos
+  setTimeout(function () {
+    $('#validation-message').fadeOut(500);
+  }, 3000); // 3000 milissegundos = 3 segundos
+}

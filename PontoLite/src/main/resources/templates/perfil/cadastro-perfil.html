@@ -17,7 +17,8 @@
 			<div class="row mb-4">
 				<div class="col-md-12">
 					<label for="select-cliente" class="form-label">Cliente</label>
-					<select id="select-cliente" class="form-select form-control" onchange="carregarConfiguracoes()">
+					<select id="select-cliente" class="form-select form-control" onchange="carregarConfiguracoes()"
+						required>
 						<option value="">Selecione um cliente...</option>
 						<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
 							th:text="${cliente.nomeCliente}"></option>
@@ -35,7 +36,7 @@
 				<div class="row align-items-end mb-4">
 					<div class="col-md-5 mb-3 mb-md-0">
 						<label for="select-perfil" class="form-label">Perfil</label>
-						<select id="select-perfil" class="form-select form-control">
+						<select id="select-perfil" class="form-select form-control" required>
 							<option value="">Selecione um perfil...</option>
 							<option th:each="perfil : ${perfis}" th:value="${perfil.codigoPerfil}"
 								th:text="${perfil.nomePerfil}"></option>
@@ -44,7 +45,7 @@
 
 					<div class="col-md-5 mb-3 mb-md-0">
 						<label for="select-funcionalidade" class="form-label">Funcionalidade</label>
-						<select id="select-funcionalidade" class="form-select form-control">
+						<select id="select-funcionalidade" class="form-select form-control" required>
 							<option value="">Selecione uma funcionalidade...</option>
 							<option th:each="func : ${funcionalidades}" th:value="${func.codigoFuncionalidade}"
 								th:text="${func.nomeFuncionalidade}"></option>

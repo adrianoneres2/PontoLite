@@ -26,8 +26,6 @@ import com.octadata.pontolite.service.PerfilFuncionalidadeService;
 import com.octadata.pontolite.service.PerfilService;
 import com.octadata.pontolite.util.ClienteHelper;
 
-import jakarta.transaction.Transactional;
-
 @Controller
 @RequestMapping("pontolite/perfil")
 public class PerfilController {
@@ -50,7 +48,7 @@ public class PerfilController {
     @Autowired
     private PerfilFuncionalidadeService perfilFuncionalidadeService;
 
-    @GetMapping("/formulario")
+    @GetMapping("/acessar-formulario")
     public String cadastroPerfil(Model model) {
 
         Usuario usuarioAutenticado = autenticacaoService.getUsuarioAutenticado();

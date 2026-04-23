@@ -23,8 +23,8 @@ public class PerfilFuncionalidade implements GrantedAuthority {
 	}
 
 	@Id
-	@SequenceGenerator(name = "seq_perfil_funcionalidade", sequenceName = "pontolite.seq_perfil_funcionalidade", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_perfil_funcionalidade")
+	@SequenceGenerator(name = "sq_perfil_funcionalidade", sequenceName = "pontolite.sq_perfil_funcionalidade", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_perfil_funcionalidade")
 	@Column(name = "id_perfil_funcionalidade", nullable = false)
 	private Long codigoPerfilFuncionalidade;
 

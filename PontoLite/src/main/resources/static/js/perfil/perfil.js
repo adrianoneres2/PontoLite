@@ -21,7 +21,7 @@ function carregarConfiguracoes() {
         })
         .catch(error => {
             console.error("Erro ao carregar configurações:", error);
-            alert("Erro ao carregar configurações. Verifique o console.");
+            displayValidationMessage("Erro ao carregar configurações. Verifique o console.");
         });
 }
 
@@ -78,7 +78,8 @@ function adicionarConfiguracao() {
     const nomeFuncionalidade = selectFuncionalidade.options[selectFuncionalidade.selectedIndex].text;
 
     if (!idPerfil || !idFuncionalidade) {
-        alert("Por favor, selecione um perfil e uma funcionalidade para adicionar.");
+        //alert("Por favor, selecione um pefil e uma funcionalidade para adicionar.");
+        displayValidationMessage("Por favor, selecione um perfil e uma funcionalidade para adicionar.");
         return;
     }
 
@@ -88,7 +89,8 @@ function adicionarConfiguracao() {
     );
 
     if (duplicado) {
-        alert("Esta configuração já foi adicionada!");
+        //alert("Esta configuração já foi adicionada!");
+        displayValidationMessage("Esta configuração já foi adicionada!");
         return;
     }
 
@@ -109,8 +111,9 @@ function removerConfiguracao(index) {
 
 function salvarConfiguracoes() {
     const codCliente = document.getElementById("select-cliente").value;
+
     if (!codCliente) {
-        alert("Nenhum cliente selecionado.");
+        displayValidationMessage("Nenhum cliente selecionado.");
         return;
     }
 
@@ -135,7 +138,7 @@ function salvarConfiguracoes() {
     })
         .then(response => {
             if (response.ok) {
-                alert("Configurações salvas com sucesso!");
+                displayFloatValidationMessage("Configurações salvas com sucesso!");
                 carregarConfiguracoes(); // Recarrega
             } else {
                 throw new Error("Erro na rede ou backend: " + response.status);
@@ -143,7 +146,7 @@ function salvarConfiguracoes() {
         })
         .catch(error => {
             console.error("Erro ao salvar:", error);
-            alert("Houve um erro ao salvar configurações. Consulte o administrador do sistema.");
+            displayValidationMessage("Houve um erro ao salvar configurações. Consulte o administrador do sistema.");
         })
         .finally(() => {
             btn.disabled = false;
