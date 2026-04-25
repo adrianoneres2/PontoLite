@@ -32,7 +32,7 @@
 						<label for="input-cnpj" class="form-label">CNPJ</label>
 						<input type="text" class="form-control" id="input-cnpj" placeholder="00.000.000/0000-00"
 							required th:field="*{numeroCnpj}" maxlength="18" onkeypress="mascara_cnpj(this)"
-							onkeydown="mascara_cnpj(this)" onkeyup="validar_cnpj(this.value)">
+							onblur="validar_cnpj(this.value)">
 						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('numeroCnpj')}"
 							th:errors="*{numeroCnpj}"></div>
 					</div>
@@ -47,9 +47,9 @@
 					<div class="col-md-6 mb-3">
 						<label for="input-telefone" class="form-label">Telefone</label>
 						<input type="text" class="form-control" id="input-telefone" placeholder="(00) 00000-0000"
-							required th:field="*{numeroTelefone}" maxlength="20"
-							onkeyup="mascaraTelefonefone(event,'input-telefone')"
-							onkeydown="mascaraTelefonefone(event,'input-telefone')">
+							required th:field="*{numeroTelefone}" maxlength="15"
+							onkeydown="mascaraTelefonefone(event,'input-telefone')"
+							onblur="limpaTelefone('input-telefone')">
 						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('numeroTelefone')}"
 							th:errors="*{numeroTelefone}"></div>
 					</div>

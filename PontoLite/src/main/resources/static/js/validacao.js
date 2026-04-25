@@ -1,7 +1,19 @@
+function marcar_invalido() {
+  const input = document.getElementById("input-cnpj");
+  input.value = "";
+  input.style.backgroundColor = "#f1babaff";
+};
+
+function marcar_valido() {
+  const input = document.getElementById("input-cnpj");
+  input.style.backgroundColor = "#94c78bff";
+};
+
 // Validação de CNPJ
 function validar_cnpj(cnpj) {
   cnpj = cnpj.replace(/[^\d]+/g, '');
   if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) {
+
     marcar_invalido();
     return false;
   }
@@ -41,18 +53,6 @@ function validar_cnpj(cnpj) {
 
   marcar_valido();
   return true;
-};
-
-function marcar_valido() {
-  const input = document.getElementById("input-cnpj");
-  input.classList.remove("background-color: red");
-  input.classList.add("background-color: blue");
-};
-
-function marcar_invalido() {
-  const input = document.getElementById("input-cnpj");
-  input.classList.remove("background-color: blue");
-  input.classList.add("background-color: red");
 };
 
 
