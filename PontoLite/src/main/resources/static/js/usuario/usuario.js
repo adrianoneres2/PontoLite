@@ -16,3 +16,27 @@ function validar_confirmacao_senha() {
 		document.getElementById("input-password-confirm").style.backgroundColor = "#74a348";
 	}
 }
+
+
+function carregarJornadaPorCliente() {
+	let codigoCliente = document.getElementById("input-nome-cliente").value;
+
+	alert(codigoCliente);
+
+	fetch(`/pontolite/usuario/api/listar-jornada-cliente?codigoCliente=${codigoCliente}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+			let jornadas = document.getElementById("input-nome-jornada");
+			jornadas.innerHTML = "";
+			data.forEach(jornada => {
+				let option = document.createElement("option");
+				option.value = jornada.codigoJornada;
+				option.text = jornada.nomeJornada;
+				jornadas.appendChild(option);
+			});
+			jornadas.disabled = false;
+		}).catch(error => {
+			console.log("error" + error);
+		});
+}

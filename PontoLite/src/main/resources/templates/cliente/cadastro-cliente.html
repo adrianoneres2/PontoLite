@@ -48,7 +48,7 @@
 						<label for="input-telefone" class="form-label">Telefone</label>
 						<input type="text" class="form-control" id="input-telefone" placeholder="(00) 00000-0000"
 							required th:field="*{numeroTelefone}" maxlength="15"
-							onkeydown="mascaraTelefonefone(event,'input-telefone')"
+							onkeydown="mascaraTelefone	(event,'input-telefone')"
 							onblur="limpaTelefone('input-telefone')">
 						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('numeroTelefone')}"
 							th:errors="*{numeroTelefone}"></div>

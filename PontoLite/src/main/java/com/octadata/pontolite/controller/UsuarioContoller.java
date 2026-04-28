@@ -1,6 +1,7 @@
 package com.octadata.pontolite.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.octadata.pontolite.dto.JornadaResponseDTO;
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.model.Perfil;
@@ -50,7 +53,8 @@ public class UsuarioContoller {
 	@GetMapping("/formulario")
 	public String acessarFormularioCadastroUsuario(Model model) {
 		List<Perfil> perfis = perfilService.findAll();
-		List<Jornada> jornadas = jornadaService.porCliente(autenticacaoService.getUsuarioAutenticado().getCliente());
+		List<Jornada> jornadas = listarJornadaPorCliente(
+				autenticacaoService.getUsuarioAutenticado().getCliente().getCodigoCliente());
 		model.addAttribute("usuario", new Usuario());
 		model.addAttribute("perfis", perfis);
 		model.addAttribute("clientes", clienteService.listarTodos());
@@ -103,7 +107,7 @@ public class UsuarioContoller {
 	public String alterar(@RequestParam(name = "codUsuario", required = true) Long codigoUsuario, Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		List<Perfil> perfis = perfilService.findAll();
-		List<Jornada> jornadas = jornadaService.porCliente(autenticacaoService.getUsuarioAutenticado().getCliente());
+		List<Jornada> jornadas = listarJornadaPorCliente(usuario.getCliente().getCodigoCliente());
 		model.addAttribute("perfis", perfis);
 		model.addAttribute("clientes", clienteService.listarTodos());
 		model.addAttribute("jornadas", jornadas);
@@ -152,4 +156,17 @@ public class UsuarioContoller {
 		return "/usuario/alterar-senha";
 	}
 
+	public List<Jornada> listarJornadaPorCliente(
+			@RequestParam(name = "codigoCliente", required = true) Long codigoCliente) {
+		return jornadaService.porCliente(clienteService.porId(codigoCliente));
+	}
+
+	@GetMapping("/api/listar-jornada-cliente")
+	@ResponseBody
+	public List<JornadaResponseDTO> listarJornadaPorClienteApi(
+			@RequestParam(name = "codigoCliente", required = true) Long codigoCliente) {
+		List<Jornada> jornadas = jornadaService.porCliente(clienteService.porId(codigoCliente));
+		return jornadas.stream().map(j -> new JornadaResponseDTO(j.getCodigoJornada(), j.getNomeJornada()))
+				.collect(Collectors.toList());
+	}
 }

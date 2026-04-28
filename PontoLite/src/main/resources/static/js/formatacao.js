@@ -25,7 +25,7 @@ function mascara_cnpj(campo) {
   }
 };
 
-function mascaraTelefonefone(event, field) {
+function mascaraTelefone(event, field) {
   var valor = document.getElementById(field).attributes[0].ownerElement['value'];
   var retorno = valor.replace(/\D/g, "");
   retorno = retorno.replace(/^0/, "");

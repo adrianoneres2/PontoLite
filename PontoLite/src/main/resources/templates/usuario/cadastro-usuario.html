@@ -67,7 +67,7 @@
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="input-nome-jornada" class="form-label">Jornada de Trabalho</label>
-						<select id="input-nome-jornada" class="form-select form-control" th:field="*{jornada}">
+						<select id="input-nome-jornada" class="form-select form-control" th:field="*{jornada}" disabled>
 							<option value="">Selecione uma jornada...</option>
 							<option th:each="jornada : ${jornadas}" th:value="${jornada.codigoJornada}"
 								th:text="${jornada.nomeJornada}"></option>
@@ -77,7 +77,8 @@
 					</div>
 					<div class="col-md-4 mb-3">
 						<label for="input-nome-cliente" class="form-label">Empresa (Cliente)</label>
-						<select id="input-nome-cliente" class="form-select form-control" required th:field="*{cliente}">
+						<select id="input-nome-cliente" onchange="carregarJornadaPorCliente()"
+							class="form-select form-control" required th:field="*{cliente}">
 							<option value="">Selecione um cliente...</option>
 							<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
 								th:text="${cliente.nomeCliente}"></option>

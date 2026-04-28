@@ -73,7 +73,7 @@ public class Usuario implements UserDetails {
 	 * Referencia de qual cliente esse usuário pertence.
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_cliente", insertable = true, updatable = false, nullable = false)
+	@JoinColumn(name = "id_cliente", insertable = true, updatable = true, nullable = false)
 	private Cliente cliente;
 
 	/*
