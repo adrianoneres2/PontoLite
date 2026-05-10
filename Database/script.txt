@@ -4,7 +4,7 @@
 
 
 ---Backup
-pg_dumpall --globals-only --username=postgres > 01-roles.sql
+pg_dumpall --globals-only --username=postgres > 10052026-1755-roles.sql
 pg_dump --dbname=octadb --format=c --username=postgres > 02-octadb-21122025-2135.dump
 
 

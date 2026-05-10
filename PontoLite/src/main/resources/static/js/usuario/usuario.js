@@ -21,12 +21,9 @@ function validar_confirmacao_senha() {
 function carregarJornadaPorCliente() {
 	let codigoCliente = document.getElementById("input-nome-cliente").value;
 
-	alert(codigoCliente);
-
 	fetch(`/pontolite/usuario/api/listar-jornada-cliente?codigoCliente=${codigoCliente}`)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
 			let jornadas = document.getElementById("input-nome-jornada");
 			jornadas.innerHTML = "";
 			data.forEach(jornada => {
