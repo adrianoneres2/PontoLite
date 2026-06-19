@@ -53,6 +53,10 @@ public class Jornada implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JornadaDataHora> listaJornadaDataHora;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_tipo_escala", insertable = true, updatable = true)
+	private TipoEscala tipoEscala;
+
 	public Long getCodigoJornada() {
 		return codigoJornada;
 	}
@@ -121,4 +125,13 @@ public class Jornada implements Serializable {
 	public String getDescricaoSituacaoJornada() {
 		return situacaoJornada == 1 ? "Ativo" : "Inativo";
 	}
+
+	public TipoEscala getTipoEscala() {
+		return tipoEscala;
+	}
+
+	public void setTipoEscala(TipoEscala tipoEscala) {
+		this.tipoEscala = tipoEscala;
+	}
+
 }

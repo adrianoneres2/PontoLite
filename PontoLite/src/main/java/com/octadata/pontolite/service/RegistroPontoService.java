@@ -22,4 +22,9 @@ public interface RegistroPontoService {
 	List<RegistroPonto> listarPeriodoPorUsuario(Usuario usuario, LocalDateTime dataHoraIncial,
 			LocalDateTime dataHoraFinal);
 
+	Long calcularTempoRegistro(LocalDateTime dataRegistroPontoInicio, LocalDateTime dataRegistroPontoFim);
+
+	Long calcularTempoTotalRegistro(List<RegistroPonto> registrosPonto);
+
+	Long calcularTempoPorTipoRegistro(RegistroPonto registroPonto, List<RegistroPonto> registrosPonto);
 }

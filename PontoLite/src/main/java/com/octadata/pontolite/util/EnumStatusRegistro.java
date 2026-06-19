@@ -3,7 +3,8 @@ package com.octadata.pontolite.util;
 public enum EnumStatusRegistro {
     ATIVO(1),
     AGUARDANDO_APROVACAO(2),
-    INATIVO_POR_AJUSTE(-1);
+    INATIVO(-1),
+    REPROVADO(-2);
 
     private final int valor;
 

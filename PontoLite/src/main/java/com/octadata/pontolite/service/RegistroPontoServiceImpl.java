@@ -2,6 +2,7 @@ package com.octadata.pontolite.service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.repository.RegistroPontoRepository;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.EnumStatusRegistro;
+import com.octadata.pontolite.util.EnumTipoRegistroPonto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,7 +37,12 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	public RegistroPonto salvar(RegistroPonto registroPonto) {
 		registroPonto.setDataRegistroPonto(LocalDateTime.now());
 		registroPonto.setSituacaoRegistroPonto(1);
-		registroPontoRepository.save(validarInclusao(registroPonto));
+		registroPonto = validarInclusao(registroPonto);
+		List<RegistroPonto> registrosPonto = listarPeriodoPorUsuario(registroPonto.getUsuario(),
+				LocalDateTime.now().toLocalDate().atStartOfDay(),
+				LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX));
+		registroPonto.setTempoRegistro(calcularTempoPorTipoRegistro(registroPonto, registrosPonto));
+		registroPontoRepository.save(registroPonto);
 		return registroPonto;
 	}
 
@@ -102,4 +109,46 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		}
 		return registroValidacao;
 	}
+
+	@Override
+	public Long calcularTempoRegistro(LocalDateTime dataRegistroPontoInicio,
+			LocalDateTime dataRegistroPontoFim) {
+		return ChronoUnit.SECONDS.between(dataRegistroPontoInicio, dataRegistroPontoFim);
+	}
+
+	@Override
+	public Long calcularTempoTotalRegistro(List<RegistroPonto> registrosPonto) {
+		Long tempoTotal = 1L;
+		for (int i = 0; i < registrosPonto.size() - 1; i++) {
+			tempoTotal += calcularTempoRegistro(registrosPonto.get(i).getDataRegistroPonto(),
+					registrosPonto.get(i + 1).getDataRegistroPonto());
+		}
+		return tempoTotal;
+	}
+
+	@Override
+	public Long calcularTempoPorTipoRegistro(RegistroPonto registroPonto, List<RegistroPonto> registrosPonto) {
+
+		Long tempoTotal = 0L;
+
+		for (int i = 0; i < registrosPonto.size(); i++) {
+			if (registroPonto.getTipoRegistro().getCodigoTipoRegistro() == EnumTipoRegistroPonto.INTERVALO.getValor()
+					&& i + 1 == EnumTipoRegistroPonto.ENTRADA.getValor()) {
+				tempoTotal += calcularTempoRegistro(registrosPonto.get(i).getDataRegistroPonto(),
+						registroPonto.getDataRegistroPonto());
+			} else if (registroPonto.getTipoRegistro()
+					.getCodigoTipoRegistro() == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor()
+					&& i + 1 == EnumTipoRegistroPonto.INTERVALO.getValor()) {
+				tempoTotal += calcularTempoRegistro(registrosPonto.get(i).getDataRegistroPonto(),
+						registroPonto.getDataRegistroPonto());
+			} else if (registroPonto.getTipoRegistro()
+					.getCodigoTipoRegistro() == EnumTipoRegistroPonto.SAIDA.getValor()
+					&& i + 1 == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor()) {
+				tempoTotal += calcularTempoRegistro(registrosPonto.get(i).getDataRegistroPonto(),
+						registroPonto.getDataRegistroPonto());
+			}
+		}
+		return tempoTotal;
+	}
+
 }
