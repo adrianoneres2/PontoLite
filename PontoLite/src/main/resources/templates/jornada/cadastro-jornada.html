@@ -29,6 +29,18 @@
 							th:errors="*{cliente}">
 						</div>
 					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-tipo-escala" class="form-label">Tipo de Escala</label>
+						<select id="input-tipo-escala" class="form-select form-control" required
+							th:field="*{tipoEscala}">
+							<option value="">Selecione um tipo de escala...</option>
+							<option th:each="tipoEscala : ${tiposEscala}" th:value="${tipoEscala.codigoTipoEscala}"
+								th:text="${tipoEscala.nomeTipoEscala}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('tipoEscala')}"
+							th:errors="*{tipoEscala}">
+						</div>
+					</div>
 				</div>
 				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
 					style="font-size: 0.8rem; letter-spacing: 1px;">Quadro de Horários</h6>

@@ -6,6 +6,7 @@ import java.util.List;
 import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.model.JornadaDataHora;
+import com.octadata.pontolite.model.TipoEscala;
 import jakarta.validation.constraints.NotNull;
 
 public record JornadaDTO(
@@ -14,10 +15,11 @@ public record JornadaDTO(
         @NotNull Long codigoJornada,
         Date dataCriacao,
         @NotNull Cliente cliente,
+        @NotNull TipoEscala tipoEscala,
         @NotNull List<JornadaDataHoraDTO> listaJornadaDataHora) {
 
     public JornadaDTO() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
 
     public JornadaDTO fromJornada(Jornada jornada) {
@@ -27,6 +29,7 @@ public record JornadaDTO(
                 jornada.getCodigoJornada(),
                 jornada.getDataCriacao(),
                 jornada.getCliente(),
+                jornada.getTipoEscala(),
                 jornada.getListaJornadaDataHora().stream()
                         .map(JornadaDataHoraDTO::fromJornadaDataHora).toList());
     }
@@ -38,6 +41,7 @@ public record JornadaDTO(
         jornada.setCodigoJornada(jornadaDTO.codigoJornada);
         jornada.setDataCriacao(jornadaDTO.dataCriacao);
         jornada.setCliente(jornadaDTO.cliente);
+        jornada.setTipoEscala(jornadaDTO.tipoEscala);
         jornada.setListaJornadaDataHora(toJornadaDataHora(jornadaDTO.listaJornadaDataHora));
         return jornada;
     }

@@ -26,6 +26,7 @@
 							<th scope="col">Cadastro</th>
 							<th scope="col">Cliente</th>
 							<th scope="col">Usuário Cadastro</th>
+							<th scope="col">Tipo Escala</th>
 							<th scope="col">Status</th>
 							<th scope="col" class="text-center">Ações</th>
 						</tr>
@@ -37,6 +38,7 @@
 							<td th:text="${jornada.dataCriacao}"></td>
 							<td th:text="${jornada.cliente.nomeCliente}"></td>
 							<td th:text="${jornada.usuarioCadastro.username}"></td>
+							<td th:text="${jornada.tipoEscala.nomeTipoEscala}"></td>
 							<td class="text-center">
 								<form action="#"
 									th:action="@{/pontolite/jornada/alterar-status/{codJornada}(codJornada = ${jornada.codigoJornada})}"

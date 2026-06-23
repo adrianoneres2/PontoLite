@@ -17,6 +17,7 @@ import com.octadata.pontolite.model.Jornada;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
 import com.octadata.pontolite.service.JornadaService;
+import com.octadata.pontolite.service.TipoEscalaService;
 import com.octadata.pontolite.util.ClienteHelper;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
@@ -34,12 +35,16 @@ public class JornadaController {
 	@Autowired
 	AutenticacaoService autenticacaoService;
 
+	@Autowired
+	TipoEscalaService tipoEscalaService;
+
 	@GetMapping("/formulario")
 	public String acessarFormularioJornada(Model model) {
 
-		JornadaDTO jornadaDTO = new JornadaDTO(null, null, null, null, null, null);
+		JornadaDTO jornadaDTO = new JornadaDTO(null, null, null, null, null, null, null);
 		model.addAttribute("jornadaDTO", jornadaDTO);
 		model.addAttribute("clientes", clienteService.listarTodos());
+		model.addAttribute("tiposEscala", tipoEscalaService.listarTodos());
 		return "/jornada/cadastro-jornada";
 	}
 
@@ -49,6 +54,7 @@ public class JornadaController {
 		jornada = jornadaDTO.toJornada(jornadaDTO);
 		jornada.setUsuarioCadastro(autenticacaoService.getUsuarioAutenticado());
 		jornada.setCliente(ClienteHelper.getClienteSelecionado(jornada.getCliente(), autenticacaoService));
+		jornada.setTipoEscala(tipoEscalaService.buscarPorId(jornadaDTO.tipoEscala().getCodigoTipoEscala()));
 		jornadaService.salvar(jornada);
 		ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Processado com sucesso!!");
 		return "/jornada/cadastro-jornada";
@@ -83,6 +89,7 @@ public class JornadaController {
 		jornadaDTO = jornadaDTO.fromJornada(jornada);
 		model.addAttribute("jornadaDTO", jornadaDTO);
 		model.addAttribute("clientes", clienteService.listarTodos());
+		model.addAttribute("tiposEscala", tipoEscalaService.listarTodos());
 		return "/jornada/alteracao-jornada";
 	}
 
