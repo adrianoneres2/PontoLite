@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div class="card">
+		<div class="card-header">
+			<h5 class="mb-0"><i class="bi bi-person-plus"></i> Gestão de Perfil</h5>
+		</div>
+		<div class="card-body">
+
+			<div th:if="${_csrf}">
+				<input type="hidden" id="csrfToken" th:value="${_csrf.token}" />
+				<input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}" />
+			</div>
+
+			<!-- Select Cliente -->
+			<div class="row mb-4">
+				<div class="col-md-12">
+					<label for="select-cliente" class="form-label">Cliente</label>
+					<select id="select-cliente" class="form-select form-control" onchange="carregarConfiguracoes()"
+						required>
+						<option value="">Selecione um cliente...</option>
+						<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
+							th:text="${cliente.nomeCliente}"></option>
+					</select>
+				</div>
+			</div>
+
+			<hr>
+
+			<!-- Config Container -->
+			<div id="container-configuracao" style="display: none;">
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Adicionar Configuração</h6>
+
+				<div class="row align-items-end mb-4">
+					<div class="col-md-5 mb-3 mb-md-0">
+						<label for="select-perfil" class="form-label">Perfil</label>
+						<select id="select-perfil" class="form-select form-control" required>
+							<option value="">Selecione um perfil...</option>
+							<option th:each="perfil : ${perfis}" th:value="${perfil.codigoPerfil}"
+								th:text="${perfil.nomePerfil}"></option>
+						</select>
+					</div>
+
+					<div class="col-md-5 mb-3 mb-md-0">
+						<label for="select-funcionalidade" class="form-label">Funcionalidade</label>
+						<select id="select-funcionalidade" class="form-select form-control" required>
+							<option value="">Selecione uma funcionalidade...</option>
+							<option th:each="func : ${funcionalidades}" th:value="${func.codigoFuncionalidade}"
+								th:text="${func.nomeFuncionalidade}"></option>
+						</select>
+					</div>
+
+					<div class="col-md-2">
+						<button type="button" class="btn btn-secondary w-100" onclick="adicionarConfiguracao()"><i
+								class="bi bi-plus-lg"></i> Adicionar</button>
+					</div>
+				</div>
+
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Configurações do Cliente</h6>
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped" id="tabela-configuracoes">
+						<thead class="table-light">
+							<tr>
+								<th>Perfil</th>
+								<th>Funcionalidade</th>
+								<th class="text-center" style="width: 10%;">Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Dynamically populated -->
+						</tbody>
+					</table>
+					<div id="empty-state-message" class="text-center text-muted" style="display: none; padding: 20px;">
+						Nenhuma configuração encontrada ou adicionada para este cliente.
+					</div>
+				</div>
+
+				<hr class="my-4">
+
+				<div class="d-flex justify-content-end gap-2">
+					<button class="btn btn-primary" type="button" id="bt-salvar" onclick="salvarConfiguracoes()"><i
+							class="bi bi-check-lg"></i> Salvar
+						Configurações</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/perfil/perfil.js}"></script>
+</main>
+
+</html>

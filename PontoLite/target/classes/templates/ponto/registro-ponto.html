@@ -1,0 +1,62 @@
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+		<div class="card shadow-lg" style="width: 450px; border-radius: 15px; border: none;">
+			<div class="card-header bg-primary text-white text-center"
+				style="border-top-left-radius: 15px; border-top-right-radius: 15px; padding: 1.5rem;">
+				<h4 class="mb-0 font-weight-bold"><i class="bi bi-clock-history mr-2"></i>Registro de Ponto</h4>
+			</div>
+			<div class="card-body text-center d-flex flex-column align-items-center bg-light"
+				style="padding: 3rem 2rem; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+				<!-- RELÓGIO -->
+				<div id="real_time_clock"
+					style="font-size: 4rem; font-weight: bold; font-family: monospace; color: #333; line-height: 1;">
+					00:00:00</div>
+				<!-- DATA -->
+				<div id="current_date_display"
+					style="font-size: 1.3rem; color: #6c757d; margin-bottom: 2.5rem; margin-top: 0.5rem; font-weight: 500;">
+					-</div>
+
+				<!-- BOTÃO DE REGISTRO -->
+				<a href="/pontolite/ponto/registrarPonto"
+					class="btn btn-success btn-lg d-flex align-items-center justify-content-center"
+					style="border-radius: 50px; font-size: 1.3rem; padding: 0.75rem 2rem; width: 85%; box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3); transition: transform 0.2s;">
+					<i class="bi bi-fingerprint mr-2" style="font-size: 1.8rem;"></i>
+					Registrar Ponto
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function updateClock() {
+			const now = new Date();
+
+			// Formatar tempo (HH:MM:SS)
+			const horas = String(now.getHours()).padStart(2, '0');
+			const minutos = String(now.getMinutes()).padStart(2, '0');
+			const segundos = String(now.getSeconds()).padStart(2, '0');
+			const timeString = `${horas}:${minutos}:${segundos}`;
+
+			// Formatar data
+			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+			const dateString = now.toLocaleDateString('pt-BR', options);
+
+			// Capitalizar a primeira letra
+			const formattedDate = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+
+			const clockElement = document.getElementById('real_time_clock');
+			const dateElement = document.getElementById('current_date_display');
+
+			if (clockElement) clockElement.innerText = timeString;
+			if (dateElement) dateElement.innerText = formattedDate;
+		}
+
+		// Inicializar e configurar o intervalo em tempo real
+		updateClock();
+		setInterval(updateClock, 1000);
+	</script>
+</main>
+
+</html>

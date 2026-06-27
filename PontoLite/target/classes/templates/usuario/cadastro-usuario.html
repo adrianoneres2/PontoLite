@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div class="card">
+		<div class="card-header">
+			<h5 class="mb-0"><i class="bi bi-person-plus"></i> Cadastro de Usuário</h5>
+		</div>
+		<div class="card-body">
+			<form action="#" th:action="@{/pontolite/usuario/formulario}" th:object="${usuario}" method="post">
+
+				<!-- Section: user Data -->
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Dados do Usuário</h6>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="input-nome-usuario" class="form-label">Nome do Usuário</label>
+						<input type="text" class="form-control" id="input-nome-usuario" placeholder="Ex: João da Silva"
+							required th:field="*{username}" maxlength="60">
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('username')}"
+							th:errors="*{username}"></div>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="input-email" class="form-label">E-mail</label>
+						<input type="email" class="form-control" id="input-email" placeholder="email@exemplo.com"
+							required th:field="*{email}" maxlength="80">
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+						</div>
+					</div>
+				</div>
+
+				<hr class="my-4">
+
+				<!-- Section: Password Data -->
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Dados de Acesso</h6>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="input-password" class="form-label">Senha</label>
+						<input type="password" class="form-control" id="input-password" placeholder="••••••" required
+							th:field="*{password}" maxlength="60">
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}"></div>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="input-password-confirm" class="form-label">Confirmar Senha</label>
+						<input type="password" class="form-control" id="input-password-confirm" placeholder="••••••"
+							required onblur="validar_confirmacao_senha()" maxlength="60">
+					</div>
+				</div>
+
+				<hr class="my-4">
+
+				<!-- Section: configuration Data -->
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Dados de Configuração</h6>
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-perfil" class="form-label">Perfil de Acesso</label>
+						<select id="input-nome-perfil" class="form-select form-control" required th:field="*{perfil}">
+							<option value="">Selecione um perfil...</option>
+							<option th:each="perfil : ${perfis}" th:value="${perfil.codigoPerfil}"
+								th:text="${perfil.nomePerfil}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('perfil')}"
+							th:errors="*{perfil}"></div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-jornada" class="form-label">Jornada de Trabalho</label>
+						<select id="input-nome-jornada" class="form-select form-control" th:field="*{jornada}" disabled>
+							<option value="">Selecione uma jornada...</option>
+							<option th:each="jornada : ${jornadas}" th:value="${jornada.codigoJornada}"
+								th:text="${jornada.nomeJornada}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('jornada')}"
+							th:errors="*{jornada}"></div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-nome-cliente" class="form-label">Empresa (Cliente)</label>
+						<select id="input-nome-cliente" onchange="carregarJornadaPorCliente()"
+							class="form-select form-control" required th:field="*{cliente}">
+							<option value="">Selecione um cliente...</option>
+							<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
+								th:text="${cliente.nomeCliente}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('cliente')}"
+							th:errors="*{cliente}"></div>
+					</div>
+				</div>
+
+				<hr class="my-4">
+
+				<div class="d-flex justify-content-end gap-2">
+					<button class="btn btn-primary" type="submit" id="bt-enviar"><i class="bi bi-check-lg"></i> Salvar
+						Usuário</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script th:src="@{/js/usuario/usuario.js}"></script>
+</main>
+
+</html>

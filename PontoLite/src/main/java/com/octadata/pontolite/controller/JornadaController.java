@@ -73,8 +73,9 @@ public class JornadaController {
 		return "/jornada/quadro-horarios";
 	}
 
-	@PostMapping("/alterar-status/{codJornada}")
-	public String alterarStatusJornada(@PathVariable("codJornada") Long codJornada, Model model) {
+	@GetMapping("/alterar-status")
+	public String alterarStatusJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
+			Model model) {
 		Jornada jornada = jornadaService.buscarPorId(codJornada);
 		jornadaService.alterarStatus(jornada);
 		return "redirect:/pontolite/jornada/listar";

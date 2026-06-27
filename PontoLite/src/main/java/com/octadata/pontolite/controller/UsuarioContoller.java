@@ -90,8 +90,9 @@ public class UsuarioContoller {
 		return "/usuario/listagem-usuario";
 	}
 
-	@PostMapping("/alterar-status/{codigoUsuario}")
-	public String alterarStatus(@PathVariable Long codigoUsuario, Model model) {
+	@GetMapping("/alterar-status")
+	public String alterarStatus(@RequestParam(name = "codUsuario", required = true) Long codigoUsuario,
+			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuarioService.updateStatus(usuario);
 		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente());
@@ -133,8 +134,9 @@ public class UsuarioContoller {
 		return "/usuario/alterar-usuario";
 	}
 
-	@PostMapping("/formulario-alterar-senha/{codigoUsuario}")
-	public String formularioAlterarSenha(@PathVariable Long codigoUsuario, Model model) {
+	@GetMapping("/formulario-alterar-senha")
+	public String formularioAlterarSenha(@RequestParam(name = "codigoUsuario", required = true) Long codigoUsuario,
+			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuario.setPassword(null);
 		model.addAttribute("usuario", usuario);

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html th:replace="~{aplicacao :: layout(~{:: main})}">
+
+<main>
+	<div class="card">
+		<div class="card-header">
+			<h5 class="mb-0"><i class="bi bi-calendar-week"></i> Alteração de Jornada</h5>
+		</div>
+		<div class="card-body">
+			<form action="#" onsubmit="return validateForm()" th:action="@{/pontolite/jornada/formulario}"
+				th:object="${jornadaDTO}" method="post" id="form-jornada">
+
+				<div class="row">
+					<div class="mb-4">
+						<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>
+						<input type="hidden" th:field="*{codigoJornada}">
+						<input type="hidden" th:field="*{dataCriacao}">
+						<input type="hidden" th:field="*{situacaoJornada}">
+						<input type="text" class="form-control" id="input-nome-jornada"
+							placeholder="Ex: Comercial (08:00 - 18:00)" required th:field="*{nomeJornada}"
+							maxlength="60">
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('nomeJornada')}"
+							th:errors="*{nomeJornada}"></div>
+					</div>
+					<div class="col-md-4 mb-3" sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')">
+						<label for="input-nome-cliente" class="form-label">Empresa (Cliente)</label>
+						<select id="input-nome-cliente" class="form-select form-control" required th:field="*{cliente}">
+							<option value="">Selecione um cliente...</option>
+							<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
+								th:text="${cliente.nomeCliente}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('cliente')}"
+							th:errors="*{cliente}">
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="input-tipo-escala" class="form-label">Tipo de Escala</label>
+						<select id="input-tipo-escala" class="form-select form-control" required
+							th:field="*{tipoEscala}">
+							<option value="">Selecione um tipo de escala...</option>
+							<option th:each="tipoEscala : ${tiposEscala}" th:value="${tipoEscala.codigoTipoEscala}"
+								th:text="${tipoEscala.nomeTipoEscala}"></option>
+						</select>
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('tipoEscala')}"
+							th:errors="*{tipoEscala}">
+						</div>
+					</div>
+				</div>
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Quadro de Horários</h6>
+
+				<div id="validation-message" role="alert"></div>
+
+				<div class="table-responsive mb-3">
+					<table id="table-jornada" class="table table-bordered align-middle table-hover">
+						<thead class="table-light">
+							<tr>
+								<th style="width: 15%;">Dia</th>
+								<th>Entrada</th>
+								<th>Intervalo</th>
+								<th>Retorno</th>
+								<th>Saída</th>
+								<th style="width: 50px;">Ação</th>
+							</tr>
+						</thead>
+						<tbody id="table-jornada-body">
+							<tr th:each="jornadaDataHora, indice : ${jornadaDTO.listaJornadaDataHora}"
+								th:if="${jornadaDataHora.codigoTipoRegistro == 1}"
+								th:data-dia-id="${jornadaDataHora.codigoDia}">
+								<td class="fw-bold" th:text="${jornadaDataHora.nomeDiaSemana}"></td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+1}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+2}__].codigoJornadaDataHora}">
+								</td>
+								<td>
+									<input type="time" class="form-control" required
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].hora}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoDia}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoTipoRegistro}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoJornada}">
+									<input type="hidden"
+										th:field="*{listaJornadaDataHora[__${indice.index+3}__].codigoJornadaDataHora}">
+								</td>
+								<td class="text-center">
+									<button type="button" class="btn btn-outline-danger btn-sm"
+										onclick="excluirDia(this)">
+										<i class="bi bi-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="mb-4">
+					<button type="button" class="btn btn-outline-primary btn-sm" onclick="adicionarDia()">
+						<i class="bi bi-plus-lg"></i> Adicionar Dia
+					</button>
+				</div>
+
+				<hr class="my-4">
+
+				<div class="d-flex justify-content-end gap-2">
+					<button class="btn btn-primary" type="submit" id="bt-enviar"><i class="bi bi-check-lg"></i> Salvar
+						Jornada</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script th:src="@{/js/jornada/jornada-alteracao.js}"></script>
+</main>
+
+</html>

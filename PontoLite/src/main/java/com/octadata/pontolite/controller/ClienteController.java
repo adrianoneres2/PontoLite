@@ -67,8 +67,8 @@ public class ClienteController {
         return "/cliente/listagem-cliente";
     }
 
-    @PostMapping("/alterar-status/{codigoCliente}")
-    public String alterarStatus(@PathVariable Long codigoCliente) {
+    @GetMapping("/alterar-status")
+    public String alterarStatus(@RequestParam(name = "codCliente", required = true) Long codigoCliente) {
         clienteService.alterarStatus(clienteService.porId(codigoCliente));
         return "redirect:/pontolite/cliente/listar";
     }
