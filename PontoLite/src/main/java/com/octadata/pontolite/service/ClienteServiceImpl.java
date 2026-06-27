@@ -3,6 +3,9 @@ package com.octadata.pontolite.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +76,13 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> listarTodos() {
 		Sort sortByCodCliente = Sort.by("codigoCliente").descending();
 		return clienteRepository.findAll(sortByCodCliente);
+	}
+
+	@Override
+	public Page<Cliente> listarTodosPaginado(int pagina, int tamanho) {
+		Sort sortByCodCliente = Sort.by("codigoCliente").descending();
+		Pageable pageable = PageRequest.of(pagina, tamanho, sortByCodCliente);
+		return clienteRepository.findAll(pageable);
 	}
 
 	@Override

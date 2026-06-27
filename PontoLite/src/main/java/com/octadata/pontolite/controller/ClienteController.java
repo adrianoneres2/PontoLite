@@ -3,6 +3,9 @@ package com.octadata.pontolite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,9 +60,10 @@ public class ClienteController {
     }
 
     @GetMapping("/listar")
-    public String acessarListagem(Model model) {
-        List<Cliente> clientes = clienteService.listarTodos();
-        model.addAttribute("clientes", clientes);
+    public String acessarListagem(Model model, @PageableDefault(size = 8) Pageable pageable) {
+        Page<Cliente> clientesPage = clienteService.listarTodosPaginado(pageable.getPageNumber(),
+                pageable.getPageSize());
+        model.addAttribute("clientesPage", clientesPage);
         return "/cliente/listagem-cliente";
     }
 

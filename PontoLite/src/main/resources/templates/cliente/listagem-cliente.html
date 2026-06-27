@@ -34,11 +34,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cliente : ${clientes}">
+						<tr th:each="cliente : ${clientesPage.content}">
 							<th th:text="${cliente.codigoCliente}" scope="row"></th>
 							<td th:text="${cliente.razaoSocial}"></td>
 							<td th:text="${cliente.nomeCliente}"></td>
-							<td th:text="${cliente.dataCadastro}"></td>
+							<td th:text="${#dates.format(cliente.dataCadastro, 'dd/MM/yyyy')}"></td>
 							<td th:text="${cliente.numeroCnpj}"></td>
 							<td th:text="${cliente.nomeEmail}"></td>
 							<td th:text="${cliente.numeroTelefone}"></td>
@@ -68,6 +68,26 @@
 					</tbody>
 				</table>
 			</div>
+
+			<!-- Paginação -->
+			<nav th:if="${clientesPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" th:classappend="${clientesPage.first} ? 'disabled'">
+						<a class="page-link" th:href="@{/pontolite/cliente/listar(page=${clientesPage.number - 1})}"
+							tabindex="-1" aria-disabled="true">Anterior</a>
+					</li>
+
+					<li class="page-item" th:each="i : ${#numbers.sequence(0, clientesPage.totalPages - 1)}"
+						th:classappend="${clientesPage.number == i} ? 'active'">
+						<a class="page-link" th:href="@{/pontolite/cliente/listar(page=${i})}" th:text="${i + 1}">1</a>
+					</li>
+
+					<li class="page-item" th:classappend="${clientesPage.last} ? 'disabled'">
+						<a class="page-link"
+							th:href="@{/pontolite/cliente/listar(page=${clientesPage.number + 1})}">Próxima</a>
+					</li>
+				</ul>
+			</nav>
 
 			<div class="alert alert-warning mt-3 border-0 bg-warning-light" role="alert" id="noResults"
 				style="display: none;">
