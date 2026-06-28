@@ -3,6 +3,7 @@ package com.octadata.pontolite.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import com.octadata.pontolite.service.JornadaService;
 import com.octadata.pontolite.service.PerfilService;
 import com.octadata.pontolite.service.UsuarioService;
 import com.octadata.pontolite.util.ClienteHelper;
+import com.octadata.pontolite.util.DefaultConstant;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
 
@@ -84,24 +86,31 @@ public class UsuarioContoller {
 
 	@GetMapping("/listar")
 	public String listar(@RequestParam(name = "codCliente", required = true, defaultValue = "0") Long codigoCliente,
+			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
 		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente, autenticacaoService);
-		atualizarListaUsuarioPorCliente(model, codigoCliente);
+		atualizarListaUsuarioPorCliente(model, codigoCliente, page, size);
 		return "/usuario/listagem-usuario";
 	}
 
 	@GetMapping("/alterar-status")
 	public String alterarStatus(@RequestParam(name = "codUsuario", required = true) Long codigoUsuario,
+			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuarioService.updateStatus(usuario);
-		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente());
+		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente(), page, size);
 		return "/usuario/listagem-usuario";
 	}
 
-	protected void atualizarListaUsuarioPorCliente(Model model, Long codigoCliente) {
-		List<Usuario> usuarios = usuarioService.findAllByCliente(clienteService.porId(codigoCliente));
-		model.addAttribute("usuarios", usuarios);
+	protected void atualizarListaUsuarioPorCliente(Model model, Long codigoCliente, int page, int size) {
+		Page<Usuario> usuariosPage = usuarioService.findAllByClientePaged(clienteService.porId(codigoCliente), page,
+				size);
+		model.addAttribute("usuariosPage", usuariosPage);
+		model.addAttribute("usuarios", usuariosPage.getContent());
+		model.addAttribute("codCliente", codigoCliente);
 	}
 
 	@GetMapping("/alterar")

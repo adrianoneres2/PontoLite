@@ -3,6 +3,12 @@ package com.octadata.pontolite.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.domain.ScrollPosition.Direction;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +67,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public List<Usuario> findAllByCliente(Cliente cliente) {
 		return usuarioRepository.findAllByCliente(cliente);
+	}
+
+	@Override
+	public Page<Usuario> findAllByClientePaged(Cliente cliente, int pagina, int tamanho) {
+		Pageable pageable = PageRequest.of(pagina, tamanho);
+		return usuarioRepository.findAllByCliente(cliente, pageable);
 	}
 
 	@Override

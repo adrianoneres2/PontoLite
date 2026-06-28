@@ -34,7 +34,7 @@
 						<tr th:each="jornada : ${jornadas}">
 							<th th:text="${jornada.codigoJornada}" scope="row"></th>
 							<td th:text="${jornada.nomeJornada}"></td>
-							<td th:text="${jornada.dataCriacao}"></td>
+							<td th:text="${#dates.format(jornada.dataCriacao, 'dd/MM/yyyy')}"></td>
 							<td th:text="${jornada.cliente.nomeCliente}"></td>
 							<td th:text="${jornada.usuarioCadastro.username}"></td>
 							<td th:text="${jornada.tipoEscala.nomeTipoEscala}"></td>
