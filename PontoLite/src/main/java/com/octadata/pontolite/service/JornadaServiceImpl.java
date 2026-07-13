@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,11 @@ public class JornadaServiceImpl implements JornadaService {
 	@Override
 	public List<Jornada> porCliente(Cliente cliente) {
 		return jornadaRepository.findByCliente(cliente);
+	}
+
+	@Override
+	public Page<Jornada> porClientePaginado(Cliente cliente, Pageable pageable) {
+		return jornadaRepository.findByCliente(cliente, pageable);
 	}
 
 	public void validar(Jornada jornada) {

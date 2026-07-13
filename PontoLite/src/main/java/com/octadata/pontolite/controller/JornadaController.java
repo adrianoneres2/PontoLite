@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,8 @@ import com.octadata.pontolite.service.TipoEscalaService;
 import com.octadata.pontolite.util.ClienteHelper;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
+import com.octadata.pontolite.util.DefaultConstant;
+import org.springframework.data.domain.PageRequest;
 
 @Controller
 @RequestMapping("pontolite/jornada")
@@ -61,10 +65,15 @@ public class JornadaController {
 	}
 
 	@GetMapping("/listar")
-	public String listarJornadas(Model model) {
-		List<Jornada> jornadas = new ArrayList<>();
-		jornadas = jornadaService.porCliente(autenticacaoService.getUsuarioAutenticado().getCliente());
-		model.addAttribute("jornadas", jornadas);
+	public String listarJornadas(
+			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
+			Model model) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		Page<Jornada> jornadasPage = jornadaService.porClientePaginado(autenticacaoService.getUsuarioAutenticado().getCliente(),
+				pageRequest);
+		model.addAttribute("jornadasPage", jornadasPage);
+		model.addAttribute("jornadas", jornadasPage.getContent());
 		return "/jornada/listagem-jornada";
 	}
 

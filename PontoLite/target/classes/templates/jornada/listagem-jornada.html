@@ -58,6 +58,26 @@
 				</table>
 			</div>
 
+			<!-- Paginação -->
+			<nav th:if="${jornadasPage != null and jornadasPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
+				<ul class="pagination justify-content-center">
+					<li class="page-item" th:classappend="${jornadasPage.first} ? 'disabled'">
+						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number - 1})}"
+							tabindex="-1" aria-disabled="true">Anterior</a>
+					</li>
+
+					<li class="page-item" th:each="i : ${#numbers.sequence(0, jornadasPage.totalPages - 1)}"
+						th:classappend="${jornadasPage.number == i} ? 'active'">
+						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${i})}" th:text="${i + 1}">1</a>
+					</li>
+
+					<li class="page-item" th:classappend="${jornadasPage.last} ? 'disabled'">
+						<a class="page-link"
+							th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number + 1})}">Próxima</a>
+					</li>
+				</ul>
+			</nav>
+
 			<div class="alert alert-warning mt-3 border-0 bg-warning-light" role="alert" id="noResults"
 				style="display: none;">
 				<i class="bi bi-info-circle me-2"></i> Nenhuma jornada encontrado.
