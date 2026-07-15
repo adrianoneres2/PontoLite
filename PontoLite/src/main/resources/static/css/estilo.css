@@ -379,6 +379,10 @@ a:hover {
     display: block;
 }
 
+.default-table-font-size {
+    font-size: 0.95rem;
+}
+
 @media (max-width: 768px) {
     .login-card {
         width: 100%;

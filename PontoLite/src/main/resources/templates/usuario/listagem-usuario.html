@@ -20,7 +20,7 @@
 
 			<!-- Table -->
 			<div class="table-responsive">
-				<table id="clientTable" class="table table-hover align-middle">
+				<table id="clientTable" class="table table-hover align-middle default-table-font-size">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -70,16 +70,19 @@
 			</div>
 
 			<!-- Paginação -->
-			<nav th:if="${usuariosPage != null and usuariosPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
+			<nav th:if="${usuariosPage != null and usuariosPage.totalPages > 1}" aria-label="Navegação de página"
+				class="mt-4">
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${usuariosPage.first} ? 'disabled'">
-						<a class="page-link" th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${usuariosPage.number - 1})}"
+						<a class="page-link"
+							th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${usuariosPage.number - 1})}"
 							tabindex="-1" aria-disabled="true">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
 						th:classappend="${usuariosPage.number == i} ? 'active'">
-						<a class="page-link" th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${i})}" th:text="${i + 1}">1</a>
+						<a class="page-link" th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${i})}"
+							th:text="${i + 1}">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${usuariosPage.last} ? 'disabled'">

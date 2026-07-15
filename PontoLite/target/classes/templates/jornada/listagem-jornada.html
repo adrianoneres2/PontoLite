@@ -18,7 +18,7 @@
 
 			<!-- Table -->
 			<div class="table-responsive">
-				<table id="clientTable" class="table table-hover align-middle">
+				<table id="clientTable" class="table table-hover align-middle default-table-font-size">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
@@ -59,7 +59,8 @@
 			</div>
 
 			<!-- Paginação -->
-			<nav th:if="${jornadasPage != null and jornadasPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
+			<nav th:if="${jornadasPage != null and jornadasPage.totalPages > 1}" aria-label="Navegação de página"
+				class="mt-4">
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${jornadasPage.first} ? 'disabled'">
 						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number - 1})}"
