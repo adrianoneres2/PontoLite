@@ -4,9 +4,12 @@
  * @param {string} url URL para carregar conteúdo
  * @param {Event} event Evento de clique
  */
-function loadContentViaFetch(url, event) {
-    event.preventDefault(); // Impede o recarregamento total da página
-    fetch(url)
+function loadContentViaFetch(url, event, options = {}) {
+    if (event) {
+        event.preventDefault(); // Impede o recarregamento total da página
+    }
+    console.log('URL: ' + url);
+    fetch(url, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro na requisição: ' + response.status);
@@ -18,6 +21,7 @@ function loadContentViaFetch(url, event) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlString, 'text/html');
             const newMainContent = doc.querySelector('main');
+            const newFloatingMessage = doc.querySelector('message');
 
             if (newMainContent) {
                 const currentMain = document.querySelector('main');
@@ -40,8 +44,31 @@ function loadContentViaFetch(url, event) {
                     });
                 }
             }
+            if (newFloatingMessage) {
+                const currentFloatingMessage = document.querySelector('message');
+                if (currentFloatingMessage) {
+                    // Substitui o elemento main atual pelo novo carregado via fetch
+                    currentFloatingMessage.replaceWith(newFloatingMessage);
+                }
+            }
         })
         .catch(error => {
             console.error('Erro ao carregar o conteúdo:', error);
         });
+}
+
+/**
+ * Envia um formulário via fetch e atualiza o conteúdo da página
+ * 
+ * @param {HTMLFormElement} form Elemento do formulário
+ * @param {Event} event Evento de submit
+ */
+function submitFormViaFetch(form, event) {
+    event.preventDefault();
+    const url = form.action;
+    const options = {
+        method: form.method || 'POST',
+        body: new FormData(form)
+    };
+    loadContentViaFetch(url, null, options);
 }

@@ -43,17 +43,20 @@
 							<td th:text="${cliente.numeroTelefone}"></td>
 							<td class="text-center">
 								<div class="btn-group" role="group">
-									<a th:href="@{/pontolite/cliente/alterar-status?codCliente={codCliente}(codCliente=${cliente.codigoCliente})}"
+									<a href="#"
+										th:onclick="|loadContentViaFetch('@{/pontolite/cliente/alterar-status(codCliente=${cliente.codigoCliente})}', event)|"
 										class="btn btn-outline-info btn-sm" title="Status">
 										<i
 											th:classappend="${cliente.situacaoCliente==1} ? 'bi bi-check-circle-fill text-success ' : 'bi bi-x-circle-fill text-danger'">
 										</i>
 									</a>
-									<a th:href="@{/pontolite/cliente/alterar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
+									<a href="#"
+										th:onclick="|loadContentViaFetch('@{/pontolite/cliente/alterar(codCliente=${cliente.codigoCliente})}', event)|"
 										class="btn btn-outline-primary btn-sm" title="Editar">
 										<i class="bi bi-pencil"></i>
 									</a>
-									<a th:href="@{/pontolite/usuario/listar?codCliente={codCliente}(codCliente = ${cliente.codigoCliente})}"
+									<a href="#"
+										th:onclick="|loadContentViaFetch('@{/pontolite/usuario/listar?codCliente={codCliente}(codCliente=${cliente.codigoCliente})}', event)|"
 										class="btn btn-outline-info btn-sm" title="Usuários">
 										<i class="bi bi-people"></i>
 									</a>
@@ -68,18 +71,21 @@
 			<nav th:if="${clientesPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${clientesPage.first} ? 'disabled'">
-						<a class="page-link" th:href="@{/pontolite/cliente/listar(page=${clientesPage.number - 1})}"
+						<a class="page-link" href="#"
+							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${clientesPage.number - 1})}', event)|"
 							tabindex="-1" aria-disabled="true">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, clientesPage.totalPages - 1)}"
 						th:classappend="${clientesPage.number == i} ? 'active'">
-						<a class="page-link" th:href="@{/pontolite/cliente/listar(page=${i})}" th:text="${i + 1}">1</a>
+						<a class="page-link" href="#"
+							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${i})}', event)|"
+							th:text="${i + 1}">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${clientesPage.last} ? 'disabled'">
-						<a class="page-link"
-							th:href="@{/pontolite/cliente/listar(page=${clientesPage.number + 1})}">Próxima</a>
+						<a class="page-link" href="#"
+							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${clientesPage.number + 1})}', event)|">Próxima</a>
 					</li>
 				</ul>
 			</nav>

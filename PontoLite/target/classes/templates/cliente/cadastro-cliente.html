@@ -8,7 +8,7 @@
 			<h5 class="mb-0"><i class="bi bi-building-add"></i> Cadastro de Clientes</h5>
 		</div>
 		<div class="card-body">
-			<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post">
+			<form action="#" th:action="@{/pontolite/cliente/formulario}" th:object="${cliente}" method="post" onsubmit="submitFormViaFetch(this, event)">
 
 				<!-- Section: Company Data -->
 				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
