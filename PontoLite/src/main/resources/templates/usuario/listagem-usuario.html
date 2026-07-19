@@ -6,7 +6,6 @@
 	<div class="card">
 		<div class="card-header d-flex justify-content-between align-items-center">
 			<h5 class="mb-0">Listagem de Usuários</h5>
-			<a th:href="@{/pontolite}" class="btn btn-secondary btn-sm">Voltar</a>
 		</div>
 		<div class="card-body">
 			<!-- Search -->
@@ -46,19 +45,21 @@
 								<div class="btn-group" role="group">
 
 									<a th:href="@{/pontolite/usuario/alterar-status?codUsuario={codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
-										class="btn btn-sm"
+										onclick="loadContentViaFetch(this.href, event)" class="btn btn-sm"
 										th:classappend="${usuario.status==1} ? 'btn-outline-success' : 'btn-outline-danger'">
 										<i
 											th:classappend="${usuario.status==1} ? 'bi bi-check-circle-fill text-success ' : 'bi bi-x-circle-fill text-danger'">
 										</i>
 									</a>
 									<a th:href="@{/pontolite/usuario/alterar?codUsuario={codUsuario}(codUsuario = ${usuario.codigoUsuario})}"
+										onclick="loadContentViaFetch(this.href, event)"
 										class="btn btn-outline-primary btn-sm" title="Editar">
 										<i class="bi bi-pencil"></i>
 									</a>
 									<!-- Only Admin Octadata can change password here -->
 									<a sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')"
 										th:href="@{/pontolite/usuario/formulario-alterar-senha(codigoUsuario=${usuario.codigoUsuario})}"
+										onclick="loadContentViaFetch(this.href, event)"
 										class="btn btn-outline-primary btn-sm" title="Alterar Senha">
 										<i class="bi bi-key"></i>
 									</a>
@@ -76,18 +77,20 @@
 					<li class="page-item" th:classappend="${usuariosPage.first} ? 'disabled'">
 						<a class="page-link"
 							th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${usuariosPage.number - 1})}"
-							tabindex="-1" aria-disabled="true">Anterior</a>
+							onclick="loadContentViaFetch(this.href, event)" tabindex="-1"
+							aria-disabled="true">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
 						th:classappend="${usuariosPage.number == i} ? 'active'">
 						<a class="page-link" th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${i})}"
-							th:text="${i + 1}">1</a>
+							onclick="loadContentViaFetch(this.href, event)" th:text="${i + 1}">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${usuariosPage.last} ? 'disabled'">
 						<a class="page-link"
-							th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${usuariosPage.number + 1})}">Próxima</a>
+							th:href="@{/pontolite/usuario/listar(codCliente=${codCliente}, page=${usuariosPage.number + 1})}"
+							onclick="loadContentViaFetch(this.href, event)">Próxima</a>
 					</li>
 				</ul>
 			</nav>

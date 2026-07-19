@@ -2,46 +2,64 @@
 <html th:replace="~{aplicacao :: layout(~{:: main})}">
 
 <main>
-	<h1>Alteração de senha</h1>
-	<hr style="margin-top: 20px;">
-	
-	<div class="col-md-4 mb-3" style="margin-top: 50px;">
-		<strong id="strong-nome-usuario" th:text="${usuario.codigoUsuario}" style="font-size: 30px;"></strong>
-		<strong style="font-size: 30px;">-</strong>
-		<strong id="strong-nome-usuario" th:text="${usuario.username}" style="font-size: 30px;"></strong>
-	</div>
-			<form action="#" th:action="@{/pontolite/usuario/alterar-senha}" th:object="${usuario}" method="post">
-				<div class="form-row">
-					<div class="col-md-4 mb-3">
-						<label for="input-password">Password</label>
-						<input type="password" class="form-control" id="input-password" placeholder="Password" 
-						value="" required th:field="*{password}"
-						maxlength="60">
-						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></p>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="input-password-confirm">Confirmar Password</label>
-						<input type="password" class="form-control" id="input-password-confirm" placeholder="Confirmar Password" 
-						value="" required
-						onblur="validar_confirmacao_senha()"
-						maxlength="60">
-					</div>
-				</div>
-				<div>
-					<input type="hidden" id="input-codigo-usuario"th:field="*{codigoUsuario}">
-					<input type="hidden" id="input-username"th:field="*{username}">
-					<input type="hidden" id="input-data-cadastro"th:field="*{dataCadastro}">
-					<input type="hidden" id="input-email"th:field="*{email}">
-					<input type="hidden" id="input-status"th:field="*{status}">
-					<input type="hidden" id="input-perfil"th:field="*{perfil}">
-					<input type="hidden" id="input-usuario-cadastro"th:field="*{usuarioCadastro}">
-					<input type="hidden" id="input-jornada"th:field="*{jornada}">
-					<input type="hidden" id="input-cliente"th:field="*{cliente}">
-					
+	<div class="card">
+		<div class="card-header d-flex justify-content-between align-items-center">
+			<h5 class="mb-0"><i class="bi bi-key"></i> Alteração de Senha</h5>
+		</div>
+		<div class="card-body">
+			<!-- Visualização do Usuário -->
+			<div class="mb-4">
+				<h6 class="text-muted mb-2 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Usuário</h6>
+				<p class="mb-0 fs-5">
+					<strong th:text="${usuario.codigoUsuario}"></strong> -
+					<strong th:text="${usuario.username}"></strong>
+				</p>
+			</div>
 
+			<hr class="my-4">
+
+			<form action="#" th:action="@{/pontolite/usuario/alterar-senha}" th:object="${usuario}" method="post"
+				onsubmit="submitFormViaFetch(this, event);">
+				<input type="hidden" id="input-codigo-usuario" th:field="*{codigoUsuario}">
+				<input type="hidden" id="input-username" th:field="*{username}">
+				<input type="hidden" id="input-data-cadastro" th:field="*{dataCadastro}">
+				<input type="hidden" id="input-email" th:field="*{email}">
+				<input type="hidden" id="input-status" th:field="*{status}">
+				<input type="hidden" id="input-perfil" th:field="*{perfil}">
+				<input type="hidden" id="input-usuario-cadastro" th:field="*{usuarioCadastro}">
+				<input type="hidden" id="input-jornada" th:field="*{jornada}">
+				<input type="hidden" id="input-cliente" th:field="*{cliente}">
+
+				<!-- Section: Senha -->
+				<h6 class="text-muted mb-3 text-uppercase font-weight-bold"
+					style="font-size: 0.8rem; letter-spacing: 1px;">Nova Senha</h6>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="input-password" class="form-label">Password</label>
+						<input type="password" class="form-control" id="input-password" placeholder="Password" value=""
+							required th:field="*{password}" maxlength="60">
+						<div class="text-danger small mt-1" th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}"></div>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="input-password-confirm" class="form-label">Confirmar Password</label>
+						<input type="password" class="form-control" id="input-password-confirm"
+							placeholder="Confirmar Password" value="" required onblur="validar_confirmacao_senha()"
+							maxlength="60">
+					</div>
 				</div>
-				<button class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit" id="bt-enviar">Enviar</button>
-				<button id="default-botao-voltar" class="btn btn-secondary" style="width: 400px; height: 45px;" type="submit">Voltar</button>
+
+				<hr class="my-4">
+
+				<!-- Actions -->
+				<div class="d-flex justify-content-end gap-2">
+					<button class="btn btn-primary" type="submit" id="bt-enviar"><i class="bi bi-save"></i> Salvar
+						Alterações</button>
+				</div>
 			</form>
+		</div>
+	</div>
 </main>
+
 </html>
