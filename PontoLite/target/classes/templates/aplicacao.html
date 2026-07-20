@@ -17,13 +17,14 @@
 						style="font-size: 20px; font-weight: normal; color: #666;">Bem-vindo</h1>
 					<small class="text-muted" th:text="${session.usuarioLogado.perfil.nomePerfil}"></small>
 				</div>
-				<div class="d-flex gap-2">
+				<div class="d-flex align-items-center gap-2">
 					<a href="#" onclick="loadContentViaFetch('/pontolite', event)"
-						class="btn btn-outline-primary btn-sm"><i class="bi bi-house"></i>
+						class="btn btn-primary btn-sm rounded-pill fw-semibold shadow-sm" style="width: 100px;"><i
+							class="bi bi-house-door-fill me-1"></i>
 						Home</a>
 					<div style="width: 10px;"></div>
-					<a th:href="@{/login/logof}" class="btn btn-outline-danger btn-sm"><i
-							class="bi bi-box-arrow-right"></i> Sair</a>
+					<a th:href="@{/login/logof}" class="btn btn-danger btn-sm rounded-pill fw-semibold shadow-sm"
+						style="width: 100px;"><i class="bi bi-power me-1"></i> Sair</a>
 				</div>
 			</div>
 

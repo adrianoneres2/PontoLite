@@ -58,6 +58,7 @@ function limpaTelefone(field) {
 }
 
 ///Consulta no formulário a medida que vai sendo digitado
+/*
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById('searchInput');
   const table = document.getElementById('clientTable');
@@ -92,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+*/
 
 /*Balão de mensagem */
 $(document).ready(function () {

@@ -178,20 +178,28 @@ function clearValidationMessage() {
 
 function validateForm() {
     clearValidationMessage();
-    if (minimumNumberOfDays < 1) {
-        displayValidationMessage('Pelo menos um dia deve ser adicionado.');
-        return false;
-    }
+
+    let changedMinimumNumberOfDays = 0;
 
     const tbody = document.getElementById('table-jornada-body');
     const rows = tbody.querySelectorAll('tr');
+    console.log('rows', rows.length);
+    changedMinimumNumberOfDays = rows.length;
+    console.log('minimumNumberOfDays', changedMinimumNumberOfDays);
     for (const row of rows) {
         const validation = validateRowTimes(row);
         if (!validation.valid) {
+            changedMinimumNumberOfDays--;
             const diaNome = row.querySelector('td.fw-bold').textContent;
             displayValidationMessage(`<strong>${diaNome}</strong>: ${validation.message}`);
             return false;
         }
     }
+
+    if (changedMinimumNumberOfDays < 1) {
+        displayValidationMessage('Pelo menos um dia deve ser adicionado.');
+        return false;
+    }
+
     return true;
 }

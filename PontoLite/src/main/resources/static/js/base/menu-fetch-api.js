@@ -12,7 +12,19 @@ function loadContentViaFetch(url, event, options = {}) {
     fetch(url, options)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro na requisição: ' + response.status);
+                switch (response.status) {
+                    case 401:
+                        window.location.href = '/pontolite/login';
+                        break;
+                    case 403:
+                        throw new Error('Verifique permissões de acesso!');
+                    case 404:
+                        throw new Error('Recurso não encontrado!');
+                    case 500:
+                        throw new Error('Erro interno do servidor!');
+                    default:
+                        throw new Error('Erro na requisição: ' + response.status);
+                }
             }
             return response.text();
         })
@@ -54,6 +66,8 @@ function loadContentViaFetch(url, event, options = {}) {
         })
         .catch(error => {
             console.error('Erro ao carregar o conteúdo:', error);
+            const errorMessage = document.querySelector('main');
+            errorMessage.innerHTML = '<div class="alert alert-danger">' + error.message + '</div>';
         });
 }
 

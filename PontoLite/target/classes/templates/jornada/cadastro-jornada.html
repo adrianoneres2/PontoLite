@@ -7,8 +7,8 @@
 			<h5 class="mb-0"><i class="bi bi-calendar-week"></i> Cadastro de Jornada</h5>
 		</div>
 		<div class="card-body">
-			<form action="#" onsubmit="return validateForm()" th:action="@{/pontolite/jornada/formulario}"
-				th:object="${jornadaDTO}" method="post" id="form-jornada">
+			<form action="#" onsubmit="return validateForm() && submitFormViaFetch(this, event)"
+				th:action="@{/pontolite/jornada/formulario}" th:object="${jornadaDTO}" method="post" id="form-jornada">
 				<div class="row">
 					<div class="mb-4">
 						<label for="input-nome-jornada" class="form-label">Nome da Jornada</label>

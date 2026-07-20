@@ -5,7 +5,6 @@
 	<div class="card">
 		<div class="card-header d-flex justify-content-between align-items-center">
 			<span>Listagem de Jornadas</span>
-			<a th:href="@{/pontolite}" class="btn btn-secondary btn-sm">Voltar</a>
 		</div>
 		<div class="card-body">
 			<!-- Search Bar -->
@@ -41,13 +40,14 @@
 							<td class="text-center">
 								<div class="btn-group" role="group">
 									<a th:href="@{/pontolite/jornada/alterar-status?codJornada={codJornada}(codJornada=${jornada.codigoJornada})}"
-										class="btn btn-sm"
+										onclick="loadContentViaFetch(this.href, event)" class="btn btn-sm"
 										th:classappend="${jornada.situacaoJornada==1} ? 'btn-outline-success' : 'btn-outline-danger'"
 										title="Status">
 										<i
 											th:classappend="${jornada.situacaoJornada==1} ? 'bi bi-check-circle-fill text-success' : 'bi bi-x-circle-fill text-danger'"></i>
 									</a>
 									<a th:href="@{/pontolite/jornada/alterar?codJornada={codJornada}(codJornada=${jornada.codigoJornada})}"
+										onclick="loadContentViaFetch(this.href, event)"
 										class="btn btn-outline-primary btn-sm" title="Editar">
 										<i class="bi bi-pencil"></i>
 									</a>
@@ -64,17 +64,19 @@
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${jornadasPage.first} ? 'disabled'">
 						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number - 1})}"
-							tabindex="-1" aria-disabled="true">Anterior</a>
+							tabindex="-1" aria-disabled="true"
+							onclick="loadContentViaFetch(this.href, event)">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, jornadasPage.totalPages - 1)}"
 						th:classappend="${jornadasPage.number == i} ? 'active'">
-						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${i})}" th:text="${i + 1}">1</a>
+						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${i})}" th:text="${i + 1}"
+							onclick="loadContentViaFetch(this.href, event)">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${jornadasPage.last} ? 'disabled'">
-						<a class="page-link"
-							th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number + 1})}">Próxima</a>
+						<a class="page-link" th:href="@{/pontolite/jornada/listar(page=${jornadasPage.number + 1})}"
+							onclick="loadContentViaFetch(this.href, event)">Próxima</a>
 					</li>
 				</ul>
 			</nav>

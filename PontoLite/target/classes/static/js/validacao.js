@@ -75,10 +75,11 @@ $(document).ready(function () {
 
 
 // Adicione um evento de clique ao botão
+/*
 document.getElementById("default-botao-voltar").addEventListener("click", function () {
   // Redireciona para a página anterior no histórico do navegador
   history.back();
-});
+});*/
 
 function displayValidationMessage(message, type = 'danger') {
   const msgDiv = document.getElementById('validation-message');
