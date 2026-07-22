@@ -185,8 +185,16 @@ function validateForm() {
     const rows = tbody.querySelectorAll('tr');
     console.log('rows', rows.length);
     changedMinimumNumberOfDays = rows.length;
+
+    if (changedMinimumNumberOfDays < 1) {
+        displayValidationMessage('Pelo menos um dia deve ser adicionado.');
+        return false;
+    }
+
+
     console.log('minimumNumberOfDays', changedMinimumNumberOfDays);
     for (const row of rows) {
+        minimumNumberOfDays
         const validation = validateRowTimes(row);
         if (!validation.valid) {
             changedMinimumNumberOfDays--;
@@ -194,11 +202,6 @@ function validateForm() {
             displayValidationMessage(`<strong>${diaNome}</strong>: ${validation.message}`);
             return false;
         }
-    }
-
-    if (changedMinimumNumberOfDays < 1) {
-        displayValidationMessage('Pelo menos um dia deve ser adicionado.');
-        return false;
     }
 
     return true;

@@ -86,6 +86,13 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	public Page<Cliente> listarPorNomePaginado(int pagina, int tamanho, String nomeCliente) {
+		Sort sortByCodCliente = Sort.by("codigoCliente").descending();
+		Pageable pageable = PageRequest.of(pagina, tamanho, sortByCodCliente);
+		return clienteRepository.findByNomeClienteContainingIgnoreCase(nomeCliente, pageable);
+	}
+
+	@Override
 	public Cliente alterarStatus(Cliente cliente) {
 		cliente.setSituacaoCliente(cliente.getSituacaoCliente().equals(DefaultConstant.ATIVO) ? DefaultConstant.INATIVO
 				: DefaultConstant.ATIVO);

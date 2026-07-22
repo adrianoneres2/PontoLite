@@ -59,10 +59,28 @@ public class ClienteController {
         return "/cliente/cadastro-cliente";
     }
 
+    @GetMapping("/listar-por-nome")
+    public String acessarListagemPorNome(Model model, @PageableDefault(size = 8) Pageable pageable,
+            @RequestParam(name = "nomeCliente") String nomeCliente) {
+
+        Page<Cliente> clientesPage = Page.empty();
+        if (!nomeCliente.isBlank()) {
+            clientesPage = clienteService.listarPorNomePaginado(pageable.getPageNumber(),
+                    pageable.getPageSize(), nomeCliente);
+        } else {
+            clientesPage = clienteService.listarTodosPaginado(pageable.getPageNumber(),
+                    pageable.getPageSize());
+        }
+
+        model.addAttribute("clientesPage", clientesPage);
+        /// Para manter o parametro de busca no campo input search no formulario
+        model.addAttribute("nomeCliente", nomeCliente);
+        return "/cliente/listagem-cliente";
+    }
+
     @GetMapping("/listar")
     public String acessarListagem(Model model, @PageableDefault(size = 8) Pageable pageable) {
-        Page<Cliente> clientesPage = clienteService.listarTodosPaginado(pageable.getPageNumber(),
-                pageable.getPageSize());
+        Page<Cliente> clientesPage = Page.empty();
         model.addAttribute("clientesPage", clientesPage);
         return "/cliente/listagem-cliente";
     }

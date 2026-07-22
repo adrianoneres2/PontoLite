@@ -23,4 +23,6 @@ public interface ClienteService {
 
 	Page<Cliente> listarTodosPaginado(int pagina, int tamanho);
 
+	Page<Cliente> listarPorNomePaginado(int pagina, int tamanho, String nomeCliente);
+
 }

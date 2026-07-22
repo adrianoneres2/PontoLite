@@ -86,3 +86,21 @@ function submitFormViaFetch(form, event) {
     };
     loadContentViaFetch(url, null, options);
 }
+
+
+function pesquisarFormulario(urlBase, event) {
+
+    event.preventDefault();
+
+    // Pega o valor atual digitado no input
+    const value = document.getElementById('searchInput').value;
+
+    //console.log('URL: ' + urlBase);
+    //console.log('Value: ' + value);
+
+    // Monta a URL dinamicamente
+    const url = urlBase.replace('parametro', value);
+    //console.log('URL: ' + url);
+    // Chama a sua função original passando a URL construída
+    loadContentViaFetch(url, event);
+}

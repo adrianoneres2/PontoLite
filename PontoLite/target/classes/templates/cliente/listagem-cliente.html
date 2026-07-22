@@ -5,15 +5,24 @@
 	<div class="card">
 		<div class="card-header d-flex justify-content-between align-items-center">
 			<span>Listagem de Clientes</span>
+			<button class="btn btn-outline-success btn-sm" title="Novo Cliente">
+				<i class="bi bi-plus-circle"></i> Novo Cliente
+			</button>
 		</div>
 		<div class="card-body">
 			<!-- Search Bar -->
 			<div class="mb-4">
 				<div class="input-group">
 					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-					<input type="text" class="form-control" id="searchInput"
-						placeholder="Buscar por nome, e-mail ou telefone...">
+					<input type="text" class="form-control" id="searchInput" th:value="${nomeCliente}"
+						placeholder="Buscar por nome">
+
+					<button class="btn btn-outline-primary btn-sm" title="Pesquisar"
+						th:onclick="|pesquisarFormulario('@{/pontolite/cliente/listar-por-nome(nomeCliente=parametro)}', event)|">
+						<i class="bi bi-search"></i> Pesquisar
+					</button>
 				</div>
+
 			</div>
 
 			<!-- Table -->
@@ -71,20 +80,20 @@
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${clientesPage.first} ? 'disabled'">
 						<a class="page-link" href="#"
-							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${clientesPage.number - 1})}', event)|"
+							th:onclick="|pesquisarFormulario('@{/pontolite/cliente/listar-por-nome(nomeCliente=parametro, page=${clientesPage.number - 1})}', event)|"
 							tabindex="-1" aria-disabled="true">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, clientesPage.totalPages - 1)}"
 						th:classappend="${clientesPage.number == i} ? 'active'">
 						<a class="page-link" href="#"
-							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${i})}', event)|"
+							th:onclick="|pesquisarFormulario('@{/pontolite/cliente/listar-por-nome(nomeCliente=parametro, page=${i})}', event)|"
 							th:text="${i + 1}">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${clientesPage.last} ? 'disabled'">
 						<a class="page-link" href="#"
-							th:onclick="|loadContentViaFetch('@{/pontolite/cliente/listar(page=${clientesPage.number + 1})}', event)|">Próxima</a>
+							th:onclick="|pesquisarFormulario('@{/pontolite/cliente/listar-por-nome(nomeCliente=parametro, page=${clientesPage.number + 1})}', event)|">Próxima</a>
 					</li>
 				</ul>
 			</nav>
