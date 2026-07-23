@@ -90,7 +90,18 @@ public class UsuarioContoller {
 			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
 		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente, autenticacaoService);
-		atualizarListaUsuarioPorCliente(model, codigoCliente, page, size);
+		atualizarListaUsuarioPorCliente(model, codigoCliente, page, size, null);
+		return "/usuario/listagem-usuario";
+	}
+
+	@GetMapping("/listar-por-nome")
+	public String listarPorNome(@RequestParam(name = "nomeUsuario", required = true) String nomeUsuario,
+			@RequestParam(name = "codCliente", required = true, defaultValue = "0") Long codigoCliente,
+			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
+			Model model) {
+		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente, autenticacaoService);
+		atualizarListaUsuarioPorCliente(model, codigoCliente, page, size, nomeUsuario);
 		return "/usuario/listagem-usuario";
 	}
 
@@ -101,16 +112,24 @@ public class UsuarioContoller {
 			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuarioService.updateStatus(usuario);
-		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente(), page, size);
+		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente(), page, size, null);
 		return "/usuario/listagem-usuario";
 	}
 
-	protected void atualizarListaUsuarioPorCliente(Model model, Long codigoCliente, int page, int size) {
-		Page<Usuario> usuariosPage = usuarioService.findAllByClientePaged(clienteService.porId(codigoCliente), page,
-				size);
+	protected void atualizarListaUsuarioPorCliente(Model model, Long codigoCliente, int page, int size,
+			String nomeUsuario) {
+		Page<Usuario> usuariosPage = Page.empty();
+		if (nomeUsuario != null) {
+			usuariosPage = usuarioService.findAllByClienteAndNomePaged(clienteService.porId(codigoCliente),
+					nomeUsuario, page, size);
+		} else {
+			usuariosPage = usuarioService.findAllByClientePaged(clienteService.porId(codigoCliente), page,
+					size);
+		}
 		model.addAttribute("usuariosPage", usuariosPage);
 		model.addAttribute("usuarios", usuariosPage.getContent());
 		model.addAttribute("codCliente", codigoCliente);
+		model.addAttribute("nomeUsuario", nomeUsuario);
 	}
 
 	@GetMapping("/alterar")

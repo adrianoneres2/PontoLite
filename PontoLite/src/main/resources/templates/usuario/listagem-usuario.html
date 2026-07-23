@@ -12,8 +12,14 @@
 			<div class="mb-4">
 				<div class="input-group">
 					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-					<input type="text" class="form-control" id="searchInput"
-						placeholder="Buscar por nome, e-mail ou telefone...">
+					<input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome"
+						th:value="${nomeUsuario}">
+
+					<button class="btn btn-outline-primary btn-sm" title="Pesquisar"
+						th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro)}', event)|"
+						style="margin-left: 18px;">
+						<i class="bi bi-search"></i> Pesquisar
+					</button>
 				</div>
 			</div>
 

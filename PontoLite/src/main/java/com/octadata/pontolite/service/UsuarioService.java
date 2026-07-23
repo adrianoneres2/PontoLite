@@ -29,4 +29,5 @@ public interface UsuarioService {
 
 	Page<Usuario> findAllByClientePaged(Cliente cliente, int pagina, int tamanho);
 
+	Page<Usuario> findAllByClienteAndNomePaged(Cliente cliente, String nomeUsuario, int pagina, int tamanho);
 }
