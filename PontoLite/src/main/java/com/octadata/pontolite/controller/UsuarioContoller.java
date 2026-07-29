@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,8 +88,14 @@ public class UsuarioContoller {
 			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
 			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
-		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente, autenticacaoService);
-		atualizarListaUsuarioPorCliente(model, codigoCliente, page, size, null);
+		// codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente,
+		// autenticacaoService);
+		Page<Usuario> usuariosPage = Page.empty();
+
+		model.addAttribute("usuariosPage", usuariosPage);
+		model.addAttribute("usuarios", usuariosPage.getContent());
+		model.addAttribute("codCliente", codigoCliente);
+
 		return "/usuario/listagem-usuario";
 	}
 

@@ -1,8 +1,5 @@
 package com.octadata.pontolite.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,11 +66,35 @@ public class JornadaController {
 			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
 			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
-		PageRequest pageRequest = PageRequest.of(page, size);
-		Page<Jornada> jornadasPage = jornadaService.porClientePaginado(autenticacaoService.getUsuarioAutenticado().getCliente(),
-				pageRequest);
+
+		Page<Jornada> jornadasPage = Page.empty();
+
 		model.addAttribute("jornadasPage", jornadasPage);
 		model.addAttribute("jornadas", jornadasPage.getContent());
+		return "/jornada/listagem-jornada";
+	}
+
+	@GetMapping("/listar-por-nome")
+	public String listarJornadasPorNome(
+			@RequestParam(name = "nomeJornada", required = true) String nomeJornada,
+			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
+			Model model) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		Page<Jornada> jornadasPage = Page.empty();
+		if (nomeJornada != null) {
+			jornadasPage = jornadaService.porClienteAndNomeJornadaPaginado(
+					autenticacaoService.getUsuarioAutenticado().getCliente(),
+					nomeJornada,
+					pageRequest);
+		} else {
+			jornadasPage = jornadaService.porClientePaginado(
+					autenticacaoService.getUsuarioAutenticado().getCliente(),
+					pageRequest);
+		}
+		model.addAttribute("jornadasPage", jornadasPage);
+		model.addAttribute("jornadas", jornadasPage.getContent());
+		model.addAttribute("nomeJornada", nomeJornada);
 		return "/jornada/listagem-jornada";
 	}
 
@@ -83,11 +104,10 @@ public class JornadaController {
 	}
 
 	@GetMapping("/alterar-status")
-	public String alterarStatusJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
+	public void alterarStatusJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
 			Model model) {
 		Jornada jornada = jornadaService.buscarPorId(codJornada);
 		jornadaService.alterarStatus(jornada);
-		return "redirect:/pontolite/jornada/listar";
 	}
 
 	@GetMapping("/alterar")

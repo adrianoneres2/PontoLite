@@ -50,6 +50,11 @@ public class JornadaServiceImpl implements JornadaService {
 		return jornadaRepository.findByCliente(cliente, pageable);
 	}
 
+	@Override
+	public Page<Jornada> porClienteAndNomeJornadaPaginado(Cliente cliente, String nomeJornada, Pageable pageable) {
+		return jornadaRepository.findByClienteAndNomeJornadaPaginado(cliente, nomeJornada, pageable);
+	}
+
 	public void validar(Jornada jornada) {
 
 		if (jornada.getCliente() == null) {

@@ -22,4 +22,6 @@ public interface JornadaService {
 
 	Page<Jornada> porClientePaginado(Cliente cliente, Pageable pageable);
 
+	Page<Jornada> porClienteAndNomeJornadaPaginado(Cliente cliente, String nomeJornada, Pageable pageable);
+
 }
