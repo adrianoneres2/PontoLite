@@ -23,6 +23,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 /// @Data
@@ -83,6 +84,9 @@ public class Usuario implements UserDetails {
 	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuarioCadastro", cascade = CascadeType.ALL)
 	private List<Cliente> clientes;
+
+	@Transient
+	private String passwordConfirmacao;
 
 	public Long getCodigoUsuario() {
 		return codigoUsuario;
@@ -162,6 +166,14 @@ public class Usuario implements UserDetails {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public String getPasswordConfirmacao() {
+		return passwordConfirmacao;
+	}
+
+	public void setPasswordConfirmacao(String passwordConfirmacao) {
+		this.passwordConfirmacao = passwordConfirmacao;
 	}
 
 	@Override

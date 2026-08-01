@@ -12,8 +12,10 @@ function validar_confirmacao_senha() {
 	if (senha != senha_confirmacao) {
 		document.getElementById("input-password-confirm").style.backgroundColor = "#ad5037";
 		document.getElementById("input-password-confirm").value = "";
+		return false;
 	} else {
 		document.getElementById("input-password-confirm").style.backgroundColor = "#74a348";
+		return true;
 	}
 }
 

@@ -121,4 +121,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return new BCryptPasswordEncoder().encode(senha);
 	}
 
+	@Override
+	public void validaSenhaConfirmacao(Usuario usuario) throws NegocioException {
+		String senha = usuario.getPassword();
+		String confirmacao = usuario.getPasswordConfirmacao();
+
+		if (!senha.equals(confirmacao)) {
+			throw new NegocioException(EnumMessage.ERROR.toString(), "As senhas não conferem.", "");
+		}
+	}
+
 }

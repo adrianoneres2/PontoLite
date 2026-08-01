@@ -45,8 +45,8 @@
 					<div class="col-md-6 mb-3">
 						<label for="input-password-confirm" class="form-label">Confirmar Password</label>
 						<input type="password" class="form-control" id="input-password-confirm"
-							placeholder="Confirmar Password" value="" required onblur="validar_confirmacao_senha()"
-							maxlength="60">
+							placeholder="Confirmar Password" value="" required maxlength="60"
+							th:field="*{passwordConfirmacao}" onblur="validar_confirmacao_senha()">
 					</div>
 				</div>
 
@@ -60,6 +60,7 @@
 			</form>
 		</div>
 	</div>
+	<script th:src="@{/js/usuario/usuario.js}"></script>
 </main>
 
 </html>
