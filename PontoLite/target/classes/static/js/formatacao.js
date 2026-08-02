@@ -98,15 +98,17 @@ document.addEventListener("DOMContentLoaded", function () {
 /*Balão de mensagem */
 $(document).ready(function () {
 
-  let textMessage = document.getElementById("id-mensagem-aplicacao").textContent;
-  ///alert(textMessage.trim().length);
+  let textMessage = document.getElementById("id-mensagem-aplicacao");
 
-  if (textMessage.trim().length > 0) {
-    ///alert(textMessage);
-    $('#id-mensagem-aplicacao').fadeIn(500); // Mostra o balão gradualmente
-    // Fecha o balão com efeito fade-out após 3 segundos
-    setTimeout(function () {
-      $('#id-mensagem-aplicacao').fadeOut(500);
-    }, 3000); // 3000 milissegundos = 3 segundos	
+  if (textMessage != null) {
+    textMessage = textMessage.textContent;
+
+    if (textMessage.trim().length > 0) {
+      $('#id-mensagem-aplicacao').fadeIn(500); // Mostra o balão gradualmente
+      // Fecha o balão com efeito fade-out após 3 segundos
+      setTimeout(function () {
+        $('#id-mensagem-aplicacao').fadeOut(500);
+      }, 3000); // 3000 milissegundos = 3 segundos	
+    }
   }
 });

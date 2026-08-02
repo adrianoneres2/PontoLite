@@ -104,10 +104,11 @@ public class JornadaController {
 	}
 
 	@GetMapping("/alterar-status")
-	public void alterarStatusJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
+	public String alterarStatusJornada(@RequestParam(name = "codJornada", required = true) Long codJornada,
 			Model model) {
 		Jornada jornada = jornadaService.buscarPorId(codJornada);
 		jornadaService.alterarStatus(jornada);
+		return listarJornadasPorNome(jornada.getNomeJornada(), 0, 8, model);
 	}
 
 	@GetMapping("/alterar")

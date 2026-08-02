@@ -47,7 +47,7 @@
 							<td class="text-center">
 								<div class="btn-group" role="group">
 									<a href="#" id="id-status"
-										th:onclick="|pesquisarFormulario('@{/pontolite/jornada/alterar-status(codJornada=${jornada.codigoJornada})}', event)|"
+										th:onclick="|loadContentViaFetch('@{/pontolite/jornada/alterar-status(codJornada=${jornada.codigoJornada})}', event)|"
 										class="btn btn-sm"
 										th:classappend="${jornada.situacaoJornada==1} ? 'btn-outline-success' : 'btn-outline-danger'"
 										title="Status">

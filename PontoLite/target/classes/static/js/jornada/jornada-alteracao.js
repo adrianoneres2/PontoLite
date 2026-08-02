@@ -1,3 +1,4 @@
+
 // EnumDiaSemana mapping
 const DIAS_SEMANA = [
     { id: 1, nome: 'Segunda-feira' },
@@ -194,7 +195,7 @@ function validateForm() {
 
     console.log('minimumNumberOfDays', changedMinimumNumberOfDays);
     for (const row of rows) {
-        minimumNumberOfDays
+        // minimumNumberOfDays
         const validation = validateRowTimes(row);
         if (!validation.valid) {
             changedMinimumNumberOfDays--;
