@@ -88,20 +88,10 @@ public class UsuarioContoller {
 			@RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
 			@RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
 			Model model) {
-		codigoCliente = ClienteHelper.getCodigoClienteSelecionado(codigoCliente,
-				autenticacaoService);
 		Page<Usuario> usuariosPage = Page.empty();
 
-		if (codigoCliente == 0) {
-			model.addAttribute("usuariosPage", usuariosPage);
-			model.addAttribute("usuarios", usuariosPage.getContent());
-		} else {
-			usuariosPage = usuarioService.findAllByClientePaged(clienteService.porId(codigoCliente), page,
-					size);
-			model.addAttribute("usuariosPage", usuariosPage);
-			model.addAttribute("usuarios", usuariosPage.getContent());
-			model.addAttribute("codCliente", codigoCliente);
-		}
+		model.addAttribute("usuariosPage", usuariosPage);
+		model.addAttribute("usuarios", usuariosPage.getContent());
 
 		return "/usuario/listagem-usuario";
 	}
@@ -124,7 +114,8 @@ public class UsuarioContoller {
 			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuarioService.updateStatus(usuario);
-		atualizarListaUsuarioPorCliente(model, usuario.getCliente().getCodigoCliente(), page, size, null);
+		// atualizarListaUsuarioPorCliente(model,
+		// usuario.getCliente().getCodigoCliente(), page, size, null);
 		return "/usuario/listagem-usuario";
 	}
 

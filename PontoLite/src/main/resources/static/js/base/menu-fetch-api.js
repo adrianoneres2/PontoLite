@@ -104,3 +104,49 @@ function pesquisarFormulario(urlBase, event) {
     // Chama a sua função original passando a URL construída
     loadContentViaFetch(url, event);
 }
+
+
+function apiAtualizaStatus(urlBase, event) {
+    event.preventDefault(); // Impede o recarregamento total da página
+    console.log('URL: ' + urlBase);
+
+    const idStatusElemento = event.id;
+    console.log('ID: ' + idStatusElemento);
+
+    fetch(urlBase, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'text/html'
+        }
+    }).then(response => {
+        if (response.ok) {
+            console.log('Status atualizado com sucesso!');
+            const statusElement = document.getElementById(idStatusElemento);
+            if (statusElement) {
+                if (statusElement.classList.contains('btn-outline-success')) {
+                    statusElement.classList.remove('btn-outline-success');
+                    statusElement.classList.add('btn-outline-danger');
+                } else {
+                    statusElement.classList.remove('btn-outline-danger');
+                    statusElement.classList.add('btn-outline-success');
+                }
+
+                const iconeStatusUpdate = document.getElementById('id-icone-status-update');
+                if (iconeStatusUpdate) {
+                    if (iconeStatusUpdate.classList.contains('bi-check-circle-fill')) {
+                        iconeStatusUpdate.classList.remove('bi-check-circle-fill');
+                        iconeStatusUpdate.classList.add('bi-x-circle-fill');
+                    } else {
+                        iconeStatusUpdate.classList.remove('bi-x-circle-fill');
+                        iconeStatusUpdate.classList.add('bi-check-circle-fill');
+                    }
+                }
+
+            }
+        } else {
+            console.error('Erro ao atualizar status!');
+        }
+    }).catch(error => {
+        console.error('Exception - Erro ao atualizar status:', error);
+    });
+}

@@ -50,12 +50,12 @@
 							<td class="text-center">
 								<div class="btn-group" role="group">
 
-									<a href="#"
-										th:onclick="|pesquisarFormulario('@{/pontolite/usuario/alterar-status(codUsuario=${usuario.codigoUsuario})}', event)|"
+									<a href="#" th:id="${'id-status-update-' + usuario.codigoUsuario}"
+										th:onclick="|apiAtualizaStatus('@{/pontolite/usuario/alterar-status(codUsuario=${usuario.codigoUsuario})}', event)|"
 										class="btn btn-sm"
 										th:classappend="${usuario.status==1} ? 'btn-outline-success' : 'btn-outline-danger'">
-										<i
-											th:classappend="${usuario.status==1} ? 'bi bi-check-circle-fill text-success ' : 'bi bi-x-circle-fill text-danger'">
+										<i th:id="${'id-icone-status-update-' + usuario.codigoUsuario}"
+											th:classappend="${usuario.status==1} ? 'bi bi-check-circle-fill text-success' : 'bi bi-x-circle-fill text-danger'">
 										</i>
 									</a>
 									<a href="#"

@@ -108,7 +108,7 @@ public class JornadaController {
 			Model model) {
 		Jornada jornada = jornadaService.buscarPorId(codJornada);
 		jornadaService.alterarStatus(jornada);
-		return listarJornadasPorNome(jornada.getNomeJornada(), 0, 8, model);
+		return listarJornadas(0, 8, model);
 	}
 
 	@GetMapping("/alterar")
