@@ -20,6 +20,7 @@ import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.ClienteService;
+import com.octadata.pontolite.util.DefaultConstant;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
 
@@ -73,22 +74,31 @@ public class ClienteController {
         }
 
         model.addAttribute("clientesPage", clientesPage);
+        model.addAttribute("clientes", clientesPage.getContent());
         /// Para manter o parametro de busca no campo input search no formulario
         model.addAttribute("nomeCliente", nomeCliente);
         return "/cliente/listagem-cliente";
     }
 
     @GetMapping("/listar")
-    public String acessarListagem(Model model, @PageableDefault(size = 8) Pageable pageable) {
+    public String acessarListagem(Model model,
+            @RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+            @RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size) {
         Page<Cliente> clientesPage = Page.empty();
+
         model.addAttribute("clientesPage", clientesPage);
+        model.addAttribute("clientes", clientesPage.getContent());
+
         return "/cliente/listagem-cliente";
     }
 
     @GetMapping("/alterar-status")
-    public String alterarStatus(@RequestParam(name = "codCliente", required = true) Long codigoCliente) {
+    public String alterarStatus(@RequestParam(name = "codCliente", required = true) Long codigoCliente,
+            @RequestParam(value = "page", defaultValue = DefaultConstant.TAMANHO_PAGINA_PADRAO) int page,
+            @RequestParam(value = "size", defaultValue = DefaultConstant.REGISTROS_POR_PAGINA_PADRAO) int size,
+            Model model) {
         clienteService.alterarStatus(clienteService.porId(codigoCliente));
-        return "redirect:/pontolite/cliente/listar";
+        return "/cliente/listagem-cliente";
     }
 
     @GetMapping("/alterar")

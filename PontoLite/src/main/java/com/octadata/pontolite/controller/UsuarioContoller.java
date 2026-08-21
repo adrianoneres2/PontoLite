@@ -114,8 +114,7 @@ public class UsuarioContoller {
 			Model model) {
 		Usuario usuario = usuarioService.porId(codigoUsuario);
 		usuarioService.updateStatus(usuario);
-		// atualizarListaUsuarioPorCliente(model,
-		// usuario.getCliente().getCodigoCliente(), page, size, null);
+
 		return "/usuario/listagem-usuario";
 	}
 

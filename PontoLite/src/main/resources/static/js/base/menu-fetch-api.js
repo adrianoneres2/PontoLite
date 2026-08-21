@@ -107,11 +107,13 @@ function pesquisarFormulario(urlBase, event) {
 
 
 function apiAtualizaStatus(urlBase, event) {
-    event.preventDefault(); // Impede o recarregamento total da página
+    if (event) {
+        event.preventDefault(); // Impede o recarregamento total da página
+    }
     console.log('URL: ' + urlBase);
 
-    const idStatusElemento = event.id;
-    console.log('ID: ' + idStatusElemento);
+    // Obtém o elemento do botão clicado (independente de ter clicado no botão ou no ícone dentro dele)
+    const buttonElement = event ? (event.currentTarget || event.target.closest('a') || event.target) : null;
 
     fetch(urlBase, {
         method: 'GET',
@@ -121,30 +123,30 @@ function apiAtualizaStatus(urlBase, event) {
     }).then(response => {
         if (response.ok) {
             console.log('Status atualizado com sucesso!');
-            const statusElement = document.getElementById(idStatusElemento);
-            if (statusElement) {
-                if (statusElement.classList.contains('btn-outline-success')) {
-                    statusElement.classList.remove('btn-outline-success');
-                    statusElement.classList.add('btn-outline-danger');
-                } else {
-                    statusElement.classList.remove('btn-outline-danger');
-                    statusElement.classList.add('btn-outline-success');
+            if (buttonElement) {
+                // Alterna as classes do botão (sucesso <-> perigo)
+                if (buttonElement.classList.contains('btn-outline-success')) {
+                    buttonElement.classList.remove('btn-outline-success');
+                    buttonElement.classList.add('btn-outline-danger');
+                } else if (buttonElement.classList.contains('btn-outline-danger')) {
+                    buttonElement.classList.remove('btn-outline-danger');
+                    buttonElement.classList.add('btn-outline-success');
                 }
 
-                const iconeStatusUpdate = document.getElementById('id-icone-status-update');
-                if (iconeStatusUpdate) {
-                    if (iconeStatusUpdate.classList.contains('bi-check-circle-fill')) {
-                        iconeStatusUpdate.classList.remove('bi-check-circle-fill');
-                        iconeStatusUpdate.classList.add('bi-x-circle-fill');
-                    } else {
-                        iconeStatusUpdate.classList.remove('bi-x-circle-fill');
-                        iconeStatusUpdate.classList.add('bi-check-circle-fill');
+                // Alterna as classes do ícone contido no botão
+                const iconElement = buttonElement.querySelector('i');
+                if (iconElement) {
+                    if (iconElement.classList.contains('bi-check-circle-fill')) {
+                        iconElement.classList.remove('bi-check-circle-fill', 'text-success');
+                        iconElement.classList.add('bi-x-circle-fill', 'text-danger');
+                    } else if (iconElement.classList.contains('bi-x-circle-fill')) {
+                        iconElement.classList.remove('bi-x-circle-fill', 'text-danger');
+                        iconElement.classList.add('bi-check-circle-fill', 'text-success');
                     }
                 }
-
             }
         } else {
-            console.error('Erro ao atualizar status!');
+            console.error('Erro ao atualizar status! Código HTTP:', response.status);
         }
     }).catch(error => {
         console.error('Exception - Erro ao atualizar status:', error);

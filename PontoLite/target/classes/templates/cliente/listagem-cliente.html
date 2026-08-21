@@ -39,7 +39,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cliente : ${clientesPage.content}">
+						<tr th:each="cliente : ${clientes}">
 							<th th:text="${cliente.codigoCliente}" scope="row"></th>
 							<td th:text="${cliente.razaoSocial}"></td>
 							<td th:text="${cliente.nomeCliente}"></td>
@@ -50,7 +50,7 @@
 							<td class="text-center">
 								<div class="btn-group" role="group">
 									<a href="#"
-										th:onclick="|loadContentViaFetch('@{/pontolite/cliente/alterar-status(codCliente=${cliente.codigoCliente})}', event)|"
+										th:onclick="|apiAtualizaStatus('@{/pontolite/cliente/alterar-status(codCliente=${cliente.codigoCliente})}', event)|"
 										class="btn btn-outline-info btn-sm" title="Status">
 										<i
 											th:classappend="${cliente.situacaoCliente==1} ? 'bi bi-check-circle-fill text-success ' : 'bi bi-x-circle-fill text-danger'">
@@ -74,7 +74,8 @@
 			</div>
 
 			<!-- Paginação -->
-			<nav th:if="${clientesPage.totalPages > 1}" aria-label="Navegação de página" class="mt-4">
+			<nav th:if="${clientesPage != null and clientesPage.totalPages > 1}" aria-label="Navegação de página"
+				class="mt-4">
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${clientesPage.first} ? 'disabled'">
 						<a class="page-link" href="#"
