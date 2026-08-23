@@ -142,15 +142,18 @@
 			</form>
 		</div>
 	</div>
-</main>
-<script th:src="@{/js/jornada/jornada-alteracao.js}">
-	/**
-	 * Atualiza os arrays do javascript com os indices dos campos do formulario de hora de entrada, intervalo e saida.
-	 */
-	window.addEventListener("load", function () {
-		updateIndexes();
-	});
+	<script th:src="@{/js/jornada/jornada-alteracao.js}">
+		/**
+		 * Atualiza os arrays do javascript com os indices dos campos do formulario de hora de entrada, intervalo e saida.
+		 */
 
-</script>
+		/*garantir o carregamento dos scripts*/
+		/*
+		$(document).ready(function () {
+			updateIndexes();
+		});*/
+
+	</script>
+</main>
 
 </html>

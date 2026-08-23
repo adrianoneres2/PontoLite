@@ -62,7 +62,7 @@
 										<i class="bi bi-pencil"></i>
 									</a>
 									<a href="#"
-										th:onclick="|loadContentViaFetch('@{/pontolite/usuario/listar?codCliente={codCliente}(codCliente=${cliente.codigoCliente})}', event)|"
+										th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro,codCliente=${cliente.codigoCliente})}', event)|"
 										class="btn btn-outline-info btn-sm" title="Usuários">
 										<i class="bi bi-people"></i>
 									</a>
