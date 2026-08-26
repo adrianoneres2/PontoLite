@@ -10,13 +10,23 @@
 		<div class="card-body">
 			<!-- Search -->
 			<div class="mb-4">
+
+				<div class="col-md-4 mb-3" sec:authorize="hasRole('ROLE_ADMIN_OCTADATA')">
+					<label for="searchInput" class="form-label">Empresa (Cliente)</label>
+					<select id="searchInput" class="form-select form-control">
+						<option value="">Selecione um cliente...</option>
+						<option th:each="cliente : ${clientes}" th:value="${cliente.codigoCliente}"
+							th:text="${cliente.nomeCliente}"></option>
+					</select>
+				</div>
+
 				<div class="input-group">
 					<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-					<input type="text" class="form-control" id="searchInput" placeholder="Buscar por nome"
+					<input type="text" class="form-control" id="searchInput2" placeholder="Buscar por nome"
 						th:value="${nomeUsuario}">
 
 					<button class="btn btn-outline-primary btn-sm" title="Pesquisar"
-						th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro)}', event)|"
+						th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(codCliente=parametro1, nomeUsuario=parametro2)}', event)|"
 						style="margin-left: 18px;">
 						<i class="bi bi-search"></i> Pesquisar
 					</button>
@@ -82,20 +92,20 @@
 				<ul class="pagination justify-content-center">
 					<li class="page-item" th:classappend="${usuariosPage.first} ? 'disabled'">
 						<a class="page-link"
-							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro, page=${usuariosPage.number - 1})}', event)|"
+							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(codCliente=parametro1, nomeUsuario=parametro2, page=${usuariosPage.number - 1})}', event)|"
 							tabindex="-1" aria-disabled="true">Anterior</a>
 					</li>
 
 					<li class="page-item" th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
 						th:classappend="${usuariosPage.number == i} ? 'active'">
 						<a class="page-link"
-							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro, page=${i})}', event)|"
+							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(codCliente=parametro1, nomeUsuario=parametro2, page=${i})}', event)|"
 							th:text="${i + 1}">1</a>
 					</li>
 
 					<li class="page-item" th:classappend="${usuariosPage.last} ? 'disabled'">
 						<a class="page-link"
-							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(nomeUsuario=parametro, page=${usuariosPage.number + 1})}', event)|">Próxima</a>
+							th:onclick="|pesquisarFormulario('@{/pontolite/usuario/listar-por-nome(codCliente=parametro1, nomeUsuario=parametro2, page=${usuariosPage.number + 1})}', event)|">Próxima</a>
 					</li>
 				</ul>
 			</nav>

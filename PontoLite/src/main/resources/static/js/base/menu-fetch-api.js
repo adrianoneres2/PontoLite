@@ -92,17 +92,28 @@ function pesquisarFormulario(urlBase, event) {
 
     event.preventDefault();
 
-    // Pega o valor atual digitado no input
-    const value = document.getElementById('searchInput').value;
+    /**
+     * Pega o valor atual digitado no input se ele existir
+     */
+    let value = '';
+    let value2 = '';
+
+    if (document.getElementById('searchInput')) {
+        value = document.getElementById('searchInput').value;
+    }
+    if (document.getElementById('searchInput2')) {
+        value2 = document.getElementById('searchInput2').value;
+    }
 
     //console.log('URL: ' + urlBase);
     //console.log('Value: ' + value);
 
     // Monta a URL dinamicamente
-    const url = urlBase.replace('parametro', value);
+    const url = urlBase.replace('parametro1', value);
+    const url2 = url.replace('parametro2', value2);
     //console.log('URL: ' + url);
     // Chama a sua função original passando a URL construída
-    loadContentViaFetch(url, event);
+    loadContentViaFetch(url2, event);
 }
 
 

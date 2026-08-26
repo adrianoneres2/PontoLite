@@ -92,6 +92,8 @@ public class UsuarioContoller {
 
 		model.addAttribute("usuariosPage", usuariosPage);
 		model.addAttribute("usuarios", usuariosPage.getContent());
+		model.addAttribute("clientes", clienteService.listarTodos());
+		model.addAttribute("codCliente", codigoCliente);
 
 		return "/usuario/listagem-usuario";
 	}
@@ -132,6 +134,7 @@ public class UsuarioContoller {
 		model.addAttribute("usuarios", usuariosPage.getContent());
 		model.addAttribute("codCliente", codigoCliente);
 		model.addAttribute("nomeUsuario", nomeUsuario);
+		model.addAttribute("clientes", clienteService.listarTodos());
 	}
 
 	@GetMapping("/alterar")
