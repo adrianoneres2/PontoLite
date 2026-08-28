@@ -9,12 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.RegistroPonto;
 import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.RegistroPontoService;
+import com.octadata.pontolite.service.UsuarioService;
 import com.octadata.pontolite.util.EnumMessage;
 import com.octadata.pontolite.util.ModelMessage;
 
@@ -28,6 +30,9 @@ public class RegistroPontoController {
 
 	@Autowired
 	private RegistroPontoService registroPontoService;
+
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private HttpSession session;
@@ -62,5 +67,24 @@ public class RegistroPontoController {
 				dataHoraFinal);
 		model.addAttribute("registros", registros);
 		return "/ponto/listagem-ponto";
+	}
+
+	@GetMapping("listar-periodo-usuario")
+	public String listarPeriodoPorUsuario(Model model,
+			@RequestParam(name = "dataHoraInicial", required = true) LocalDateTime dataHoraInicial,
+			@RequestParam(name = "dataHoraFinal", required = true) LocalDateTime dataHoraFinal,
+			@RequestParam(name = "codigoUsuario", required = false) Long codigoUsuario) {
+
+		Usuario usuario = null;
+		if (codigoUsuario != null) {
+			usuario = usuarioService.porId(codigoUsuario);
+		} else {
+			usuario = (Usuario) session.getAttribute("usuarioLogado");
+		}
+
+		List<RegistroPonto> registros = registroPontoService.listarPeriodoPorUsuario(usuario, dataHoraInicial,
+				dataHoraFinal);
+		model.addAttribute("registros", registros);
+		return "/ponto/listagem-ponto-periodo";
 	}
 }

@@ -1,0 +1,18 @@
+Faça uma tela usando o arquivo "/ponto/listagem-ponto-periodo.html" de um relatório de registro de ponto do mês atual para um funcionario com a possibilidade de ação para alterar o registro de ponto.
+
+A estrutura pode ser em grid(table) html com os seguintes campos.
+
+ * Entrada
+ * Saída para intervalo
+ * Retorno do intervalo
+ * Saída
+ * Entrada Hora Extra
+ * Saída Hora Extra
+ * Valor Hora Extra
+
+A ação de alterar a hora do ponto deve ser em cada ponto registrado individualmente.
+Usar o retorno do enpoint "listar-periodo-usuario" do RegistroPontoController.
+Utilizar o mesmo padrão de tela e layout "/ponto/listagem-ponto" mantendo a coerência visual do sistema.
+Utilizar o arquivo javascript ponto.js para os controles específicos de tela.
+Utilizar como request e response o arquivo padrão /base/menu-fech-api.js conforme já utilizado em outros casos como a chamada dos menus loadContentViaFetch do th:fragment="menu-principal" existente no arquivo base.html
+
