@@ -1,16 +1,21 @@
 package com.octadata.pontolite.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.octadata.pontolite.dto.RelatorioPontoDiaDTO;
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.model.RegistroPonto;
 import com.octadata.pontolite.model.Usuario;
@@ -36,9 +41,6 @@ public class RegistroPontoController {
 
 	@Autowired
 	private HttpSession session;
-
-	// @Autowired
-	// private RegistroPonto registroPonto;
 
 	RegistroPontoController(AutenticacaoService autenticacaoService) {
 		this.autenticacaoService = autenticacaoService;
@@ -71,9 +73,16 @@ public class RegistroPontoController {
 
 	@GetMapping("listar-periodo-usuario")
 	public String listarPeriodoPorUsuario(Model model,
-			@RequestParam(name = "dataHoraInicial", required = true) LocalDateTime dataHoraInicial,
-			@RequestParam(name = "dataHoraFinal", required = true) LocalDateTime dataHoraFinal,
+			@RequestParam(name = "dataHoraInicial", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraInicial,
+			@RequestParam(name = "dataHoraFinal", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraFinal,
 			@RequestParam(name = "codigoUsuario", required = false) Long codigoUsuario) {
+
+		if (dataHoraInicial == null) {
+			dataHoraInicial = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+		}
+		if (dataHoraFinal == null) {
+			dataHoraFinal = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).atTime(LocalTime.MAX);
+		}
 
 		Usuario usuario = null;
 		if (codigoUsuario != null) {
@@ -84,7 +93,39 @@ public class RegistroPontoController {
 
 		List<RegistroPonto> registros = registroPontoService.listarPeriodoPorUsuario(usuario, dataHoraInicial,
 				dataHoraFinal);
+		List<RelatorioPontoDiaDTO> relatorioDias = registroPontoService.montarRelatorioMensal(usuario, dataHoraInicial,
+				dataHoraFinal);
+
+		String mesAno = dataHoraInicial.format(DateTimeFormatter.ofPattern("MM/yyyy"));
+
 		model.addAttribute("registros", registros);
+		model.addAttribute("relatorioDias", relatorioDias);
+		model.addAttribute("dataHoraInicial", dataHoraInicial);
+		model.addAttribute("dataHoraFinal", dataHoraFinal);
+		model.addAttribute("mesAnoAtual", mesAno);
+		model.addAttribute("usuarioRelatorio", usuario);
+
 		return "/ponto/listagem-ponto-periodo";
 	}
+
+	@PostMapping("alterar")
+	public String alterarPonto(Model model,
+			@RequestParam(name = "codigoRegistroPonto", required = true) Long codigoRegistroPonto,
+			@RequestParam(name = "dataHora", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora,
+			@RequestParam(name = "dataHoraInicial", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraInicial,
+			@RequestParam(name = "dataHoraFinal", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraFinal,
+			@RequestParam(name = "codigoUsuario", required = false) Long codigoUsuario) {
+
+		try {
+			registroPontoService.alterarHorario(codigoRegistroPonto, dataHora);
+			ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Horário de ponto alterado com sucesso!");
+		} catch (NegocioException e) {
+			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(), e.getMessage());
+		} catch (Exception e) {
+			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(), "Erro ao alterar registro de ponto: " + e.getMessage());
+		}
+
+		return listarPeriodoPorUsuario(model, dataHoraInicial, dataHoraFinal, codigoUsuario);
+	}
 }
+

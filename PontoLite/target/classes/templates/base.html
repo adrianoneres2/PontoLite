@@ -20,6 +20,7 @@
 	<script th:src="@{/js/formatacao.js}"></script>
 	<script th:src="@{/js/validacao.js}"></script>
 	<script th:src="@{/js/base/menu-fetch-api.js}"></script>
+	<script th:src="@{/js/ponto/ponto.js}"></script>
 	<script>
 		// Toggle Sidebar Submenus
 		$(document).ready(function () {
@@ -81,7 +82,7 @@
 				<div class="menu-item"><a href="#" onclick="loadContentViaFetch('/pontolite/ponto/listar', event)">Meus
 						Pontos</a></div>
 				<div class="menu-item"><a href="#"
-						onclick="loadContentViaFetch('/pontolite/ponto/listar', event)">Ajuste de ponto</a></div>
+						onclick="loadContentViaFetch('/pontolite/ponto/listar-periodo-usuario', event)">Ajuste de ponto</a></div>
 			</div>
 		</div>
 

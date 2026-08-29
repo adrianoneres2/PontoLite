@@ -151,4 +151,87 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		return tempoTotal;
 	}
 
+	@Override
+	public RegistroPonto porId(Long codigoRegistroPonto) {
+		return registroPontoRepository.findById(codigoRegistroPonto)
+				.orElseThrow(() -> new NegocioException(EnumMessage.ERROR.toString(),
+						"Registro de ponto não encontrado!", "Não encontrado"));
+	}
+
+	@Override
+	public RegistroPonto alterarHorario(Long codigoRegistroPonto, java.time.LocalDateTime novaDataHora) {
+		RegistroPonto ponto = porId(codigoRegistroPonto);
+		ponto.setDataRegistroPonto(novaDataHora);
+		return registroPontoRepository.save(ponto);
+	}
+
+	@Override
+	public java.util.List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> montarRelatorioMensal(Usuario usuario,
+			java.time.LocalDateTime dataHoraInicial, java.time.LocalDateTime dataHoraFinal) {
+
+		java.util.List<RegistroPonto> registros = listarPeriodoPorUsuario(usuario, dataHoraInicial, dataHoraFinal);
+
+		java.util.Map<java.time.LocalDate, java.util.List<RegistroPonto>> porDia = registros.stream()
+				.filter(r -> r.getDataRegistroPonto() != null)
+				.collect(java.util.stream.Collectors.groupingBy(r -> r.getDataRegistroPonto().toLocalDate()));
+
+		java.util.List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> relatorio = new java.util.ArrayList<>();
+
+		java.time.LocalDate inicio = dataHoraInicial.toLocalDate();
+		java.time.LocalDate fim = dataHoraFinal.toLocalDate();
+
+		for (java.time.LocalDate data = inicio; !data.isAfter(fim); data = data.plusDays(1)) {
+			com.octadata.pontolite.dto.RelatorioPontoDiaDTO dto = new com.octadata.pontolite.dto.RelatorioPontoDiaDTO(data);
+			java.util.List<RegistroPonto> pontosDoDia = porDia.get(data);
+
+			if (pontosDoDia != null && !pontosDoDia.isEmpty()) {
+				pontosDoDia.sort(java.util.Comparator.comparing(RegistroPonto::getDataRegistroPonto));
+
+				for (RegistroPonto r : pontosDoDia) {
+					if (r.getTipoRegistro() == null) continue;
+					long codTipo = r.getTipoRegistro().getCodigoTipoRegistro();
+					String nomeTipo = r.getTipoRegistro().getNomeTipoRegistro() != null ? r.getTipoRegistro().getNomeTipoRegistro().toUpperCase() : "";
+
+					if (nomeTipo.contains("EXTRA") || nomeTipo.contains("HE")) {
+						if (nomeTipo.contains("ENTRADA") || codTipo == 5) {
+							dto.setEntradaHoraExtra(r);
+						} else {
+							dto.setSaidaHoraExtra(r);
+						}
+					} else if (codTipo == EnumTipoRegistroPonto.ENTRADA.getValor() || nomeTipo.contains("ENTRADA")) {
+						if (dto.getEntrada() == null) {
+							dto.setEntrada(r);
+						} else if (dto.getEntradaHoraExtra() == null) {
+							dto.setEntradaHoraExtra(r);
+						}
+					} else if (codTipo == EnumTipoRegistroPonto.INTERVALO.getValor() || (nomeTipo.contains("INTERVALO") && !nomeTipo.contains("RETORNO"))) {
+						dto.setSaidaIntervalo(r);
+					} else if (codTipo == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor() || nomeTipo.contains("RETORNO")) {
+						dto.setRetornoIntervalo(r);
+					} else if (codTipo == EnumTipoRegistroPonto.SAIDA.getValor() || nomeTipo.contains("SAÍDA") || nomeTipo.contains("SAIDA")) {
+						if (dto.getSaida() == null) {
+							dto.setSaida(r);
+						} else if (dto.getSaidaHoraExtra() == null) {
+							dto.setSaidaHoraExtra(r);
+						}
+					}
+				}
+
+				long minutosHE = 0;
+				if (dto.getEntradaHoraExtra() != null && dto.getSaidaHoraExtra() != null) {
+					minutosHE = java.time.Duration.between(dto.getEntradaHoraExtra().getDataRegistroPonto(), dto.getSaidaHoraExtra().getDataRegistroPonto()).toMinutes();
+				}
+				if (minutosHE > 0) {
+					long h = minutosHE / 60;
+					long m = minutosHE % 60;
+					dto.setValorHoraExtra(String.format("%02d:%02d", h, m));
+				}
+			}
+			relatorio.add(dto);
+		}
+
+		return relatorio;
+	}
+
 }
+

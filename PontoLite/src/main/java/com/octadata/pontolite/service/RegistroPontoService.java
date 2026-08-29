@@ -27,4 +27,10 @@ public interface RegistroPontoService {
 	Long calcularTempoTotalRegistro(List<RegistroPonto> registrosPonto);
 
 	Long calcularTempoPorTipoRegistro(RegistroPonto registroPonto, List<RegistroPonto> registrosPonto);
+
+	RegistroPonto porId(Long codigoRegistroPonto);
+
+	RegistroPonto alterarHorario(Long codigoRegistroPonto, LocalDateTime novaDataHora);
+
+	List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> montarRelatorioMensal(Usuario usuario, LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal);
 }
