@@ -47,9 +47,15 @@ function submeterAlteracaoPonto(form, event) {
 
     const dataIso = document.getElementById('modalDataIso').value;
     const hora = document.getElementById('modalHoraRegistro').value;
+    const observacao = document.getElementById('modalObservacao').value;
 
     if (!hora) {
         alert('Por favor, informe um horário válido.');
+        return;
+    }
+
+    if (!observacao) {
+        alert('Por favor, informe uma observação.');
         return;
     }
 
@@ -58,6 +64,7 @@ function submeterAlteracaoPonto(form, event) {
     const dataHoraIso = dataIso + 'T' + horaComSegundos;
 
     document.getElementById('modalDataHoraFinalIso').value = dataHoraIso;
+    document.getElementById('modalObservacaoFinal').value = observacao;
 
     fecharModalAlterarPonto();
 

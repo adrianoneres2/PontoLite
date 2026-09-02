@@ -35,15 +35,48 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 
 	@Override
 	public RegistroPonto salvar(RegistroPonto registroPonto) {
+
 		registroPonto.setDataRegistroPonto(LocalDateTime.now());
-		registroPonto.setSituacaoRegistroPonto(1);
+		registroPonto.setSituacaoRegistroPonto(EnumStatusRegistro.ATIVO.getValor());
 		registroPonto = validarInclusao(registroPonto);
-		List<RegistroPonto> registrosPonto = listarPeriodoPorUsuario(registroPonto.getUsuario(),
-				LocalDateTime.now().toLocalDate().atStartOfDay(),
-				LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX));
-		registroPonto.setTempoRegistro(calcularTempoPorTipoRegistro(registroPonto, registrosPonto));
+		registroPonto.setTempoRegistro(calcularTempoPorTipoRegistro(registroPonto, buscarListaDePontos(registroPonto)));
 		registroPontoRepository.save(registroPonto);
 		return registroPonto;
+	}
+
+	protected List<RegistroPonto> buscarListaDePontos(RegistroPonto registroPonto) {
+
+		LocalDateTime dataHoraIncial = registroPonto.getDataRegistroPonto().toLocalDate().atStartOfDay();
+		LocalDateTime dataHoraFinal = registroPonto.getDataRegistroPonto().toLocalDate().atTime(LocalTime.MAX);
+
+		if (dataHoraIncial == null && dataHoraFinal == null) {
+			dataHoraIncial = LocalDateTime.now().toLocalDate().atStartOfDay();
+			dataHoraFinal = LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX);
+		}
+
+		List<RegistroPonto> registrosPonto = listarPeriodoPorUsuario(registroPonto.getUsuario(), dataHoraIncial,
+				dataHoraFinal);
+
+		return registrosPonto;
+	}
+
+	@Override
+	public RegistroPonto solicitacaoAlteracao(Long codigoRegistroPonto,
+			java.time.LocalDateTime novaDataHora, String observacao) {
+
+		RegistroPonto registroPonto = porId(codigoRegistroPonto);
+		RegistroPonto registroPontoSolicitado = new RegistroPonto();
+
+		registroPontoSolicitado.setUsuario(registroPonto.getUsuario());
+		registroPontoSolicitado.setDataRegistroPonto(novaDataHora);
+		registroPontoSolicitado.setTipoRegistro(registroPonto.getTipoRegistro());
+		registroPontoSolicitado.setRegistroPontoAjustado(registroPonto);
+		registroPontoSolicitado.setObservacao(observacao);
+		registroPontoSolicitado.setSituacaoRegistroPonto(EnumStatusRegistro.AGUARDANDO_APROVACAO.getValor());
+		registroPontoSolicitado
+				.setTempoRegistro(calcularTempoPorTipoRegistro(registroPonto, buscarListaDePontos(registroPonto)));
+		registroPontoRepository.save(registroPontoSolicitado);
+		return registroPontoSolicitado;
 	}
 
 	@Override
@@ -85,7 +118,8 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 				.findMaiorRegistroPorCodigoUsuario(registroValidacao.getUsuario().getCodigoUsuario());
 
 		if (ultimoRegistroPonto == null) {
-			registroValidacao.setTipoRegistro(tipoRegistroService.porCodigoTipoRegistro(1L));
+			registroValidacao.setTipoRegistro(
+					tipoRegistroService.porCodigoTipoRegistro((long) EnumStatusRegistro.ATIVO.getValor()));
 			return registroValidacao;
 		}
 
@@ -95,7 +129,8 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		 */
 		if (ultimoRegistroPonto == null
 				|| ultimoRegistroPonto.getDataRegistroPonto().getDayOfMonth() != LocalDateTime.now().getDayOfMonth()) {
-			registroValidacao.setTipoRegistro(tipoRegistroService.porCodigoTipoRegistro(1L));
+			registroValidacao.setTipoRegistro(
+					tipoRegistroService.porCodigoTipoRegistro((long) EnumStatusRegistro.ATIVO.getValor()));
 		} else {
 			/* Obtem o próximo tipo de registro */
 			registroValidacao.setTipoRegistro((tipoRegistroService
@@ -118,7 +153,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 
 	@Override
 	public Long calcularTempoTotalRegistro(List<RegistroPonto> registrosPonto) {
-		Long tempoTotal = 1L;
+		Long tempoTotal = (long) EnumStatusRegistro.ATIVO.getValor();
 		for (int i = 0; i < registrosPonto.size() - 1; i++) {
 			tempoTotal += calcularTempoRegistro(registrosPonto.get(i).getDataRegistroPonto(),
 					registrosPonto.get(i + 1).getDataRegistroPonto());
@@ -181,16 +216,20 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		java.time.LocalDate fim = dataHoraFinal.toLocalDate();
 
 		for (java.time.LocalDate data = inicio; !data.isAfter(fim); data = data.plusDays(1)) {
-			com.octadata.pontolite.dto.RelatorioPontoDiaDTO dto = new com.octadata.pontolite.dto.RelatorioPontoDiaDTO(data);
+			com.octadata.pontolite.dto.RelatorioPontoDiaDTO dto = new com.octadata.pontolite.dto.RelatorioPontoDiaDTO(
+					data);
 			java.util.List<RegistroPonto> pontosDoDia = porDia.get(data);
 
 			if (pontosDoDia != null && !pontosDoDia.isEmpty()) {
 				pontosDoDia.sort(java.util.Comparator.comparing(RegistroPonto::getDataRegistroPonto));
 
 				for (RegistroPonto r : pontosDoDia) {
-					if (r.getTipoRegistro() == null) continue;
+					if (r.getTipoRegistro() == null)
+						continue;
 					long codTipo = r.getTipoRegistro().getCodigoTipoRegistro();
-					String nomeTipo = r.getTipoRegistro().getNomeTipoRegistro() != null ? r.getTipoRegistro().getNomeTipoRegistro().toUpperCase() : "";
+					String nomeTipo = r.getTipoRegistro().getNomeTipoRegistro() != null
+							? r.getTipoRegistro().getNomeTipoRegistro().toUpperCase()
+							: "";
 
 					if (nomeTipo.contains("EXTRA") || nomeTipo.contains("HE")) {
 						if (nomeTipo.contains("ENTRADA") || codTipo == 5) {
@@ -204,11 +243,14 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 						} else if (dto.getEntradaHoraExtra() == null) {
 							dto.setEntradaHoraExtra(r);
 						}
-					} else if (codTipo == EnumTipoRegistroPonto.INTERVALO.getValor() || (nomeTipo.contains("INTERVALO") && !nomeTipo.contains("RETORNO"))) {
+					} else if (codTipo == EnumTipoRegistroPonto.INTERVALO.getValor()
+							|| (nomeTipo.contains("INTERVALO") && !nomeTipo.contains("RETORNO"))) {
 						dto.setSaidaIntervalo(r);
-					} else if (codTipo == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor() || nomeTipo.contains("RETORNO")) {
+					} else if (codTipo == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor()
+							|| nomeTipo.contains("RETORNO")) {
 						dto.setRetornoIntervalo(r);
-					} else if (codTipo == EnumTipoRegistroPonto.SAIDA.getValor() || nomeTipo.contains("SAÍDA") || nomeTipo.contains("SAIDA")) {
+					} else if (codTipo == EnumTipoRegistroPonto.SAIDA.getValor() || nomeTipo.contains("SAÍDA")
+							|| nomeTipo.contains("SAIDA")) {
 						if (dto.getSaida() == null) {
 							dto.setSaida(r);
 						} else if (dto.getSaidaHoraExtra() == null) {
@@ -219,7 +261,8 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 
 				long minutosHE = 0;
 				if (dto.getEntradaHoraExtra() != null && dto.getSaidaHoraExtra() != null) {
-					minutosHE = java.time.Duration.between(dto.getEntradaHoraExtra().getDataRegistroPonto(), dto.getSaidaHoraExtra().getDataRegistroPonto()).toMinutes();
+					minutosHE = java.time.Duration.between(dto.getEntradaHoraExtra().getDataRegistroPonto(),
+							dto.getSaidaHoraExtra().getDataRegistroPonto()).toMinutes();
 				}
 				if (minutosHE > 0) {
 					long h = minutosHE / 60;
@@ -234,4 +277,3 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	}
 
 }
-

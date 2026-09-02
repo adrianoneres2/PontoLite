@@ -58,6 +58,9 @@ public class RegistroPonto implements Serializable {
 	@Column(name = "tm_registro_ponto", nullable = true)
 	private Long tempoRegistro;
 
+	@Column(name = "ds_observacao_alteracao", nullable = true)
+	private String observacao;
+
 	public Long getCodigoRegistroPonto() {
 		return codigoRegistroPonto;
 	}
@@ -134,6 +137,14 @@ public class RegistroPonto implements Serializable {
 	public int hashCode() {
 		return Objects.hash(codigoRegistroPonto, dataAprovacao, dataRegistroPonto, registroPontoAjustado,
 				situacaoRegistroPonto, usuario, usuarioAprovacao, tempoRegistro);
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	@Override

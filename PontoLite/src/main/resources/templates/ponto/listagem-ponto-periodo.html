@@ -227,12 +227,13 @@
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
 						onclick="fecharModalAlterarPonto()" aria-label="Close"></button>
 				</div>
-				<form th:action="@{/pontolite/ponto/alterar}" method="post"
+				<form th:action="@{/pontolite/ponto/solicitar}" method="post"
 					onsubmit="submeterAlteracaoPonto(this, event)">
 					<div class="modal-body p-4">
 						<input type="hidden" id="modalCodigoRegistroPonto" name="codigoRegistroPonto">
 						<input type="hidden" id="modalDataIso">
 						<input type="hidden" id="modalDataHoraFinalIso" name="dataHora">
+						<input type="hidden" id="modalObservacaoFinal" name="observacao">
 
 						<!-- Informações do Ponto -->
 						<div class="mb-3 p-3 bg-light rounded border">
@@ -253,6 +254,12 @@
 							<label for="modalHoraRegistro" class="form-label fw-bold">Novo Horário</label>
 							<input type="time" class="form-control form-control-lg" id="modalHoraRegistro" required>
 						</div>
+
+						<div class="mb-3">
+							<label for="modalObservacao" class="form-label fw-bold">Observação</label>
+							<input type="text" class="form-control form-control-lg" id="modalObservacao" required>
+						</div>
+
 					</div>
 					<div class="modal-footer border-0 pt-0">
 						<button type="button" class="btn btn-secondary px-4" onclick="fecharModalAlterarPonto()"

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.octadata.pontolite.model.RegistroPonto;
+import com.octadata.pontolite.util.EnumStatusRegistro;
+
 import com.octadata.pontolite.model.Usuario;
 
 @Service
@@ -32,5 +34,10 @@ public interface RegistroPontoService {
 
 	RegistroPonto alterarHorario(Long codigoRegistroPonto, LocalDateTime novaDataHora);
 
-	List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> montarRelatorioMensal(Usuario usuario, LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal);
+	List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> montarRelatorioMensal(Usuario usuario,
+			LocalDateTime dataHoraInicial, LocalDateTime dataHoraFinal);
+
+	RegistroPonto solicitacaoAlteracao(Long codigoRegistroPonto, java.time.LocalDateTime novaDataHora,
+			String observacao);
+
 }

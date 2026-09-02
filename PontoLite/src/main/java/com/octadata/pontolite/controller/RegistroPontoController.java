@@ -108,24 +108,26 @@ public class RegistroPontoController {
 		return "/ponto/listagem-ponto-periodo";
 	}
 
-	@PostMapping("alterar")
-	public String alterarPonto(Model model,
+	@PostMapping("solicitar")
+	public String solicitarAlteracaoPonto(Model model,
 			@RequestParam(name = "codigoRegistroPonto", required = true) Long codigoRegistroPonto,
 			@RequestParam(name = "dataHora", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora,
 			@RequestParam(name = "dataHoraInicial", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraInicial,
 			@RequestParam(name = "dataHoraFinal", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHoraFinal,
-			@RequestParam(name = "codigoUsuario", required = false) Long codigoUsuario) {
+			@RequestParam(name = "codigoUsuario", required = false) Long codigoUsuario,
+			@RequestParam(name = "observacao", required = false) String observacao) {
 
 		try {
-			registroPontoService.alterarHorario(codigoRegistroPonto, dataHora);
-			ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(), "Horário de ponto alterado com sucesso!");
+			registroPontoService.solicitacaoAlteracao(codigoRegistroPonto, dataHora, observacao);
+			ModelMessage.setAttribute(model, EnumMessage.SUCCESS.toString(),
+					"Horário de ponto solicitado com sucesso!");
 		} catch (NegocioException e) {
 			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(), e.getMessage());
 		} catch (Exception e) {
-			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(), "Erro ao alterar registro de ponto: " + e.getMessage());
+			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(),
+					"Erro ao solicitar alteração de registro de ponto: " + e.getMessage());
 		}
 
 		return listarPeriodoPorUsuario(model, dataHoraInicial, dataHoraFinal, codigoUsuario);
 	}
 }
-
