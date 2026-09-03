@@ -35,4 +35,7 @@ public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Lo
 			+ "         group by ID_USUARIO)")
 	RegistroPonto findMaiorRegistroPorCodigoUsuario(Long codigoUsuario);
 
+	@Query(nativeQuery = true, value = "select * from pontolite.tb_registro_ponto trp where trp.id_registro_ponto_ajustado = :codigoRegistroPonto and st_registro_ponto = 2")
+	RegistroPonto findRegistroPontoAjustado(Long codigoRegistroPonto);
+
 }

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.octadata.pontolite.dto.RelatorioPontoDiaDTO;
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.handler.NegocioExceptionHandler;
 import com.octadata.pontolite.model.RegistroPonto;
@@ -201,6 +202,11 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	}
 
 	@Override
+	public RegistroPonto buscarRegistroPontoAjustado(Long codigoRegistroPonto) {
+		return registroPontoRepository.findRegistroPontoAjustado(codigoRegistroPonto);
+	}
+
+	@Override
 	public java.util.List<com.octadata.pontolite.dto.RelatorioPontoDiaDTO> montarRelatorioMensal(Usuario usuario,
 			java.time.LocalDateTime dataHoraInicial, java.time.LocalDateTime dataHoraFinal) {
 
@@ -214,6 +220,8 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 
 		java.time.LocalDate inicio = dataHoraInicial.toLocalDate();
 		java.time.LocalDate fim = dataHoraFinal.toLocalDate();
+
+		RegistroPonto pontoAjustado = null;
 
 		for (java.time.LocalDate data = inicio; !data.isAfter(fim); data = data.plusDays(1)) {
 			com.octadata.pontolite.dto.RelatorioPontoDiaDTO dto = new com.octadata.pontolite.dto.RelatorioPontoDiaDTO(
@@ -237,24 +245,51 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 						} else {
 							dto.setSaidaHoraExtra(r);
 						}
+
+						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						if (pontoAjustado != null) {
+							dto.setHasSolicitacaoEntradaHoraExtra(true);
+							dto.setObservacaoSolicitacaoEntradaHoraExtra(pontoAjustado.getObservacao());
+						}
+
 					} else if (codTipo == EnumTipoRegistroPonto.ENTRADA.getValor() || nomeTipo.contains("ENTRADA")) {
 						if (dto.getEntrada() == null) {
 							dto.setEntrada(r);
 						} else if (dto.getEntradaHoraExtra() == null) {
 							dto.setEntradaHoraExtra(r);
 						}
+						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						if (pontoAjustado != null) {
+							dto.setHasSolicitacaoEntrada(true);
+							dto.setObservacaoSolicitacaoEntrada(pontoAjustado.getObservacao());
+						}
 					} else if (codTipo == EnumTipoRegistroPonto.INTERVALO.getValor()
 							|| (nomeTipo.contains("INTERVALO") && !nomeTipo.contains("RETORNO"))) {
 						dto.setSaidaIntervalo(r);
+						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						if (pontoAjustado != null) {
+							dto.setHasSolicitacaoSaidaIntervalo(true);
+							dto.setObservacaoSolicitacaoSaidaIntervalo(pontoAjustado.getObservacao());
+						}
 					} else if (codTipo == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor()
 							|| nomeTipo.contains("RETORNO")) {
 						dto.setRetornoIntervalo(r);
+						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						if (pontoAjustado != null) {
+							dto.setHasSolicitacaoRetornoIntervalo(true);
+							dto.setObservacaoSolicitacaoRetornoIntervalo(pontoAjustado.getObservacao());
+						}
 					} else if (codTipo == EnumTipoRegistroPonto.SAIDA.getValor() || nomeTipo.contains("SAÍDA")
 							|| nomeTipo.contains("SAIDA")) {
 						if (dto.getSaida() == null) {
 							dto.setSaida(r);
 						} else if (dto.getSaidaHoraExtra() == null) {
 							dto.setSaidaHoraExtra(r);
+						}
+						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						if (pontoAjustado != null) {
+							dto.setHasSolicitacaoSaida(true);
+							dto.setObservacaoSolicitacaoSaida(pontoAjustado.getObservacao());
 						}
 					}
 				}

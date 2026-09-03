@@ -40,4 +40,6 @@ public interface RegistroPontoService {
 	RegistroPonto solicitacaoAlteracao(Long codigoRegistroPonto, java.time.LocalDateTime novaDataHora,
 			String observacao);
 
+	RegistroPonto buscarRegistroPontoAjustado(Long codigoRegistroPonto);
+
 }

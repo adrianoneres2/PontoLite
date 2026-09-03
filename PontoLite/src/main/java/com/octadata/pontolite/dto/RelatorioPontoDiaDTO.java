@@ -27,6 +27,20 @@ public class RelatorioPontoDiaDTO implements Serializable {
 	private String valorHoraExtra = "00:00";
 	private String totalTrabalhado = "00:00";
 
+	private Boolean hasSolicitacaoEntrada = false;
+	private Boolean hasSolicitacaoSaidaIntervalo = false;
+	private Boolean hasSolicitacaoRetornoIntervalo = false;
+	private Boolean hasSolicitacaoSaida = false;
+	private Boolean hasSolicitacaoEntradaHoraExtra = false;
+	private Boolean hasSolicitacaoSaidaHoraExtra = false;
+
+	private String observacaoSolicitacaoEntrada;
+	private String observacaoSolicitacaoSaidaIntervalo;
+	private String observacaoSolicitacaoRetornoIntervalo;
+	private String observacaoSolicitacaoSaida;
+	private String observacaoSolicitacaoEntradaHoraExtra;
+	private String observacaoSolicitacaoSaidaHoraExtra;
+
 	public RelatorioPontoDiaDTO() {
 	}
 
@@ -131,4 +145,101 @@ public class RelatorioPontoDiaDTO implements Serializable {
 	public void setTotalTrabalhado(String totalTrabalhado) {
 		this.totalTrabalhado = totalTrabalhado;
 	}
+
+	public Boolean getHasSolicitacaoEntrada() {
+		return hasSolicitacaoEntrada;
+	}
+
+	public void setHasSolicitacaoEntrada(Boolean hasSolicitacaoEntrada) {
+		this.hasSolicitacaoEntrada = hasSolicitacaoEntrada;
+	}
+
+	public Boolean getHasSolicitacaoSaidaIntervalo() {
+		return hasSolicitacaoSaidaIntervalo;
+	}
+
+	public void setHasSolicitacaoSaidaIntervalo(Boolean hasSolicitacaoSaidaIntervalo) {
+		this.hasSolicitacaoSaidaIntervalo = hasSolicitacaoSaidaIntervalo;
+	}
+
+	public Boolean getHasSolicitacaoRetornoIntervalo() {
+		return hasSolicitacaoRetornoIntervalo;
+	}
+
+	public void setHasSolicitacaoRetornoIntervalo(Boolean hasSolicitacaoRetornoIntervalo) {
+		this.hasSolicitacaoRetornoIntervalo = hasSolicitacaoRetornoIntervalo;
+	}
+
+	public Boolean getHasSolicitacaoSaida() {
+		return hasSolicitacaoSaida;
+	}
+
+	public void setHasSolicitacaoSaida(Boolean hasSolicitacaoSaida) {
+		this.hasSolicitacaoSaida = hasSolicitacaoSaida;
+	}
+
+	public Boolean getHasSolicitacaoEntradaHoraExtra() {
+		return hasSolicitacaoEntradaHoraExtra;
+	}
+
+	public void setHasSolicitacaoEntradaHoraExtra(Boolean hasSolicitacaoEntradaHoraExtra) {
+		this.hasSolicitacaoEntradaHoraExtra = hasSolicitacaoEntradaHoraExtra;
+	}
+
+	public Boolean getHasSolicitacaoSaidaHoraExtra() {
+		return hasSolicitacaoSaidaHoraExtra;
+	}
+
+	public void setHasSolicitacaoSaidaHoraExtra(Boolean hasSolicitacaoSaidaHoraExtra) {
+		this.hasSolicitacaoSaidaHoraExtra = hasSolicitacaoSaidaHoraExtra;
+	}
+
+	public String getObservacaoSolicitacaoEntrada() {
+		return observacaoSolicitacaoEntrada;
+	}
+
+	public void setObservacaoSolicitacaoEntrada(String observacaoSolicitacaoEntrada) {
+		this.observacaoSolicitacaoEntrada = observacaoSolicitacaoEntrada;
+	}
+
+	public String getObservacaoSolicitacaoSaidaIntervalo() {
+		return observacaoSolicitacaoSaidaIntervalo;
+	}
+
+	public void setObservacaoSolicitacaoSaidaIntervalo(String observacaoSolicitacaoSaidaIntervalo) {
+		this.observacaoSolicitacaoSaidaIntervalo = observacaoSolicitacaoSaidaIntervalo;
+	}
+
+	public String getObservacaoSolicitacaoRetornoIntervalo() {
+		return observacaoSolicitacaoRetornoIntervalo;
+	}
+
+	public void setObservacaoSolicitacaoRetornoIntervalo(String observacaoSolicitacaoRetornoIntervalo) {
+		this.observacaoSolicitacaoRetornoIntervalo = observacaoSolicitacaoRetornoIntervalo;
+	}
+
+	public String getObservacaoSolicitacaoSaida() {
+		return observacaoSolicitacaoSaida;
+	}
+
+	public void setObservacaoSolicitacaoSaida(String observacaoSolicitacaoSaida) {
+		this.observacaoSolicitacaoSaida = observacaoSolicitacaoSaida;
+	}
+
+	public String getObservacaoSolicitacaoEntradaHoraExtra() {
+		return observacaoSolicitacaoEntradaHoraExtra;
+	}
+
+	public void setObservacaoSolicitacaoEntradaHoraExtra(String observacaoSolicitacaoEntradaHoraExtra) {
+		this.observacaoSolicitacaoEntradaHoraExtra = observacaoSolicitacaoEntradaHoraExtra;
+	}
+
+	public String getObservacaoSolicitacaoSaidaHoraExtra() {
+		return observacaoSolicitacaoSaidaHoraExtra;
+	}
+
+	public void setObservacaoSolicitacaoSaidaHoraExtra(String observacaoSolicitacaoSaidaHoraExtra) {
+		this.observacaoSolicitacaoSaidaHoraExtra = observacaoSolicitacaoSaidaHoraExtra;
+	}
+
 }

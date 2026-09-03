@@ -88,9 +88,15 @@
 										data-tipo="Entrada"
 										th:data-data-iso="${#temporals.format(item.entrada.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoEntrada}"
+										th:title="${item.observacaoSolicitacaoEntrada}">
+										<i class="bi bi-chat-left-text text-danger" style="margin-left: 5px;"></i>
+									</span>
 								</div>
+
 								<span th:if="${item.entrada == null}" class="text-muted opacity-50">-</span>
 							</td>
 
@@ -109,8 +115,13 @@
 										data-tipo="Saída Intervalo"
 										th:data-data-iso="${#temporals.format(item.saidaIntervalo.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoSaidaIntervalo}"
+										th:title="${item.observacaoSolicitacaoSaidaIntervalo}">
+										<i style="margin-left: 5px;" class="bi bi-chat-left-text text-danger"></i>
+									</span>
 								</div>
 								<span th:if="${item.saidaIntervalo == null}" class="text-muted opacity-50">-</span>
 							</td>
@@ -130,8 +141,13 @@
 										data-tipo="Retorno Intervalo"
 										th:data-data-iso="${#temporals.format(item.retornoIntervalo.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoRetornoIntervalo}"
+										th:title="${item.observacaoSolicitacaoRetornoIntervalo}">
+										<i style="margin-left: 5px;" class="bi bi-chat-left-text text-danger"></i>
+									</span>
 								</div>
 								<span th:if="${item.retornoIntervalo == null}" class="text-muted opacity-50">-</span>
 							</td>
@@ -150,8 +166,13 @@
 										data-tipo="Saída"
 										th:data-data-iso="${#temporals.format(item.saida.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoSaida}"
+										th:title="${item.observacaoSolicitacaoSaida}">
+										<i class="bi bi-chat-left-text text-danger" style="margin-left: 5px;"></i>
+									</span>
 								</div>
 								<span th:if="${item.saida == null}" class="text-muted opacity-50">-</span>
 							</td>
@@ -171,8 +192,13 @@
 										data-tipo="Entrada HE"
 										th:data-data-iso="${#temporals.format(item.entradaHoraExtra.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoEntradaHoraExtra}"
+										th:title="${item.observacaoSolicitacaoEntradaHoraExtra}">
+										<i class="bi bi-chat-left-text text-danger" style="margin-left: 5px;"></i>
+									</span>
 								</div>
 								<span th:if="${item.entradaHoraExtra == null}" class="text-muted opacity-50">-</span>
 							</td>
@@ -192,8 +218,13 @@
 										data-tipo="Saída HE"
 										th:data-data-iso="${#temporals.format(item.saidaHoraExtra.dataRegistroPonto, 'yyyy-MM-dd')}"
 										onclick="abrirModalPontoViaData(this)">
-										<i class="bi bi-pencil-fill text-primary" style="font-size: 0.9rem;"></i>
+										<i class="bi bi-pencil-fill text-primary"
+											style="font-size: 0.9rem; margin-left: 5px;"></i>
 									</button>
+									<span th:if="${item.hasSolicitacaoSaidaHoraExtra}"
+										th:title="${item.observacaoSolicitacaoSaidaHoraExtra}">
+										<i class="bi bi-circle-fill  text-danger"></i>
+									</span>
 								</div>
 								<span th:if="${item.saidaHoraExtra == null}" class="text-muted opacity-50">-</span>
 							</td>
