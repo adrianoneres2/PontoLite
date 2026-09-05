@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.octadata.pontolite.dto.RelatorioPontoDiaDTO;
 import com.octadata.pontolite.exception.NegocioException;
 import com.octadata.pontolite.handler.NegocioExceptionHandler;
+import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.model.RegistroPonto;
 import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.repository.RegistroPontoRepository;
@@ -76,8 +77,24 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 		registroPontoSolicitado.setSituacaoRegistroPonto(EnumStatusRegistro.AGUARDANDO_APROVACAO.getValor());
 		registroPontoSolicitado
 				.setTempoRegistro(calcularTempoPorTipoRegistro(registroPonto, buscarListaDePontos(registroPonto)));
-		registroPontoRepository.save(registroPontoSolicitado);
-		return registroPontoSolicitado;
+
+		if (!existeRegistroPontoSolicitado(registroPonto)) {
+			registroPontoRepository.save(registroPontoSolicitado);
+			return registroPontoSolicitado;
+		}
+		return null;
+	}
+
+	protected boolean existeRegistroPontoSolicitado(RegistroPonto registroPonto) {
+		RegistroPonto registroPontoAjustado = registroPontoRepository
+				.findRegistroPontoAguardandoAprovacao(registroPonto.getCodigoRegistroPonto());
+
+		if (registroPontoAjustado != null) {
+			throw new NegocioException(EnumMessage.ERROR.toString(),
+					"Já existe uma solicitação de alteração para este registro!",
+					"Fora de hora");
+		}
+		return false;
 	}
 
 	@Override
@@ -202,8 +219,13 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 	}
 
 	@Override
-	public RegistroPonto buscarRegistroPontoAjustado(Long codigoRegistroPonto) {
-		return registroPontoRepository.findRegistroPontoAjustado(codigoRegistroPonto);
+	public RegistroPonto buscarRegistroPontoAguardandoAprovacao(Long codigoRegistroPonto) {
+		return registroPontoRepository.findRegistroPontoAguardandoAprovacao(codigoRegistroPonto);
+	}
+
+	@Override
+	public List<RegistroPonto> buscarRegistrosPontoAguardandoAprovacao(Cliente cliente) {
+		return registroPontoRepository.findRegistrosPontoAguardandoAprovacao(cliente.getCodigoCliente());
 	}
 
 	@Override
@@ -246,7 +268,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 							dto.setSaidaHoraExtra(r);
 						}
 
-						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						pontoAjustado = buscarRegistroPontoAguardandoAprovacao(r.getCodigoRegistroPonto());
 						if (pontoAjustado != null) {
 							dto.setHasSolicitacaoEntradaHoraExtra(true);
 							dto.setObservacaoSolicitacaoEntradaHoraExtra(pontoAjustado.getObservacao());
@@ -258,7 +280,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 						} else if (dto.getEntradaHoraExtra() == null) {
 							dto.setEntradaHoraExtra(r);
 						}
-						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						pontoAjustado = buscarRegistroPontoAguardandoAprovacao(r.getCodigoRegistroPonto());
 						if (pontoAjustado != null) {
 							dto.setHasSolicitacaoEntrada(true);
 							dto.setObservacaoSolicitacaoEntrada(pontoAjustado.getObservacao());
@@ -266,7 +288,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 					} else if (codTipo == EnumTipoRegistroPonto.INTERVALO.getValor()
 							|| (nomeTipo.contains("INTERVALO") && !nomeTipo.contains("RETORNO"))) {
 						dto.setSaidaIntervalo(r);
-						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						pontoAjustado = buscarRegistroPontoAguardandoAprovacao(r.getCodigoRegistroPonto());
 						if (pontoAjustado != null) {
 							dto.setHasSolicitacaoSaidaIntervalo(true);
 							dto.setObservacaoSolicitacaoSaidaIntervalo(pontoAjustado.getObservacao());
@@ -274,7 +296,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 					} else if (codTipo == EnumTipoRegistroPonto.RETORNO_INTERVALO.getValor()
 							|| nomeTipo.contains("RETORNO")) {
 						dto.setRetornoIntervalo(r);
-						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						pontoAjustado = buscarRegistroPontoAguardandoAprovacao(r.getCodigoRegistroPonto());
 						if (pontoAjustado != null) {
 							dto.setHasSolicitacaoRetornoIntervalo(true);
 							dto.setObservacaoSolicitacaoRetornoIntervalo(pontoAjustado.getObservacao());
@@ -286,7 +308,7 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 						} else if (dto.getSaidaHoraExtra() == null) {
 							dto.setSaidaHoraExtra(r);
 						}
-						pontoAjustado = buscarRegistroPontoAjustado(r.getCodigoRegistroPonto());
+						pontoAjustado = buscarRegistroPontoAguardandoAprovacao(r.getCodigoRegistroPonto());
 						if (pontoAjustado != null) {
 							dto.setHasSolicitacaoSaida(true);
 							dto.setObservacaoSolicitacaoSaida(pontoAjustado.getObservacao());

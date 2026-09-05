@@ -36,6 +36,9 @@ public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Lo
 	RegistroPonto findMaiorRegistroPorCodigoUsuario(Long codigoUsuario);
 
 	@Query(nativeQuery = true, value = "select * from pontolite.tb_registro_ponto trp where trp.id_registro_ponto_ajustado = :codigoRegistroPonto and st_registro_ponto = 2")
-	RegistroPonto findRegistroPontoAjustado(Long codigoRegistroPonto);
+	RegistroPonto findRegistroPontoAguardandoAprovacao(Long codigoRegistroPonto);
+
+	@Query(nativeQuery = true, value = "select * from pontolite.tb_registro_ponto trp where trp.id_cliente = :codigoCliente and st_registro_ponto = 2")
+	List<RegistroPonto> findRegistrosPontoAguardandoAprovacao(Long codigoCliente);
 
 }

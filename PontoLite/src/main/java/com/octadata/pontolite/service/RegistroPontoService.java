@@ -6,9 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.octadata.pontolite.model.RegistroPonto;
-import com.octadata.pontolite.util.EnumStatusRegistro;
 
 import com.octadata.pontolite.model.Usuario;
+
+import com.octadata.pontolite.model.Cliente;
 
 @Service
 public interface RegistroPontoService {
@@ -40,6 +41,8 @@ public interface RegistroPontoService {
 	RegistroPonto solicitacaoAlteracao(Long codigoRegistroPonto, java.time.LocalDateTime novaDataHora,
 			String observacao);
 
-	RegistroPonto buscarRegistroPontoAjustado(Long codigoRegistroPonto);
+	RegistroPonto buscarRegistroPontoAguardandoAprovacao(Long codigoRegistroPonto);
+
+	List<RegistroPonto> buscarRegistrosPontoAguardandoAprovacao(Cliente cliente);
 
 }

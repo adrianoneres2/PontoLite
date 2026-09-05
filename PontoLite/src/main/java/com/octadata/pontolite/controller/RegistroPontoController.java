@@ -125,7 +125,7 @@ public class RegistroPontoController {
 			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(), e.getMessage());
 		} catch (Exception e) {
 			ModelMessage.setAttribute(model, EnumMessage.ERROR.toString(),
-					"Erro ao solicitar alteração de registro de ponto: " + e.getMessage());
+					"Erro ao solicitar alteração de registro de ponto: ");
 		}
 
 		return listarPeriodoPorUsuario(model, dataHoraInicial, dataHoraFinal, codigoUsuario);
