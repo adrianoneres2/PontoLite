@@ -91,3 +91,49 @@ function filtrarRelatorioPeriodo(event) {
 
     loadContentViaFetch(url, event);
 }
+
+/**
+ * Busca a quantidade de solicitações de alteração de ponto aguardando aprovação
+ * e atualiza apenas o contador no ícone de notificação.
+ */
+function buscarAguardandoAprovacaoNotificacao(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    const contadorElement = document.getElementById('contador-aprovacoes-pendentes');
+
+    console.log('contadorElement', contadorElement);
+    if (!contadorElement) return;
+
+    fetch('/pontolite/ponto/buscar-aguardando-aprovacao')
+        .then(response => {
+            if (!response.ok) {
+                console.error('HTTP Error:', response.status, response.statusText);
+                throw new Error('Erro ao buscar solicitações aguardando aprovação');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.quantidade !== undefined) {
+                contadorElement.textContent = data.quantidade;
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar contador de notificações:', error);
+        });
+}
+
+// Inicializa o contador ao carregar a página se o ícone estiver visível na tela
+if (typeof $ !== 'undefined') {
+    $(document).ready(function () {
+        if (document.getElementById('contador-aprovacoes-pendentes')) {
+            buscarAguardandoAprovacaoNotificacao();
+        }
+    });
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('contador-aprovacoes-pendentes')) {
+            buscarAguardandoAprovacaoNotificacao();
+        }
+    });
+}

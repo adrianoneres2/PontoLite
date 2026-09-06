@@ -18,6 +18,20 @@
 					<small class="text-muted" th:text="${session.usuarioLogado.perfil.nomePerfil}"></small>
 				</div>
 				<div class="d-flex align-items-center gap-2">
+
+					<div th:if="${session.usuarioLogado != null and (session.usuarioLogado.perfil.codigoPerfil == 1 or session.usuarioLogado.perfil.nomePerfil == 'Administrador')}"
+						class="position-relative d-inline-block" style="margin-right: 20px;">
+						<a href="#" onclick="buscarAguardandoAprovacaoNotificacao(event)"
+							class="btn btn-outline-secondary btn-sm rounded-circle position-relative shadow-sm d-flex align-items-center justify-content-center"
+							style="width: 36px; height: 36px; text-decoration: none;"
+							title="Aprovações de alteração de ponto pendentes">
+							<i class="bi bi-bell-fill text-secondary" style="font-size: 1.1rem;"></i>
+							<span id="contador-aprovacoes-pendentes"
+								class="badge badge-danger badge-pill position-absolute"
+								style="top: -5px; right: -5px; font-size: 0.65rem; padding: 0.25em 0.45em;">0</span>
+						</a>
+					</div>
+
 					<a href="#" onclick="loadContentViaFetch('/pontolite', event)"
 						class="btn btn-primary btn-sm rounded-pill fw-semibold shadow-sm" style="width: 100px;"><i
 							class="bi bi-house-door-fill me-1"></i>

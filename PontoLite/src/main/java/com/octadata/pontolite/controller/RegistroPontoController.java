@@ -4,25 +4,31 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.octadata.pontolite.dto.RelatorioPontoDiaDTO;
 import com.octadata.pontolite.exception.NegocioException;
+import com.octadata.pontolite.model.Cliente;
 import com.octadata.pontolite.model.RegistroPonto;
 import com.octadata.pontolite.model.Usuario;
 import com.octadata.pontolite.service.AutenticacaoService;
 import com.octadata.pontolite.service.RegistroPontoService;
 import com.octadata.pontolite.service.UsuarioService;
 import com.octadata.pontolite.util.EnumMessage;
+import com.octadata.pontolite.util.EnumPerfil;
 import com.octadata.pontolite.util.ModelMessage;
 
 import jakarta.servlet.http.HttpSession;
@@ -130,4 +136,28 @@ public class RegistroPontoController {
 
 		return listarPeriodoPorUsuario(model, dataHoraInicial, dataHoraFinal, codigoUsuario);
 	}
+
+	@GetMapping("buscar-aguardando-aprovacao")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> buscarAguardandoAprovacao() {
+		Map<String, Object> response = new HashMap<>();
+		int quantidade = 0;
+		try {
+			Usuario usuario = autenticacaoService.getUsuarioAutenticado();
+			if (usuario != null && usuario.getPerfil() != null
+					&& usuario.getPerfil().getCodigoPerfil() == EnumPerfil.ADMINISTRADOR.getValor()
+					&& usuario.getCliente() != null) {
+				List<RegistroPonto> registrosPontoAguardandoAprovacao = registroPontoService
+						.buscarRegistrosPontoAguardandoAprovacao(usuario.getCliente());
+				if (registrosPontoAguardandoAprovacao != null) {
+					quantidade = registrosPontoAguardandoAprovacao.size();
+				}
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body(response);
+		}
+		response.put("quantidade", quantidade);
+		return ResponseEntity.ok(response);
+	}
+
 }

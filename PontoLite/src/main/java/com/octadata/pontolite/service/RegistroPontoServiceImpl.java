@@ -225,6 +225,9 @@ public class RegistroPontoServiceImpl implements RegistroPontoService {
 
 	@Override
 	public List<RegistroPonto> buscarRegistrosPontoAguardandoAprovacao(Cliente cliente) {
+		if (cliente == null) {
+			return java.util.Collections.emptyList();
+		}
 		return registroPontoRepository.findRegistrosPontoAguardandoAprovacao(cliente.getCodigoCliente());
 	}
 
